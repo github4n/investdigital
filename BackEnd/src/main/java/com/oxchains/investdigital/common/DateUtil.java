@@ -34,13 +34,4 @@ public class DateUtil {
         String randomStr = ""+r.nextInt(9)+r.nextInt(9)+r.nextInt(9)+r.nextInt(9)+r.nextInt(9);
         return getPresentTime()+randomStr;
     }
-
-    public static void main(String[] args) {
-        System.out.println(getOrderId());
-        System.out.println(getOrderId());
-        System.out.println(getOrderId());
-        System.out.println(getOrderId());
-        System.out.println(getOrderId());
-    }
-
 }
