@@ -20,6 +20,8 @@ import Signupemail from './components/auth/signup_email';
 import Signout from './components/auth/signout';
 import Home from './components/home';
 import FundIssuance from './components/fund_issuance';
+import Strategy from './components/strategy';
+import StrategyDetails from './components/strategy_details';
 const createStoreWithMiddleware = compose(
     applyMiddleware(reduxThunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
@@ -45,6 +47,8 @@ ReactDOM.render(
                         <Route path="/signupemail" component={Signupemail} />
                         <Route path="/signout" component={Signout} />
                         <Route path="/fundissuance" component={FundIssuance} />
+                        <Route path="/strategy/details" component={StrategyDetails} />
+                        <Route path="/strategy" component={Strategy} />
                         <Route path="/" component={Home} />
                     </Switch>
                     {/* <Footer /> */}
