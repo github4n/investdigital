@@ -3,29 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "webpack-dev-server",
     "build": "webpack -p --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oxchains/themis.git"
+    "url": "git+https://github.com/oxchains/investdigital.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/oxchains/themis/issues"
+    "url": "https://github.com/oxchains/investdigital/issues"
   },
-  "homepage": "https://github.com/oxchains/themis#readme",
+  "homepage": "https://github.com/oxchains/investdigital#readme",
   "dependencies": {
-    "antd": "^2.13.7",
+    "antd": "^2.13.11",
     "axios": "^0.16.2",
     "babel-preset-stage-1": "^6.24.1",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "moment": "^2.19.1",
-    "nl-design": "^1.0.5",
+    "nl-design": "^1.0.6",
     "punycode": "^2.1.0",
     "qrcode.react": "^0.7.2",
     "react": "^15.6.2",
@@ -34,13 +34,16 @@
     "react-dropzone": "^4.2.1",
     "react-modal-bootstrap": "^1.1.1",
     "react-moment": "^0.6.5",
+    "react-quill": "^1.2.3",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-sk-countdown": "^1.0.2",
+    "react-swipe": "^5.1.0",
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "swipe-js-iso": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

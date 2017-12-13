@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { signinAction } from '../../actions/auth';
 import { Alert } from 'antd';
 import { Link } from 'react-router-dom';
+import Header from '../common/header-all';
+
 class Signin extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +40,7 @@ class Signin extends Component {
         console.log(this.props.errorMessage);
         return (
             <div className="mainbgc">
+            <Header />
                 <div className="login-box">
                     <div className="login-box-body">
                         <div className=" signinWay text-center g-pt-50">

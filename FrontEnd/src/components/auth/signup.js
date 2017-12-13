@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signupUser, GetverifyCode } from '../../actions/auth';
 import { Alert } from 'antd';
-
+import Header from '../common/header-all';
 import {
     Modal,
     ModalHeader,
@@ -120,6 +120,7 @@ class Signup extends Component {
 
         return (
             <div>
+                <Header />
                 <div className="login-box">
                     <div className=" signinWay text-center g-pt-50">
                             <ul className="row loginul">
@@ -143,7 +144,7 @@ class Signup extends Component {
                                     <input type="checkbox" defaultChecked className="checkbox-width" onChange={this.handleChange.bind(this)} /><span> 我已阅读themis用户手册及相关法律</span>
                                 </div>
                                 <div className="">
-                                    <button type="submit" className="btn   form-register"><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
+                                    <button type="submit" className="btn form-register" style={{color:'white'}}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
                                 </div>
                                 {this.renderAlert()}
                             </div>

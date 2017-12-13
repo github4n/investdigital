@@ -10,6 +10,7 @@ import { EmailsigninAction } from '../../actions/auth';
 import { Route, Redirect } from 'react-router-dom';
 import { Alert } from 'antd';
 import { Link } from 'react-router-dom';
+import Header from '../common/header-all';
 class Emiallogin extends Component {
     // let Emiallogin = React.createClass({
     handleEmailSubmit() {
@@ -34,6 +35,8 @@ class Emiallogin extends Component {
     }
     render() {
         return (
+            <div>
+            <Header />
             <div className="login-box">
                 <div className="login-box-body">
                     <div className="signinWay text-center g-pt-50">
@@ -52,6 +55,7 @@ class Emiallogin extends Component {
                             {this.renderAlert()}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>);
     }

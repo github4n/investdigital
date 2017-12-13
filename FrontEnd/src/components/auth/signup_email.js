@@ -9,6 +9,7 @@ import { EmialsignupUser } from '../../actions/auth';
 import { Route, Redirect } from 'react-router-dom';
 import { ROOT_URLC } from '../../actions/types';
 import { Alert } from 'antd';
+import Header from '../common/header-all';
 class SignupEmial extends Component {
     constructor(props) {
         super(props);
@@ -46,6 +47,8 @@ class SignupEmial extends Component {
         const url = data.status === -1 ? "/signup" : "/signin";
         localStorage.setItem("registertip", data.message);
         return (
+            <div>
+                 <Header />
             <div className="login-box">
                     <div className="signinWay text-center g-pt-50">
                         <ul className="row loginul">
@@ -63,11 +66,12 @@ class SignupEmial extends Component {
                                     <input type="checkbox" defaultChecked className="checkbox-width" /><span> 我已阅读themis用户手册及相关法律</span>
                                 </div>
                                 <div className="">
-                                    <button  className="btn  form-register" onClick={this.handleFormSubmit.bind(this)}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
+                                    <button  className="btn  form-register" style={{color:'white'}} onClick={this.handleFormSubmit.bind(this)}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
                                 </div>
                             </div>
                         </div>
                         {this.renderAlert()}
+                    </div>
                     </div>
             </div>);
     }

@@ -1,0 +1,254 @@
+.id-boxshadow{
+    border-radius: 10px;
+    -moz-box-shadow: 0px 0px 20px rgba(228, 228, 228, 1);
+    -webkit-box-shadow: 0px 0px 20px rgba(228, 228, 228, 1);
+    box-shadow: 0px 0px 20px rgba(228, 228, 228, 1);
+     background: #fff;
+}
+hr{
+    margin-top: 2rem !important;
+    margin-bottom: 10px !important;
+}
+.strategy a{
+    color: rgb(85, 85, 85);
+}
+.strategy a:hover{
+    color: rgb(85, 85, 85);
+}
+.strategy-content{
+    margin-top: -200px;
+}
+.strategy-list-banner{
+    height:660px;
+    background: url("/public/img/u16.png") no-repeat center bottom;
+}
+.strategy-list-banner-mask{
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+    text-align: center;
+}
+.strategy-list-banner-mask h2{
+    padding-top: 200px;
+}
+.strategy-line{
+    display: inline-block;
+    width: 150px;
+    height: 6px;
+    background: inherit;
+    background-color: rgba(246, 183, 7, 1);
+
+}
+.strategy-choiceness-tip{
+    background-color: rgba(67, 116, 249, .15);
+    color:#68AAF9;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.strategy-choiceness .title{
+  font-size: 20px;
+}
+.strategy-choiceness-item{
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    margin: 0 10px;
+}
+.strategy-choiceness-user{
+    position: relative;
+}
+.photo{
+    padding-right: 5px;
+    display: inline-block;
+    font-size: 12px;
+    background-color: #ffffff;
+}
+.photo img{
+    width: 30px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #bbbbbb;
+    vertical-align: middle;
+}
+.strategy-choiceness-title-line{
+    position: absolute;
+    display: inline-block;
+    width: 65%;
+    height: 1px;
+    background-color: gainsboro;
+    top: 24px;
+}
+.strategy-chart{
+    height: 130px;
+    width: 100%;
+    background-color: #bcddff;
+}
+.strategy-choiceness-number{
+    font-size: 14px;
+}
+/*tab*/
+.tab_item1{
+    transition:all .3s ease;
+    display: none;
+}
+.strategy-tab-title{
+    font-size: 20px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #F3F3F3;
+}
+.strategy-tab-title div{
+    padding: 0;
+}
+.strategy-tab-title span{
+    display: inline-block;
+    cursor: pointer;
+    padding: 26px 0;
+    width: 100%;
+    color: #252535;
+    transition:all .3s ease;
+}
+.strategy-tab-title span:hover{
+    color:rgb(246, 183, 7);
+}
+.strategy-tab-title .active{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #ffffff;
+    color:rgb(246, 183, 7);
+}
+/*全部策略*/
+.strategy-all{
+    padding: 0 !important;
+}
+.strategy-all-content{
+    margin: 0 40px;
+}
+.strategy-all-content-filtrate ul li{
+    text-align: center;
+    line-height: 40px;
+    width: 114px;
+    height: 40px;
+    border-radius: 30px;
+    float: left;
+}
+.strategy-all-content-filtrate ul .active{
+    color: white;
+    background-color: rgba(246, 183, 7, 1);
+}
+.strate-all-content-item{
+    height: 230px;
+    background: inherit;
+    background-color: rgba(255, 255, 255, 0);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(228, 228, 228, 1);
+    border-radius: 8px;
+}
+
+
+/*策略详情*/
+.strategy-details-banner{
+    height:380px;
+    background: url("/public/img/strategy-detail-banner.png") no-repeat center bottom;
+    background-size: cover;
+}
+.strategy-details-banner-mask{
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.2);
+}
+.strategy-details h3{
+    color: #FFFFFF;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.strategy-details-tip{
+    font-size: 14px;
+    display: inline-block;
+    color: #D7D7D7;;
+    width: 95px;
+    height: 34px;
+    background: inherit;
+    background-color: rgba(255, 255, 255, .15);
+    border: none;
+    border-radius: 10px;
+}
+.strategy-details-info-main{
+    color: #fff;
+    width: 100%;
+    height: 89px;
+    line-height: 89px;
+    background-color: rgba(215, 215, 215, .08);
+    border-radius: 10px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.strategy-details-info-main span{
+    display: inline-block;
+}
+.strategy-details-info-main .info1{
+    font-weight: 700;
+    font-size: 48px;
+    color:#F6B707;
+}
+.strategy-details-info-main .info2{
+    font-size: 14px;
+}
+.strategy-details-info-main .info3{
+    font-size: 28px;
+}
+.strategy-details-info-list{
+    color: #D7D7D7;;
+}
+.strategy-details-info-list .number{
+    font-size: 20px;
+}
+.strategy-details-info-list .title{
+    font-size: 14px;
+}
+.user-des{
+    width: 100%;
+    height: 315px;
+    border-radius: 16px;
+    margin-top: 30px;
+}
+.user-des .signature{
+    font-size: 14px;
+    line-height: 28px;
+    color: #999999;
+}
+.strategy-details .section-tilte {
+    text-align: left;
+    text-indent: 30px;
+    font-size:16px;
+}
+.message-board .title{
+    font-size: 14px;
+    line-height: 60px;
+    height: 60px;
+    border-bottom: 1px solid gainsboro;
+}
+.message-board-item{
+    border-bottom: 1px solid gainsboro;
+}
+.strategy-btn{
+    color: #fff;
+    width: 140px;
+    height: 40px;
+    line-height: 25px;
+    background: inherit;
+    background-color: rgba(246, 183, 7, 1);
+    border-radius: 5px;
+    -moz-box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
+    -webkit-box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
+    box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+
+

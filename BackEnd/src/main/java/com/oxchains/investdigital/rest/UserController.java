@@ -7,6 +7,7 @@ import com.google.common.net.HttpHeaders;
 import com.oxchains.investdigital.common.ParamType;
 import com.oxchains.investdigital.common.RegexUtils;
 import com.oxchains.investdigital.common.RestResp;
+import com.oxchains.investdigital.entity.FundIssuance;
 import com.oxchains.investdigital.entity.User;
 import com.oxchains.investdigital.entity.VerifyCode;
 import com.oxchains.investdigital.service.UserService;
