@@ -10,7 +10,7 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import Header from './components/common/header';
+import Header from './components/common/header-all';
 import Footer from './components/common/footer';
 import Singin from './components/auth/signin';
 import Signinemail from './components/auth/signin_email';
@@ -19,7 +19,7 @@ import Signupemail from './components/auth/signup_email';
 
 import Signout from './components/auth/signout';
 import Home from './components/home';
-
+import FundIssuance from './components/fund_issuance';
 const createStoreWithMiddleware = compose(
     applyMiddleware(reduxThunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
@@ -37,16 +37,17 @@ ReactDOM.render(
         <BrowserRouter>
             <div>
                 <main>
-                    <Header />
+                    {/* <Header /> */}
                     <Switch>
                         <Route path="/signin" component={Singin} />
                         <Route path="/signinemail" component={Signinemail} />
                         <Route path="/signup" component={Singup} />
                         <Route path="/signupemail" component={Signupemail} />
                         <Route path="/signout" component={Signout} />
+                        <Route path="/fundissuance" component={FundIssuance} />
                         <Route path="/" component={Home} />
                     </Switch>
-                    <Footer />
+                    {/* <Footer /> */}
                 </main>
             </div>
         </BrowserRouter>
