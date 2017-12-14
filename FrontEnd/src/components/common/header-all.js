@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge } from 'antd';
 import { connect } from 'react-redux';
 
 class Header extends Component {
@@ -14,8 +13,6 @@ class Header extends Component {
     }
 
     renderUserInfo() {
-        const role = localStorage.getItem('role');
-        let allUnRead=this.props.message_number && this.props.message_number.allUnRead;
         if (this.props.authenticated) {
             const loginname = localStorage.getItem('loginname');
             return (
@@ -25,19 +22,6 @@ class Header extends Component {
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                                 <span className="hidden-xs">{loginname}</span>
                             </a>
-                            <ul className="dropdown-menu">
-                                <li className="info-self">
-                                    <div className="info-style">
-                                        <Link to="/usercenter" >用户中心</Link>
-                                    </div>
-                                    <div className="info-style">
-                                        <Link to="/myadvert" >我的广告</Link>
-                                    </div>
-                                    <div className="info-style">
-                                        <Link to="/signout" >退出登录</Link>
-                                    </div>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -56,8 +40,8 @@ class Header extends Component {
                         </div>
                         <ul className="headerul-all" >
                             <li ><Link to="/" >首页</Link></li>
-                            <li ><Link to="/"  >策略英雄榜</Link></li>
-                            <li ><Link to="/" >我的策略</Link></li>
+                            <li ><Link to="/strategy">策略英雄榜</Link></li>
+                            <li ><Link to="/strategy/details" >我的策略</Link></li>
                             <li ><Link to="/" >基金排行榜</Link></li>
                             <li ><Link to="/fundissuance" >基金发行服务</Link></li>
                         </ul>
@@ -68,10 +52,16 @@ class Header extends Component {
                             <li className={`loginlia order-style-all `}><Link to="/signin"  >登录</Link></li>
                         </ul>
                     </div>
+                    {this.renderUserInfo()}
                 </nav>
             </div>
         );
     }
 }
+function mapStateToProps(state) {
+    return {
+        authenticated: state.auth.authenticated
+    };
+}
 
-export default Header;
+export default connect(mapStateToProps, { })(Header);

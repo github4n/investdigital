@@ -63,6 +63,11 @@ hr{
     font-size: 12px;
     background-color: #ffffff;
 }
+.photo>span
+{
+    font-size: 14px;
+    color: black;
+}
 .photo img{
     width: 30px;
     border-radius: 50%;
