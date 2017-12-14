@@ -3,7 +3,7 @@ package com.oxchains.investdigital.entity;
 import javax.persistence.*;
 
 /**
- * @author oxchains
+ * @author ccl
  * @time 2017-12-13 17:06
  * @name Fund
  * @desc:
@@ -14,10 +14,16 @@ public class Fund {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String symbol;
+    private String fundCode;
+    private String fundSymbol;
     private String fundName;
-    private String issueUser;
+    private Long issueUser;
+    @Transient
+    private String issueUserName;
     private Long startTime;
+    @Transient
+    private String startTimeStr;
+
     private Float price;
     private Float volume;
     private Float fee;
@@ -30,12 +36,20 @@ public class Fund {
         this.id = id;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getFundCode() {
+        return fundCode;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setFundCode(String fundCode) {
+        this.fundCode = fundCode;
+    }
+
+    public String getFundSymbol() {
+        return fundSymbol;
+    }
+
+    public void setFundSymbol(String fundSymbol) {
+        this.fundSymbol = fundSymbol;
     }
 
     public String getFundName() {
@@ -46,11 +60,11 @@ public class Fund {
         this.fundName = fundName;
     }
 
-    public String getIssueUser() {
+    public Long getIssueUser() {
         return issueUser;
     }
 
-    public void setIssueUser(String issueUser) {
+    public void setIssueUser(Long issueUser) {
         this.issueUser = issueUser;
     }
 
@@ -84,5 +98,36 @@ public class Fund {
 
     public void setFee(Float fee) {
         this.fee = fee;
+    }
+
+    @Override
+    public String toString() {
+        return "Fund{" +
+                "id=" + id +
+                ", fundCode='" + fundCode + '\'' +
+                ", fundSymbol='" + fundSymbol + '\'' +
+                ", fundName='" + fundName + '\'' +
+                ", issueUser='" + issueUser + '\'' +
+                ", startTime=" + startTime +
+                ", price=" + price +
+                ", volume=" + volume +
+                ", fee=" + fee +
+                '}';
+    }
+
+    public String getStartTimeStr() {
+        return startTimeStr;
+    }
+
+    public void setStartTimeStr(String startTimeStr) {
+        this.startTimeStr = startTimeStr;
+    }
+
+    public String getIssueUserName() {
+        return issueUserName;
+    }
+
+    public void setIssueUserName(String issueUserName) {
+        this.issueUserName = issueUserName;
     }
 }

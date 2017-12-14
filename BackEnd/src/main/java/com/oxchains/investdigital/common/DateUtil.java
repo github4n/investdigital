@@ -24,6 +24,11 @@ public class DateUtil {
         int MI = Cld.get(Calendar.MILLISECOND);
         return ""+YY+MM+DD+HH+mm+SS+MI;
     }
+    public static long getDateMillis(int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,day);
+        return calendar.getTime().getTime();
+    }
     /*
     * 获取当前时间格式为 YY-MM-dd HH:mm:ss
     * */
@@ -60,5 +65,28 @@ public class DateUtil {
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime();
         return ts;
+    }
+
+    public static Date longToDate(long time,String pattern) throws ParseException {
+        Date date = new Date(time);
+        String str = dateToString(date,pattern);
+        return stringToDate(str,pattern);
+    }
+    public static String longToString(long time,String pattern){
+        Date date = new Date(time);
+        return dateToString(date,pattern);
+    }
+    public static String dateToString(Date date, String pattern){
+        return new SimpleDateFormat(pattern).format(date);
+    }
+    public static Date stringToDate(String str, String pattern) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = sdf.parse(str);
+        return date;
+    }
+    public static long getTimeMillis(String str, String pattern) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = sdf.parse(str);
+        return  date.getTime();
     }
 }
