@@ -15,4 +15,7 @@ import java.util.List;
 @Repository
 public interface StrategyDao extends CrudRepository<Strategy,Long>{
     Page<Strategy> findByUserId(Long userId, Pageable pageable);
+    Page<Strategy> findAll(Pageable pageable);
+    List<Strategy> findByIdIsIn(Long[] ids);
+    List<Strategy> findByIdIn(Long[] ids);
 }

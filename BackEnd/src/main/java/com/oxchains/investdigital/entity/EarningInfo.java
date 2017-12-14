@@ -8,16 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Created by xuqi on 2017/12/13.
+ * Created by xuqi on 2017/12/14.
  */
 @Data
-@Entity(name = "contract")
-public class Contract {
+@Entity
+public class EarningInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String contractName;
-    private double freightSpace;
-    private double avgFreightPrice;
-
+    private double earning;
+    private Long strategyId;
+    private Long timeStamp;
 }

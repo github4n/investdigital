@@ -8,16 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Created by xuqi on 2017/12/13.
+ * Created by xuqi on 2017/12/14.
  */
 @Data
-@Entity(name = "subscribe")
-public class Subscribe {
+@Entity(name = "StrategyTagsCenter")
+public class StrategyTagsCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long strategyId;
-    //private Long userId;
-    private Integer totalSubscribed;
-    private Integer alreadySubscribed;
+    private Integer tagId;
 }

@@ -17,6 +17,12 @@ public class Earning {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long strategyId; //策略编号
-    private String time;   //时间
+    private long time;   //时间
     private double worth; //价值
+    private double totalReturn;
+    private double dailyReturn;
+    private double annualizedReturn;
+    private double monthlyReturn;
+    private double weeklyReturn;
+
 }

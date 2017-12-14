@@ -12,27 +12,17 @@ import javax.persistence.Id;
 @Entity(name = "strategy")
 public class Strategy {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //主键id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     //策略名称
     private String title;
     //策略类型
     private Integer strategyType;
-    /*//累计收益
-    private double totalEarning;
-    //年收益
-    private double annualizedEarning;
-    //月收益
-    private double monthEarning;
-    //日收益
-    private double dailyEarning;
-    //周收益
-    private double weeklyEarning;*/
     //开始时间也就是策略的发布时间
-    private String beginTime;
+    private long beginTime;
     //最后修改时间
-    private String lastUpdateTime;
+    private long lastUpdateTime;
     //最大回撤
     private double maxDrawdown;
     //排名
@@ -40,7 +30,7 @@ public class Strategy {
     //用户id
     private Long userId;
 
-    private String strategyRunId;
+    private Integer strategyRunId;
 
 
 
