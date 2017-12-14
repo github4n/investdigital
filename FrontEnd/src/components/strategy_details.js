@@ -6,13 +6,17 @@ import {connect} from 'react-redux';
 import MessageBoard from './message_board';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
+import Header from './common/header-all';
+import StrateTimeLine from './charts/strategy_time_line';
+import StrateRadar from './charts/strategy_radar';
+import StratePie from './charts/strategy_pie';
+import StrateBar from './charts/strategy_bar';
 
 class StrategyDetails extends Component{
     constructor(props) {
         super(props);
     }
     componentWillMount() {
-
     }
     render(){
         const columns1 = [{
@@ -96,6 +100,7 @@ class StrategyDetails extends Component{
         }];
         return(
             <div className="strategy-details">
+                <Header/>
                 <div className="strategy-details-banner">
                     <div className="strategy-details-banner-mask">
                         <div className="container">
@@ -165,7 +170,10 @@ class StrategyDetails extends Component{
                 <div className="container g-mt-10 g-pb-150">
                     <div className="row">
                         <div className="col-sm-8 text-center">
-                            <div className="id-boxshadow g-mb-10">jndkebf</div>
+                            <div className="id-boxshadow g-mb-10 clearfix">
+                                <div className="section-tilte g-py-10">收益走势图</div>
+                                <StrateTimeLine/>
+                            </div>
                             <div className="id-boxshadow g-mb-10">
                                 <div className="section-tilte g-py-10">当前持仓</div>
                                 <Table columns={columns1} dataSource={data1} pagination={false} scroll={{ y: 240 }} />
@@ -175,7 +183,20 @@ class StrategyDetails extends Component{
                                 <Table columns={columns2} dataSource={data2} pagination={false} scroll={{ y: 240 }} />
                             </div>
                         </div>
-                        <div className="col-sm-4"></div>
+                        <div className="col-sm-4">
+                            <div className="id-boxshadow g-mb-10 clearfix">
+                                <div className="section-tilte g-py-10">风格分析</div>
+                                <StrateRadar/>
+                            </div>
+                            <div className="id-boxshadow g-mb-10 clearfix">
+                                <div className="section-tilte g-py-10">板块分析</div>
+                                <StratePie/>
+                            </div>
+                            <div className="id-boxshadow g-mb-10 clearfix">
+                                <div className="section-tilte g-py-10">Brinson分析</div>
+                                <StrateBar/>
+                            </div>
+                        </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-12"><MessageBoard/></div>
