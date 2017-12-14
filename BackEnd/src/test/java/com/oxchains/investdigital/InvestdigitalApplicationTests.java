@@ -1,5 +1,11 @@
 package com.oxchains.investdigital;
 
+import com.oxchains.investdigital.dao.FundOfTagRepo;
+import com.oxchains.investdigital.dao.FundRepo;
+import com.oxchains.investdigital.dao.FundTagRepo;
+import com.oxchains.investdigital.entity.Fund;
+import com.oxchains.investdigital.entity.FundOfTag;
+import com.oxchains.investdigital.entity.FundTag;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -13,7 +19,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,6 +33,36 @@ public class InvestdigitalApplicationTests {
 		get("http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&rs=zzf,20&gs=0&sc=zzf&st=desc&sd=2016-12-13&ed=2017-12-13&qdii=&tabSubtype=,,,,,&pi=1&pn=50&dx=1&v=0.9199814353030342");
 	}
 
+	@Resource
+	FundRepo fundRepo;
+	@Resource
+	FundTagRepo fundTagRepo;
+	@Resource
+	FundOfTagRepo fundOfTagRepo;
+	@Test
+	public void createTags(){
+		Iterable<Fund> funds = fundRepo.findAll();
+		Iterable<FundTag> fundTags = fundTagRepo.findAll();
+
+		List<FundOfTag> list = new ArrayList<>();
+		for(Fund fund:funds){
+			int n = fund.getId().intValue() % 4;
+			int i = 0;
+			for(FundTag fundTag : fundTags){
+				if(i>n){
+					break;
+				}
+				FundOfTag fundOfTag = new FundOfTag();
+				fundOfTag.setFundId(fund.getId());
+				fundOfTag.setTagId(fundTag.getId());
+
+				list.add(fundOfTag);
+				i++ ;
+			}
+
+		}
+		fundOfTagRepo.save(list);
+	}
 	/**
 	 * 发送 get请求
 	 */
