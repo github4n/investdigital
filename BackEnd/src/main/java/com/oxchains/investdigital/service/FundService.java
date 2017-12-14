@@ -52,6 +52,8 @@ public class FundService {
     private FundOfTagRepo fundOfTagRepo;
     @Resource
     private FundTagRepo fundTagRepo;
+    @Resource
+    private UserRepo userRepo;
 
     public RestResp add(FundIssuance fundIssuance){
         if (null != fundIssuance){
@@ -72,6 +74,7 @@ public class FundService {
         if(null == list || list.size() < 1){
             return RestResp.fail("无数据");
         }
+        Iterable<User> users = userRepo.findAll();
         List<FundVO> result = new ArrayList<>();
         for(FundReturn fundReturn : list){
             Fund fund = fundRepo.findOne(fundReturn.getFundId());
@@ -81,6 +84,12 @@ public class FundService {
             List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),l);
             fundVO.setTags(getTagsByFundId(fund.getId()));
             fundVO.setDetails(details);
+            for(User user : users){
+                if(user.getId().equals(fund.getIssueUser())){
+                    fundVO.setIssueUserName(user.getLoginname());
+                    break;
+                }
+            }
 
             result.add(fundVO);
         }
@@ -104,6 +113,7 @@ public class FundService {
             return RestResp.fail("无数据");
         }
         Iterable<Fund> funds = fundRepo.findAll();
+        Iterable<User> users = userRepo.findAll();
         List<FundVO> result = new ArrayList<>();
         for(FundReturn fundReturn : list){
             for(Fund fund : funds){
@@ -113,6 +123,12 @@ public class FundService {
                     List<FundReturnDetail> details =fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),DateUtil.getDateMillis(-90));
                     fundVO.setDetails(details);
                     fundVO.setTags(getTagsByFundId(fund.getId()));
+                    for(User user : users){
+                        if(user.getId().equals(fund.getIssueUser())){
+                            fundVO.setIssueUserName(user.getLoginname());
+                            break;
+                        }
+                    }
                     result.add(fundVO);
                     break;
                 }
@@ -151,6 +167,8 @@ public class FundService {
                     if(fundReturn.getFundId().equals(fund.getId())){
                         FundVO fundVO = new FundVO(fund);
                         fundVO.setReturns(fundReturn);
+                        User user = userRepo.findOne(fund.getIssueUser());
+                        fundVO.setIssueUserName(user.getLoginname());
                         List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),DateUtil.getDateMillis(-90));
                         fundVO.setDetails(details);
                         result.add(fundVO);
