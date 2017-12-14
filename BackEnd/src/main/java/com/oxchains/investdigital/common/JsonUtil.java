@@ -1,12 +1,8 @@
-package com.oxchains.themis.common.util;
+package com.oxchains.investdigital.common;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.oxchains.themis.common.constant.ThemisUserAddress;
-import com.oxchains.themis.common.model.RestResp;
-import com.oxchains.themis.repo.entity.User;
 
 import java.util.List;
 

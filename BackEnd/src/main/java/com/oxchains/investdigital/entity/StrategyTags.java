@@ -12,7 +12,7 @@ import javax.persistence.Id;
  */
 @Data
 @Entity(name = "tags")
-public class Tags {
+public class StrategyTags {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

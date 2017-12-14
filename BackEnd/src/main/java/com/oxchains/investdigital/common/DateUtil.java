@@ -1,5 +1,6 @@
 package com.oxchains.investdigital.common;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,5 +34,31 @@ public class DateUtil {
         Random r = new Random();
         String randomStr = ""+r.nextInt(9)+r.nextInt(9)+r.nextInt(9)+r.nextInt(9)+r.nextInt(9);
         return getPresentTime()+randomStr;
+    }
+    public static String stampToDate(Long s){
+        String res = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(s);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+    public static String stampToDate(Long s,String pattern){
+        String res = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date date = new Date(s);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+    public static Long dateToStamp(String s) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime();
+        return ts;
+    }
+    public static Long dateToStamp(String s,String pattern) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime();
+        return ts;
     }
 }
