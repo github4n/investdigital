@@ -41,7 +41,7 @@ class Header extends Component {
                         <ul className="headerul" >
                             <li ><a href="/" >首页</a></li>
                             <li ><Link to="/strategy">策略英雄榜</Link></li>
-                            <li ><Link to="/" >我的策略</Link></li>
+                            <li ><Link to="/mystrategy" >我的策略</Link></li>
                             <li ><Link to="/fundlist" >基金排行榜</Link></li>
                             <li ><Link to="/fundissuance" >基金发行服务</Link></li>
                         </ul>

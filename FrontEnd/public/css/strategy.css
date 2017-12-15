@@ -47,11 +47,16 @@ hr{
 .strategy-choiceness .title{
   font-size: 20px;
 }
+.strategy-choiceness-up:hover{
+    color: red;
+    transform:translateY(-30px);
+    transition: transform 0.35s ease;
+}
 .strategy-choiceness-item{
     padding: 20px;
     background-color: rgba(255, 255, 255, 1);
     border: none;
-    margin: 0 10px;
+    margin: 0 15px;
 }
 .strategy-choiceness-user{
     position: relative;
@@ -68,6 +73,7 @@ hr{
     color: black;
 }
 .photo img{
+    display: inline-block;
     width: 30px;
     border-radius: 50%;
     box-shadow: 0 0 20px #bbbbbb;
@@ -76,7 +82,7 @@ hr{
 .strategy-choiceness-title-line{
     position: absolute;
     display: inline-block;
-    width: 65%;
+    width: 58%;
     height: 1px;
     background-color: gainsboro;
     top: 24px;
@@ -150,13 +156,20 @@ hr{
     box-shadow: 0px 0px 10px rgba(22, 122, 255, 1);
 }
 .strategy-all-set{
-    width:86px;
+    cursor: pointer;
+    display: inline-block;
     height: 40px;
     line-height: 40px;
     font-size: 16px;
     border:1px solid rgba(22, 122, 255, 1);
     border-radius: 30px;
     color: rgba(22, 122, 255, 1);
+    transition: all .3s ease;
+}
+.strategy-all-set:hover{
+    background-color: rgba(22, 122, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    transition: all .3s ease;
 }
 .strate-all-content-item{
     height: 230px;
@@ -168,7 +181,12 @@ hr{
     border-color: rgba(228, 228, 228, 1);
     border-radius: 8px;
 }
-
+.rank{
+    position: absolute;
+    top: 84px;
+    left: 44px;
+    font-size: 20px;
+}
 
 /*策略详情*/
 .strategy-details-banner{
@@ -276,4 +294,64 @@ hr{
 .earning-figure-select .active{
     background-color: #bcddff;
     transition: all .3 ease;
+}
+
+/*我的策略*/
+.my-strategy .table .header-style{
+    font-size: 16px;
+    line-height:3.428571;
+    background-color:rgba(228, 228, 228, 1);
+    color: grey;
+    border: 0;
+}
+.my-strategy .no-striped tr:nth-of-type(2n+1){
+    background-color: #fff;
+}
+.my-strategy .member{
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    background: rgba(22, 122, 255, 1);
+    border: none;
+    border-radius: 5px;
+    -moz-box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
+    -webkit-box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
+    box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
+}
+.strategy-input{
+    outline: none;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    border:1px solid rgba(228, 228, 228, 1);
+    border-radius: 30px;
+    color: rgba(228, 228, 228, 1);
+}
+.strategy-table-btn{
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    border:1px solid rgb(70, 70, 70);
+    border-radius: 30px;
+    color: rgb(70, 70, 70);
+}
+.strategy-table-pagination{
+
+}
+.slick-next:before, .slick-prev:before{
+    font-size: 52px;
+    line-height: 1;
+    opacity: .75;
+    color: gray;
+}
+.slick-next{
+    right:40px;
+}
+.slick-prev{
+    left: 4px;
 }
