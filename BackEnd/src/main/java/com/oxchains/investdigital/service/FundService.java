@@ -54,6 +54,8 @@ public class FundService {
     private FundTagRepo fundTagRepo;
     @Resource
     private UserRepo userRepo;
+    @Resource
+    private FundInfoRepo fundInfoRepo;
 
     public RestResp add(FundIssuance fundIssuance){
         if (null != fundIssuance){
@@ -105,6 +107,7 @@ public class FundService {
         }
         return list;
     }
+
     public RestResp getFunds(){
         Pageable pager = new PageRequest(0,20);
         Page<FundReturn>  page = fundReturnRepo.findFundReturns(pager);
@@ -137,15 +140,37 @@ public class FundService {
         return RestResp.success("获取数据成功",result);
     }
 
-    public List<FundTag> getTagsByFundId(Long fundId){
+    public RestResp getFundInfo(Long fundId){
+        Fund fund = fundRepo.findOne(fundId);
+        if(null == fund){
+            return RestResp.fail("无法查询基金详细信息");
+        }
+        FundVO fundVO = new FundVO(fund);
+        User user = userRepo.findOne(fund.getIssueUser());
+        if(null != user){
+            fundVO.setIssueUserName(user.getLoginname());
+        }
+        FundReturn fundReturn = fundReturnRepo.findByFundId(fundId);
+        fundVO.setReturns(fundReturn);
+        FundInfo fundInfo = fundInfoRepo.findByFundId(fundId);
+        fundVO.setInfo(fundInfo);
+        List<String> tags = getTagsByFundId(fundId);
+        fundVO.setTags(tags);
+        List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fundId,DateUtil.getDateMillis(-90));
+        fundVO.setDetails(details);
+
+        return RestResp.success("成功",fundVO);
+    }
+
+    public List<String> getTagsByFundId(Long fundId){
         List<FundOfTag> fundOfTags = fundOfTagRepo.findByFundId(fundId);
-        List<FundTag> tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
         if(null!=fundOfTags && fundOfTags.size()>0){
             Iterable<FundTag> list = fundTagRepo.findAll();
             for(FundOfTag fundOfTag : fundOfTags){
                 for(FundTag fundTag : list){
                     if(fundOfTag.getTagId().equals(fundTag.getId())){
-                        tags.add(fundTag);
+                        tags.add(fundTag.getTagName());
                     }
                 }
             }

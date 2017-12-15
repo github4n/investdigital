@@ -47,9 +47,15 @@ public class FundController {
         return RestResp.success(fundService.getFundReturnDetail(fundId,day));
     }
 
+    @GetMapping(value = "/fundInfo")
+    public RestResp fundInfo(Long fundId){
+        return fundService.getFundInfo(fundId);
+    }
+
     @GetMapping(value = "/data")
     public RestResp data() throws ParseException {
         String url = "http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&rs=zzf,20&gs=0&sc=zzf&st=desc&sd=2016-12-13&ed=2017-12-13&qdii=&tabSubtype=,,,,,&pi=1&pn=50&dx=1&v=0.9199814353030342";
+        String xrl = "http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=all&rs=&gs=0&sc=zzf&st=desc&sd=2016-12-14&ed=2017-12-14&qdii=&tabSubtype=,,,,,&pi=1&pn=50&dx=1&v=0.8905995665989086";//全部
         return fundService.getData(url);
     }
 
