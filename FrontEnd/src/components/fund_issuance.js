@@ -155,7 +155,7 @@ class FundIssuance extends Component {
                    </div>
                </div>
                 <div className='container clear'>
-                    <div className='g-pt-50 g-pb-200'>
+                    <div className='g-pt-50 g-pb-100'>
                         <div className="fund-what-content text-center">
                             <h1>基金工厂核心优势</h1>
                             <hr/>
