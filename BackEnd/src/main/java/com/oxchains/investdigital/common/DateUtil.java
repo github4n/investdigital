@@ -89,4 +89,12 @@ public class DateUtil {
         Date date = sdf.parse(str);
         return  date.getTime();
     }
+
+    public static void main(String[] args) throws Exception{
+        System.out.println(getTimeMillis("2018-06-30","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2018-08-30","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2018-09-30","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2018-10-30","yyyy-MM-dd"));
+
+    }
 }
