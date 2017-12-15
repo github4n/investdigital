@@ -10,6 +10,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { ROOT_URLC } from '../../actions/types';
 import { Alert } from 'antd';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
+
 class SignupEmial extends Component {
     constructor(props) {
         super(props);
@@ -49,7 +51,7 @@ class SignupEmial extends Component {
         return (
             <div>
                  <Header />
-            <div className="login-box">
+            <div className="login-box g-pb-200">
                     <div className="signinWay text-center g-pt-50">
                         <ul className="row loginul">
                             <li className="col-xs-6 loginli"> <Link className="g-pb-3" to="/signup">手机注册</Link></li>
@@ -73,6 +75,7 @@ class SignupEmial extends Component {
                         {this.renderAlert()}
                     </div>
                     </div>
+                <Footer/>
             </div>);
     }
 }

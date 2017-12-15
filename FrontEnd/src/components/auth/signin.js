@@ -8,6 +8,7 @@ import { signinAction } from '../../actions/auth';
 import { Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
 
 class Signin extends Component {
     constructor(props) {
@@ -41,7 +42,7 @@ class Signin extends Component {
         return (
             <div className="mainbgc">
             <Header />
-                <div className="login-box">
+                <div className="login-box g-pb-200">
                     <div className="login-box-body">
                         <div className=" signinWay text-center g-pt-50">
                             <ul className="row loginul">
@@ -67,6 +68,7 @@ class Signin extends Component {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         );
     }

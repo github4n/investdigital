@@ -35,8 +35,7 @@ hr{
     display: inline-block;
     width: 150px;
     height: 6px;
-    background: inherit;
-    background-color: rgba(246, 183, 7, 1);
+    background: linear-gradient(-90deg, rgba(98, 210, 254, 1) 0%, rgba(98, 210, 254, 1) 0%, rgba(22, 122, 255, 1) 100%, rgba(22, 122, 255, 1) 100%);
 
 }
 .strategy-choiceness-tip{
@@ -62,6 +61,11 @@ hr{
     display: inline-block;
     font-size: 12px;
     background-color: #ffffff;
+}
+.photo>span
+{
+    font-size: 14px;
+    color: black;
 }
 .photo img{
     width: 30px;
@@ -109,13 +113,13 @@ hr{
     transition:all .3s ease;
 }
 .strategy-tab-title span:hover{
-    color:rgb(246, 183, 7);
+    color:#167aff;
 }
 .strategy-tab-title .active{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #ffffff;
-    color:rgb(246, 183, 7);
+    color:#167aff;
 }
 /*全部策略*/
 .strategy-all{
@@ -125,16 +129,34 @@ hr{
     margin: 0 40px;
 }
 .strategy-all-content-filtrate ul li{
+    cursor: pointer;
+    font-size: 16px;
     text-align: center;
     line-height: 40px;
     width: 114px;
     height: 40px;
     border-radius: 30px;
     float: left;
+    transition:all .2s ease;
 }
 .strategy-all-content-filtrate ul .active{
+    transition:all .2s ease;
     color: white;
-    background-color: rgba(246, 183, 7, 1);
+    background: linear-gradient(-90deg, rgba(98, 210, 254, 1) 0%, rgba(98, 210, 254, 1) 0%, rgba(22, 122, 255, 1) 100%, rgba(22, 122, 255, 1) 100%);
+    border: none;
+    border-radius: 30px;
+    -moz-box-shadow: 0px 0px 10px rgba(22, 122, 255, 1);
+    -webkit-box-shadow: 0px 0px 10px rgba(22, 122, 255, 1);
+    box-shadow: 0px 0px 10px rgba(22, 122, 255, 1);
+}
+.strategy-all-set{
+    width:86px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    border:1px solid rgba(22, 122, 255, 1);
+    border-radius: 30px;
+    color: rgba(22, 122, 255, 1);
 }
 .strate-all-content-item{
     height: 230px;
@@ -240,15 +262,18 @@ hr{
     width: 140px;
     height: 40px;
     line-height: 25px;
-    background: inherit;
-    background-color: rgba(246, 183, 7, 1);
+    background: linear-gradient(-90deg, rgba(98, 210, 254, 1) 0%, rgba(98, 210, 254, 1) 0%, rgba(22, 122, 255, 1) 100%, rgba(22, 122, 255, 1) 100%);
+    border: none;
     border-radius: 5px;
-    -moz-box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
-    -webkit-box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
-    box-shadow: 0px 0px 10px rgba(246, 183, 7, 0.67843137254902);
+    -moz-box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
+    -webkit-box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
+    box-shadow: 0px 0px 10px rgba(67, 116, 249, 1);
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
 }
 
-
+.earning-figure-select .active{
+    background-color: #bcddff;
+    transition: all .3 ease;
+}

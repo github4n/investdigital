@@ -5,20 +5,27 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Pagination} from 'nl-design';
+// 引入 ECharts 主模块
+import echarts from 'echarts/lib/echarts';
+// 引入柱状图
+import  'echarts/lib/chart/line';
+// 引入提示框和标题组件
+import 'echarts/lib/component/tooltip';
 
 
 class StrategyAll extends Component{
     constructor(props) {
         super(props);
         this.state={
+            index:0,
             pageSize:10
         };
     }
     componentWillMount() {
 
     }
-    renderList(){
-        const data=[
+    componentDidMount() {
+        const data1=[
             {
                 title:1111,
                 aa:"wdnn",
@@ -53,8 +60,114 @@ class StrategyAll extends Component{
                 time:"2017-6-30"
             }
         ];
-        return data.map((item, index)=>{
-            console.log(item);
+
+        data1.map((item, i)=> {
+            var myChart1 = echarts.init(document.getElementById(`main1${i}`));
+            // 绘制图表
+            myChart1.setOption({
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    x: 40,
+                    y:40
+                },
+                backgroundColor:"#E2EFF9",
+                xAxis : [
+                    {
+                        type : 'category',
+                        // boundaryGap : false,
+                        axisLabel :{
+                            interval:0
+                        },
+                        data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'成交',
+                        type:'line',
+                        borderColor:'blue',
+                        // smooth:true,
+                        itemStyle: {
+                            normal: {
+                                areaStyle: {type: 'default'},
+                                lineStyle:{
+                                    color:'red'
+                                }
+                            }
+                        },
+                        data:[10, 12, 21, 54, 260, 830, 710]
+                    },
+                    {
+                        name:'预购',
+                        type:'line',
+                        borderColor:'red',
+                        data:[30, 182, 434, 791, 390, 30, 10]
+
+                    },
+                ]
+            });
+        });
+    }
+    handleClick (index) {
+        this.setState({index});
+    }
+    renderSelect(){
+        const selectItem=[
+            {title:"订阅数量"},
+            {title:"评分策略"},
+            {title:"累计收益"},
+            {title:"年化收益"}
+        ];
+        return selectItem.map((item, index)=>{
+            return(
+                <li className={ index === this.state.index ? "active" : ""} onClick={ this.handleClick.bind(this, index)} key={index}>{item.title}</li>
+            );
+        });
+    }
+    renderList(){
+        const data1=[
+            {
+                title:1111,
+                aa:"wdnn",
+                name:"zhang",
+                youyi:"23%",
+                huiche:"23%",
+                dingyue:"12%",
+                time:"2017-6-30"
+            }, {
+                title:1111,
+                aa:"wdnn",
+                name:"zhang",
+                youyi:"23%",
+                huiche:"23%",
+                dingyue:"12%",
+                time:"2017-6-30"
+            }, {
+                title:1111,
+                aa:"wdnn",
+                name:"zhang",
+                youyi:"23%",
+                huiche:"23%",
+                dingyue:"12%",
+                time:"2017-6-30"
+            }, {
+                title:1111,
+                aa:"wdnn",
+                name:"zhang",
+                youyi:"23%",
+                huiche:"23%",
+                dingyue:"12%",
+                time:"2017-6-30"
+            }
+        ];
+        return data1.map((item, index)=>{
             return(
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
                     <Link to="/strategy/details">
@@ -97,7 +210,7 @@ class StrategyAll extends Component{
                             </div>
                         </div>
                         <div className="col-sm-5">
-                            <div className="strategy-chart g-mt-20" style={{height:"180px"}}></div>
+                            <div className="strategy-chart g-mt-20" id={`main1${index}`} style={{height:"180px"}}></div>
                         </div>
                     </Link>
                 </li>
@@ -108,14 +221,11 @@ class StrategyAll extends Component{
     render(){
         return(
             <div className="strategy-all-content clearfix">
-                <div className="strategy-all-content-filtrate g-py-20">
+                <div className="strategy-all-content-filtrate g-py-20 clearfix">
                     <ul>
-                        <li>订阅数量</li>
-                        <li>评分策略</li>
-                        <li>累计收益</li>
-                        <li>年化收益</li>
+                        {this.renderSelect()}
                     </ul>
-                    <div className="btn">设置</div>
+                    <div className="strategy-all-set pull-right text-center">设置</div>
                 </div>
                 <div className="clearfix">
                     <ul className="clearfix">

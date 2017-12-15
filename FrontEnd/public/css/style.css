@@ -347,19 +347,23 @@ ul{list-style: none;}
 .footer
 {
     width: 100%;
-    height: 55px;
+    height: 200px;
     background-color: #535353;
     display: flex;
     justify-content: center;
     align-content: center;
     position: fixed;
     bottom: 0;
-    color: white;
+}
+.footer>img
+{
+    width: 200px;
+    height: 200px;
 }
 .footer-content
 {
-    padding: 20px 0;
-    margin: 0;
+    /*padding: 20px 0;*/
+    /*margin: 0;*/
 }
 .signinWay ul li .signinTypeBar{
     display: inline-block;
@@ -576,12 +580,6 @@ ul{list-style: none;}
     font-size: 18px;
     color: #FFFFFF;
 }
-.fund-what-factory
-{
-    width: 65%;
-    margin: 0 auto;
-    padding-top: 50px;
-}
 .fund-what-content>h1
 {
     font-family: 'MicrosoftYaHei-Bold', 'Microsoft YaHei Bold', 'Microsoft YaHei';
@@ -593,8 +591,8 @@ ul{list-style: none;}
 .fund-what-content>hr
 {
     border-width: 0px;
-    width: 8%;
-    margin: 20px auto;
+    width: 7%;
+    margin: 10px auto 25px auto!important;
     height: 6px;
     background-color: rgba(246, 183, 7, 1);
     border: none;
@@ -610,7 +608,7 @@ ul{list-style: none;}
 .fa-bz-1
 {
     margin: 30px 0;
-    padding:0 40px; 
+    padding:0 40px;
 }
 .fa-bz-1>div>img
 {
@@ -628,13 +626,13 @@ ul{list-style: none;}
     border-radius: 50%;
     background-color: rgba(246, 183, 7, 1);
     color: white;
-    padding-top: 3px;
+    /*padding-top: 3px;*/
     margin: 20px auto;
 }
-.fa-bz-1 .num-info
-{
-    padding: 15px 50px;
-}
+/*.fa-bz-1 .num-info*/
+/*{*/
+    /*padding: 15px 50px;*/
+/*}*/
 .fa-bz-1>img
 {
     width: 35px;
@@ -656,17 +654,17 @@ ul{list-style: none;}
     margin-bottom: 20px;
     
 }
-.fund-help-factory
-{
-    width: 70%;
-    margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 10px;
-    padding-left: 70px;
-}
+/*.fund-help-factory*/
+/*{*/
+    /*width: 70%;*/
+    /*margin: 0 auto;*/
+    /*padding-top: 50px;*/
+    /*padding-bottom: 10px;*/
+    /*padding-left: 70px;*/
+/*}*/
 .fa-bz-2
 {
-    width: 211px;
+    /*width: 211px;*/
     height: 153px;
     display: inline-block;
     padding: 10px 20px;
@@ -708,24 +706,17 @@ ul{list-style: none;}
 }
 .fund-other-factory
 {
-    width: 55%;
-    margin: 0 auto;
-    /* padding-top: 50px; */
     padding-bottom: 50px;
 }
-.fa-other-work
-{
-    width: 100%;
 
-}
-.fa-bz-3>div>h1{display: inline-block;position: relative;top: -10px;left:10px;color: #F6B707;font-size: 14px;margin: 10px auto;}
+.fa-bz-3>div>h2{display: inline-block;color: #F6B707;font-size: 16px;margin: 5px auto;}
 .fa-bz-3>div>hr
 {
     width: 30px;
     height: 6px;
     background-color: rgba(246, 183, 7, 1);
     border-width: 0px;
-    margin: 10px auto;
+    margin: 10px auto 20px auto!important;
     border: none;
 }
 .fa-bz-3 .num-info
@@ -734,3 +725,157 @@ ul{list-style: none;}
     font-size: 13px;
     color: #333333;
 }
+
+.fa-bz-4>h2
+{
+    background-color: rgba(228, 228, 228, 1);
+    color:#6B6B6B ;
+    border-radius:8px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.fa-bz-4>p
+{
+    font-size: 14px;
+    color: #333333;
+    font-weight: 400;
+    line-height: 20px;
+}
+.danger-tip
+{
+    color: #FF485A;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+.Issuing-fund,.Issuing-fund:hover,.Issuing-fund:active,.Issuing-fund:focus
+{
+    display:block;
+    width: 300px;
+    height: 40px;
+    cursor: pointer;
+    border-radius:3px;
+    color: white;
+    background: rgba(246, 183, 7, 1);
+    border:1px solid rgba(246, 183, 7, 1);
+    box-shadow: 0 0 5px rgba(246, 183, 7, 1);
+}
+/*申请表单*/
+.form-banner
+{
+    height: 160px;
+    background-color: rgba(51, 51, 51, 1);
+}
+.form-banner>div>h1
+{
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+    color: #F6B707;
+}
+.form-banner>div>hr
+{
+    width: 50px;
+    height: 2px;
+    background: inherit;
+    background-color: rgba(246, 183, 7, 1);
+    border: none;
+    margin: 20px auto!important;
+}
+.form-banner>div>p
+{
+    color: #868686;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.base-info
+{
+    background-color: rgba(250, 250, 250, 1);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0px 0px 20px rgba(201, 201, 201, 1);
+    display: block;
+}
+.base-info>h2
+{
+    color: #333333;
+    font-size:16px ;
+}
+.base-info>ul>li>span
+{
+    font-size: 14px;
+    color: #6B6B6B;
+    /*line-height: 72px;*/
+    font-weight: 400;
+    font-style: normal;
+}
+.base-info>ul>li>input
+{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+.input-radio>h1
+{
+    font-size: 16px;
+    font-weight: 700;
+    font-style: normal;
+    margin: 20px 0 10px 0;
+}
+.input-radio>span
+{
+    font-size: 14px;
+    color: #515151;
+}
+.my-fund
+{
+    background-color: rgba(250, 250, 250, 1);
+    padding-top: 30px;
+}
+.my-fund-bgc
+{
+    background-color: #fff;
+    padding:0!important;
+    padding-bottom: 150px !important;
+}
+.my-fund-item-line
+{
+    position: absolute;
+    display: inline-block;
+    width: 83%;
+    height: 1px;
+    background-color: gainsboro;
+    top: 24px;
+}
+.strate-all-content-item:hover
+{
+    transform:translateX(-30px);
+    transition: transform 0.35s ease;
+}
+.fund-Echart
+{
+    background-color: pink;
+}
+.my-fund-border
+{
+    /*position: relative;*/
+    /*top:10px;*/
+    border-left: 1px solid #D7D7D7;
+    height: 160px;
+}
+.my-fund-echart>li>a
+{
+    font-size: 14px;
+    color: black;
+}
+.my-fund-echart>li>a:hover,.my-fund-echart>li>a:active,.my-fund-echart>li>a:focus
+{
+    color: #F6B707;
+    border-bottom: 1px solid #F6B707;
+    padding-bottom: 5px;
+}
+/*.my-fund-echart>li>a:nth-child(1)*/
+/*{*/
+    /*border-bottom: 1px solid #F6B707;*/
+/*}*/

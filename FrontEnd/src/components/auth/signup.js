@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import { signupUser, GetverifyCode } from '../../actions/auth';
 import { Alert } from 'antd';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
+
 import {
     Modal,
     ModalHeader,
@@ -121,7 +123,7 @@ class Signup extends Component {
         return (
             <div>
                 <Header />
-                <div className="login-box">
+                <div className="login-box g-pb-200">
                     <div className=" signinWay text-center g-pt-50">
                             <ul className="row loginul">
                                 <li className="col-xs-6 loginli"> <Link className="signinTypeBar g-pb-3" to="/signup">手机注册</Link></li>
@@ -169,6 +171,7 @@ class Signup extends Component {
                         </button>
                     </ModalFooter>
                 </Modal>
+                <Footer/>
             </div>
         );
     }

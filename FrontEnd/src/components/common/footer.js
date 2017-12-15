@@ -16,7 +16,7 @@ class Footer extends Component {
         const username = localStorage.getItem('username');
         return (
             <div className="footer">
-                <p className="footer-content">themis 香港牛链科技</p>
+                <img className="footer-content" src="../../public/img/footer.png"/>
             </div>
         );
     }
