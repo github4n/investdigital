@@ -21,7 +21,9 @@ import Home from './components/home';
 import FundIssuance from './components/fund_issuance';
 import Issuefund from './components/issue_fund';
 import Myfund from './components/my_fund';
-
+import Fundlist from './components/fund_list';
+import FundDetails from './components/fund_details';
+import MyStrategy from './components/my_strategy';
 import Strategy from './components/strategy';
 import StrategyDetails from './components/strategy_details';
 const createStoreWithMiddleware = compose(
@@ -51,9 +53,14 @@ ReactDOM.render(
                         <Route path="/fundissuance" component={FundIssuance} />
                         <Route path="/issuefund" component={Issuefund} />
                         <Route path="/myfund" component={Myfund} />
+                        <Route path="/fundlist" component={Fundlist} />
+                        <Route path="/funddetails" component={FundDetails} />
+
                         <Route path="/strategy/details" component={StrategyDetails} />
                         <Route path="/strategy" component={Strategy} />
+                        <Route path="/mystrategy" component={MyStrategy} />
                         <Route path="/" component={Home} />
+
                     </Switch>
                      {/*<Footer />*/}
                 </main>

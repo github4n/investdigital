@@ -43,7 +43,7 @@ class Issuefund extends Component {
                         </ul>
                     </div>
                 </div>
-                <div className="container form-style g-pb-150">
+                <div className="container form-style g-pb-50">
                     <div className="col-lg-9  g-pa-20">
                         <div className="clear">
                             <ul>

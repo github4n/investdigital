@@ -4,14 +4,125 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-// import $ from 'jquery';
-// const echarts = require('echarts');
-class MyStrategyall extends Component{
+// 引入 ECharts 主模块
+import echarts from 'echarts/lib/echarts';
+// 引入柱状图
+import  'echarts/lib/chart/line';
+// 引入提示框和标题组件
+import 'echarts/lib/component/tooltip';
+
+
+class UserFundall extends Component{
     constructor(props) {
         super(props);
         this.state={
-
+           index:0
         };
+    }
+    componentDidMount() {
+        const data=[
+            {
+                title:"希瓦圣剑1号（P000039)",
+                name:"梁宏",
+                all:"29.31%",
+                danwei:"2.2451",
+                zhangdie:"+109.14%",
+                time:"2017-6-20"
+            }, {
+                title:"希瓦圣剑1号（P000039)",
+                name:"梁宏",
+                all:"29.31%",
+                danwei:"2.2451",
+                zhangdie:"+109.14%",
+                time:"2017-6-20"
+            }, {
+                title:"希瓦圣剑1号（P000039)",
+                name:"梁宏",
+                all:"29.31%",
+                danwei:"2.2451",
+                zhangdie:"+109.14%",
+                time:"2017-6-20"
+            }, {
+                title:"希瓦圣剑1号（P000039)",
+                name:"梁宏",
+                all:"29.31%",
+                danwei:"2.2451",
+                zhangdie:"+109.14%",
+                time:"2017-6-20"
+            }
+        ];
+
+        data.map((item, i)=> {
+            var myChart = echarts.init(document.getElementById(`main${i}`));
+            // 绘制图表
+            myChart.setOption({
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    x: 40,
+                    y:40
+                },
+                backgroundColor:"#E2EFF9",
+                xAxis : [
+                    {
+                        type : 'category',
+                        // boundaryGap : false,
+                        axisLabel :{
+                            interval:0
+                        },
+                        data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'成交',
+                        type:'line',
+                        borderColor:'blue',
+                        // smooth:true,
+                        itemStyle: {
+                            normal: {
+                                areaStyle: {type: 'default'},
+                                lineStyle:{
+                                    color:'red'
+                                }
+                            }
+                        },
+                        data:[10, 12, 21, 54, 260, 830, 710]
+                    },
+                    {
+                        name:'预购',
+                        type:'line',
+
+                        borderColor:'red',
+                        data:[30, 182, 434, 791, 390, 30, 10]
+
+                    },
+                ]
+            });
+        });
+    }
+    handleClick (index) {
+        this.setState({index});
+    }
+    renderSelect(){
+        const selectItem=[
+            {title:"近六个月以来"},
+            {title:"今年以来"},
+            {title:"全部"}
+        ];
+        return selectItem.map((item, index)=>{
+            return(
+                <li className={ ` user-fund-all g-mb-20 ${index === this.state.index ? "active hover" : " "} `} onClick={ this.handleClick.bind(this, index)} key={index}>
+                    <Link to=''>{item.title}</Link>
+                </li>
+            );
+        });
     }
     renderList(){
         const data=[
@@ -92,14 +203,10 @@ class MyStrategyall extends Component{
                             <div className=" my-fund-border g-px-20 g-mt-20" >
                                 <div className="col-lg-4 g-pl-30" style={{height:"180px"}}>
                                     <ul className="my-fund-echart">
-                                        <li className="g-mb-20"><Link to="">近六个月以来</Link></li>
-                                        <li className="g-mb-20"><Link to="">今年以来</Link></li>
-                                        <li><Link to="">全部</Link></li>
+                                        {this.renderSelect()}
                                     </ul>
                                 </div>
-                                <div className="col-lg-8 fund-Echart" style={{height:"180px"}}>
-                                    {/*{this.handleEchart()}*/}
-                                </div>
+                                <div className="col-lg-8" id={`main${index}`} style={{height:"180px"}}></div>
                             </div>
                         </div>
                     </Link>
@@ -107,39 +214,10 @@ class MyStrategyall extends Component{
             );
         });
     }
-
-
-    // handleEchart(){
-    //
-    //     const myChart = echarts.init($("fund-Echart"));
-    //     // 指定图表的配置项和数据
-    //     var option = {
-    //         title: {
-    //             text: 'ECharts 入门示例'
-    //         },
-    //         tooltip: {},
-    //         legend: {
-    //             data:['销量']
-    //         },
-    //         xAxis: {
-    //             data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-    //         },
-    //         yAxis: {},
-    //         series: [{
-    //             name: '销量',
-    //             type: 'bar',
-    //             data: [5, 20, 36, 10, 10, 20]
-    //         }]
-    //     };
-    //
-    //     // 使用刚指定的配置项和数据显示图表。
-    //     myChart.setOption(option);
-    // }
-
     render(){
         return(
             <div className="container g-pt-100 g-px-40 g-pb-200 clearfix">
-                <div className="clearfix">
+                <div className="clearfix  ">
                     <ul className="clearfix">
                         {this.renderList()}
                     </ul>
@@ -156,4 +234,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {})(MyStrategyall);
+export default connect(mapStateToProps, {})(UserFundall);

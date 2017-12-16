@@ -1,4 +1,4 @@
-package com.oxchains.investdigital.entity;
+package com.oxchains.investdigital.entity.strategy;
 
 import lombok.Data;
 
@@ -8,16 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Created by xuqi on 2017/12/13.
+ * Created by xuqi on 2017/12/15.
  */
 @Data
-@Entity(name = "subscribe")
-public class Subscribe {
+@Entity(name = "plate")
+public class Plate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String value;
     private Long strategyId;
-    //private Long userId;
-    private Integer totalSubscribed;
-    private Integer alreadySubscribed;
+
+
+
+
+
 }

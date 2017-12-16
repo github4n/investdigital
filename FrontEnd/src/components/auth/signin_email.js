@@ -39,7 +39,7 @@ class Emiallogin extends Component {
         return (
             <div>
             <Header />
-            <div className="login-box g-pb-200">
+            <div className="login-box">
                 <div className="login-box-body">
                     <div className="signinWay text-center g-pt-50">
                         <ul className="row loginul">

@@ -1,4 +1,4 @@
-package com.oxchains.investdigital.entity;
+package com.oxchains.investdigital.entity.strategy;
 import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +31,8 @@ public class Strategy {
     private Long userId;
 
     private Integer strategyRunId;
+
+    private double score;
 
 
 
