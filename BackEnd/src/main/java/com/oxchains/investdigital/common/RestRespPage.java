@@ -10,14 +10,14 @@ public class RestRespPage extends RestResp {
     private RestRespPage(int status, String message, Object data) {
         super(status, message, data);
     }
-    public Long pageCount;
+    public Long rowCount;
     private RestRespPage(int status, String messsage) {
         this(status, messsage, null);
     }
 
     public static RestRespPage success(Object data,Long pageCount) {
         RestRespPage page = new RestRespPage(1, "success", data);
-        page.setPageCount(pageCount);
+        page.setRowCount(pageCount);
         return page;
     }
 

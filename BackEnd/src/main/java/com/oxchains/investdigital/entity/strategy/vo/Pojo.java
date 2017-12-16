@@ -1,4 +1,4 @@
-package com.oxchains.investdigital.entity;
+package com.oxchains.investdigital.entity.strategy.vo;
 
 import lombok.Data;
 
@@ -11,4 +11,9 @@ public class Pojo {
     private Integer pageNum;
     private Integer pageSize;
     private String desc;
+    private Long strategyId;
+
+    private long beginTime;
+    private long endTime;
+
 }

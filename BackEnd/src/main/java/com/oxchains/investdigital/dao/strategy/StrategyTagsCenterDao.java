@@ -1,6 +1,6 @@
-package com.oxchains.investdigital.dao;
+package com.oxchains.investdigital.dao.strategy;
 
-import com.oxchains.investdigital.entity.StrategyTagsCenter;
+import com.oxchains.investdigital.entity.strategy.StrategyTagsCenter;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
