@@ -11,15 +11,17 @@ import java.util.List;
  * @desc:
  */
 public class FundVO extends Fund{
-    private List<FundTag> tags;
+    private FundInfo info;
     private FundReturn returns;
+    private List<String> tags;
     private List<FundReturnDetail> details;
 
-    public List<FundTag> getTags() {
+
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<FundTag> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
@@ -29,6 +31,14 @@ public class FundVO extends Fund{
 
     public void setReturns(FundReturn returns) {
         this.returns = returns;
+    }
+
+    public FundInfo getInfo() {
+        return info;
+    }
+
+    public void setInfo(FundInfo info) {
+        this.info = info;
     }
 
     public List<FundReturnDetail> getDetails() {
@@ -48,7 +58,6 @@ public class FundVO extends Fund{
         setIssueUser(fund.getIssueUser());
         setStartTime(fund.getStartTime());
         setStartTimeStr(DateUtil.longToString(fund.getStartTime(),"yyyy-MM-dd"));
-        setPrice(fund.getPrice());
         setFee(fund.getFee());
     }
 }

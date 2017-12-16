@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import { signupUser, GetverifyCode } from '../../actions/auth';
 import { Alert } from 'antd';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
+
 import {
     Modal,
     ModalHeader,
@@ -169,6 +171,7 @@ class Signup extends Component {
                         </button>
                     </ModalFooter>
                 </Modal>
+                <Footer/>
             </div>
         );
     }

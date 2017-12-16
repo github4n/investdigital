@@ -52,6 +52,10 @@ public class FundService {
     private FundOfTagRepo fundOfTagRepo;
     @Resource
     private FundTagRepo fundTagRepo;
+    @Resource
+    private UserRepo userRepo;
+    @Resource
+    private FundInfoRepo fundInfoRepo;
 
     public RestResp add(FundIssuance fundIssuance){
         if (null != fundIssuance){
@@ -72,6 +76,7 @@ public class FundService {
         if(null == list || list.size() < 1){
             return RestResp.fail("无数据");
         }
+        Iterable<User> users = userRepo.findAll();
         List<FundVO> result = new ArrayList<>();
         for(FundReturn fundReturn : list){
             Fund fund = fundRepo.findOne(fundReturn.getFundId());
@@ -81,6 +86,12 @@ public class FundService {
             List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),l);
             fundVO.setTags(getTagsByFundId(fund.getId()));
             fundVO.setDetails(details);
+            for(User user : users){
+                if(user.getId().equals(fund.getIssueUser())){
+                    fundVO.setIssueUserName(user.getLoginname());
+                    break;
+                }
+            }
 
             result.add(fundVO);
         }
@@ -96,6 +107,7 @@ public class FundService {
         }
         return list;
     }
+
     public RestResp getFunds(){
         Pageable pager = new PageRequest(0,20);
         Page<FundReturn>  page = fundReturnRepo.findFundReturns(pager);
@@ -104,6 +116,7 @@ public class FundService {
             return RestResp.fail("无数据");
         }
         Iterable<Fund> funds = fundRepo.findAll();
+        Iterable<User> users = userRepo.findAll();
         List<FundVO> result = new ArrayList<>();
         for(FundReturn fundReturn : list){
             for(Fund fund : funds){
@@ -113,6 +126,12 @@ public class FundService {
                     List<FundReturnDetail> details =fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),DateUtil.getDateMillis(-90));
                     fundVO.setDetails(details);
                     fundVO.setTags(getTagsByFundId(fund.getId()));
+                    for(User user : users){
+                        if(user.getId().equals(fund.getIssueUser())){
+                            fundVO.setIssueUserName(user.getLoginname());
+                            break;
+                        }
+                    }
                     result.add(fundVO);
                     break;
                 }
@@ -121,15 +140,37 @@ public class FundService {
         return RestResp.success("获取数据成功",result);
     }
 
-    public List<FundTag> getTagsByFundId(Long fundId){
+    public RestResp getFundInfo(Long fundId){
+        Fund fund = fundRepo.findOne(fundId);
+        if(null == fund){
+            return RestResp.fail("无法查询基金详细信息");
+        }
+        FundVO fundVO = new FundVO(fund);
+        User user = userRepo.findOne(fund.getIssueUser());
+        if(null != user){
+            fundVO.setIssueUserName(user.getLoginname());
+        }
+        FundReturn fundReturn = fundReturnRepo.findByFundId(fundId);
+        fundVO.setReturns(fundReturn);
+        FundInfo fundInfo = fundInfoRepo.findByFundId(fundId);
+        fundVO.setInfo(fundInfo);
+        List<String> tags = getTagsByFundId(fundId);
+        fundVO.setTags(tags);
+        List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fundId,DateUtil.getDateMillis(-90));
+        fundVO.setDetails(details);
+
+        return RestResp.success("成功",fundVO);
+    }
+
+    public List<String> getTagsByFundId(Long fundId){
         List<FundOfTag> fundOfTags = fundOfTagRepo.findByFundId(fundId);
-        List<FundTag> tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
         if(null!=fundOfTags && fundOfTags.size()>0){
             Iterable<FundTag> list = fundTagRepo.findAll();
             for(FundOfTag fundOfTag : fundOfTags){
                 for(FundTag fundTag : list){
                     if(fundOfTag.getTagId().equals(fundTag.getId())){
-                        tags.add(fundTag);
+                        tags.add(fundTag.getTagName());
                     }
                 }
             }
@@ -151,6 +192,8 @@ public class FundService {
                     if(fundReturn.getFundId().equals(fund.getId())){
                         FundVO fundVO = new FundVO(fund);
                         fundVO.setReturns(fundReturn);
+                        User user = userRepo.findOne(fund.getIssueUser());
+                        fundVO.setIssueUserName(user.getLoginname());
                         List<FundReturnDetail> details = fundReturnDetailRepo.findByFundIdAndDateIsGreaterThanEqualOrderByDateAsc(fund.getId(),DateUtil.getDateMillis(-90));
                         fundVO.setDetails(details);
                         result.add(fundVO);

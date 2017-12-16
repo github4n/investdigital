@@ -10,6 +10,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { ROOT_URLC } from '../../actions/types';
 import { Alert } from 'antd';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
+
 class SignupEmial extends Component {
     constructor(props) {
         super(props);
@@ -73,6 +75,7 @@ class SignupEmial extends Component {
                         {this.renderAlert()}
                     </div>
                     </div>
+                <Footer/>
             </div>);
     }
 }

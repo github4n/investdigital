@@ -8,6 +8,7 @@ import { signinAction } from '../../actions/auth';
 import { Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
 
 class Signin extends Component {
     constructor(props) {
@@ -67,6 +68,7 @@ class Signin extends Component {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         );
     }

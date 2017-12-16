@@ -11,6 +11,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import Header from '../common/header-all';
+import Footer from '../common/footer';
+
 class Emiallogin extends Component {
     // let Emiallogin = React.createClass({
     handleEmailSubmit() {
@@ -57,6 +59,7 @@ class Emiallogin extends Component {
                     </div>
                 </div>
                 </div>
+                <Footer/>
             </div>);
     }
 }

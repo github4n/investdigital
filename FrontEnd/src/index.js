@@ -11,15 +11,19 @@ import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import Header from './components/common/header-all';
-import Footer from './components/common/footer';
+// import Footer from './components/common/footer';
 import Singin from './components/auth/signin';
 import Signinemail from './components/auth/signin_email';
 import Singup from './components/auth/signup';
 import Signupemail from './components/auth/signup_email';
-
 import Signout from './components/auth/signout';
 import Home from './components/home';
 import FundIssuance from './components/fund_issuance';
+import Issuefund from './components/issue_fund';
+import Myfund from './components/my_fund';
+import Fundlist from './components/fund_list';
+import FundDetails from './components/fund_details';
+import MyStrategy from './components/my_strategy';
 import Strategy from './components/strategy';
 import StrategyDetails from './components/strategy_details';
 const createStoreWithMiddleware = compose(
@@ -47,11 +51,18 @@ ReactDOM.render(
                         <Route path="/signupemail" component={Signupemail} />
                         <Route path="/signout" component={Signout} />
                         <Route path="/fundissuance" component={FundIssuance} />
+                        <Route path="/issuefund" component={Issuefund} />
+                        <Route path="/myfund" component={Myfund} />
+                        <Route path="/fundlist" component={Fundlist} />
+                        <Route path="/funddetails" component={FundDetails} />
+
                         <Route path="/strategy/details" component={StrategyDetails} />
                         <Route path="/strategy" component={Strategy} />
+                        <Route path="/mystrategy" component={MyStrategy} />
                         <Route path="/" component={Home} />
+
                     </Switch>
-                    {/* <Footer /> */}
+                     {/*<Footer />*/}
                 </main>
             </div>
         </BrowserRouter>
