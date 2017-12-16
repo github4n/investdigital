@@ -105,7 +105,6 @@ public class UserService{
             return RestResp.fail("操作失败");
         }
 
-
         if(mail){
             String url = "http://"+"----------"+"/islive?email="+user.getEmail();
             try {

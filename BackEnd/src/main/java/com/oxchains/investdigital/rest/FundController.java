@@ -2,11 +2,9 @@ package com.oxchains.investdigital.rest;
 
 import com.oxchains.investdigital.common.RestResp;
 import com.oxchains.investdigital.entity.FundIssuance;
+import com.oxchains.investdigital.entity.PurchaserInfo;
 import com.oxchains.investdigital.service.FundService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -24,7 +22,7 @@ public class FundController {
     @Resource
     private FundService fundService;
     @PostMapping(value = "/issue")
-    public RestResp fundIssuance(FundIssuance issuance){
+    public RestResp fundIssuance(@RequestBody FundIssuance issuance){
         return fundService.add(issuance);
     }
 
@@ -43,13 +41,21 @@ public class FundController {
     }
 
     @GetMapping(value = "/change")
-    public RestResp getChange(Long fundId,int day){
+    public RestResp getChange(Long fundId,Integer day){
         return RestResp.success(fundService.getFundReturnDetail(fundId,day));
     }
 
     @GetMapping(value = "/fundInfo")
     public RestResp fundInfo(Long fundId){
         return fundService.getFundInfo(fundId);
+    }
+    @GetMapping(value = "/comment")
+    public RestResp fundComment(Long fundId){
+        return fundService.fundComment(fundId);
+    }
+    @PostMapping(value = "/buyer")
+    public RestResp purchaserInfo(@RequestBody PurchaserInfo purchaserInfo){
+        return fundService.addPurchaser(purchaserInfo);
     }
 
     @GetMapping(value = "/data")

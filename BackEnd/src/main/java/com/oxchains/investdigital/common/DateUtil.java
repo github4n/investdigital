@@ -29,6 +29,20 @@ public class DateUtil {
         calendar.add(Calendar.DATE,day);
         return calendar.getTime().getTime();
     }
+
+    public static long getFromThisYearMillis() {
+        Calendar Cld= Calendar.getInstance();
+        int YY = Cld.get(Calendar.YEAR) ;
+
+        String d = YY + "-01-01 00:00:00";
+
+        try {
+            return getTimeMillis(d, "yyyy-MM-dd HH:mm:ss");
+        } catch (ParseException e) {
+            return 0;
+        }
+
+    }
     /*
     * 获取当前时间格式为 YY-MM-dd HH:mm:ss
     * */
@@ -91,10 +105,10 @@ public class DateUtil {
     }
 
     public static void main(String[] args) throws Exception{
-        System.out.println(getTimeMillis("2018-06-30","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2018-08-30","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2018-09-30","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2018-10-30","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2017-12-10","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2017-12-13","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2017-12-15","yyyy-MM-dd"));
+        System.out.println(getTimeMillis("2017-12-16","yyyy-MM-dd"));
 
     }
 }
