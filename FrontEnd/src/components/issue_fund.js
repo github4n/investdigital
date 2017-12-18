@@ -7,10 +7,64 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from './common/header-all';
 import Footer from './common/footer';
+
+import {fetchFundSubmission } from '../actions/fund';
+
+import {
+    Modal,
+    ModalHeader,
+    ModalTitle,
+    ModalClose,
+    ModalBody,
+    ModalFooter
+} from 'react-modal-bootstrap';
+
 class Issuefund extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isModalOpen: false,
+            error: null,
+            actionResult: '',
+            radio:"",
+        };
+        this.FundSubmission= this.FundSubmission.bind(this);
+    }
+    hideModal = () => {
+        this.setState({
+            isModalOpen: false
+        });
+    };
+    FundSubmission(){
+        // const { radio} = this.state;
+        // console.log(radio);
+        // const username = this.refs.name.value;
+        // const investDigitalNo = this.refs.id.value;
+        // const mobilephone = this.refs.phonenum.value;
+
+        // console.log(username, investDigitalNo, mobilephone);
+
+        // const username = this.refs.name.value;
+       const formdata = {
+           "username":this.refs.name.value,
+           "investDigitalNo": this.refs.id.value,
+           "mobilephone": this.refs.phonenum.value,
+           "assetManageScale": 3,
+           "privateIssuanceTime": 2,
+           "fundQualification": 1,
+           "privateIssuanceStage": 1,
+           "fundAssociationRecord": 2,
+           "productDistribution": 1,
+       };
+       this.props.fetchFundSubmission({ formdata }, err => {
+           this.setState({ isModalOpen: true, error: err, actionResult: err || '提交成功!' });
+       });
+    }
+    radioChange(e){
+        console.log(e);
+        this.setState({
+            radio:e,
+        });
     }
     render() {
         return (
@@ -29,16 +83,16 @@ class Issuefund extends Component {
                         <ul>
                             <li className="text-left clear">
                                 <span className="col-lg-3">您的姓名</span>
-                                <input type="text" className="input col-lg-9"/>
+                                <input type="text" className="input col-lg-9" ref="name"/>
 
                             </li>
                             <li className="text-left clear">
                                 <span className="col-lg-3">InvestDigital号</span>
-                                <input type="text" className="input col-lg-9"/>
+                                <input type="text" className="input col-lg-9" ref="id"/>
                             </li>
                             <li className="text-left clear">
                                 <span className="col-lg-3">您的手机</span>
-                                <input type="text" className="input col-lg-9"/>
+                                <input type="text" className="input col-lg-9" ref="phonenum"/>
                             </li>
                         </ul>
                     </div>
@@ -49,52 +103,74 @@ class Issuefund extends Component {
                             <ul>
                                 <li className="input-radio">
                                     <h1>01.资产管理规模</h1>
-                                    <input name="size" type="radio"/> <span>300万元以下</span><br/><br/>
-                                    <input name="size" type="radio"/> <span>300万元-500万</span><br/><br/>
-                                    <input name="size" type="radio"/> <span>500万以上</span><br/><br/>
+                                    <input name="size" type="radio" value='1' checked={this.state.radio === 1} onChange={() => this.radioChange.bind(this)}/> <span>300万元以下</span><br/><br/>
+                                    <input name="size" type="radio" value='2' checked={this.state.radio === 2} onChange={() => this.radioChange.bind(this)}/> <span>300万元-500万</span><br/><br/>
+                                    <input name="size" type="radio" value='3' checked={this.state.radio === 3} onChange={() => this.radioChange.bind(this)}/> <span>500万以上</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>02. 拟发行私募时间？</h1>
-                                    <input name="time" type="radio"/> <span>立刻发行</span><br/><br/>
-                                    <input name="time" type="radio"/> <span>3个月内</span><br/><br/>
-                                    <input name="time" type="radio"/> <span>3-6个月内</span><br/><br/>
-                                    <input name="time" type="radio"/> <span>无法确定</span><br/><br/>
+                                    <input name="time" type="radio" value='1' checked={this.state.radio === 1} onChange={() => this.radioChange.bind(this)}/> <span>立刻发行</span><br/><br/>
+                                    <input name="time" type="radio" value='2' checked={this.state.radio === 2} onChange={() => this.radioChange.bind(this)}/> <span>3个月内</span><br/><br/>
+                                    <input name="time" type="radio" value='3' checked={this.state.radio === 3} onChange={() => this.radioChange.bind(this)}/> <span>3-6个月内</span><br/><br/>
+                                    <input name="time" type="radio" value='4' checked={this.state.radio === 4} onChange={() => this.radioChange.bind(this)}/> <span>无法确定</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>03. 是否具备基金从业资格</h1>
-                                    <input name="qualifications" type="radio"/> <span>1人具备从业资格</span><br/><br/>
-                                    <input name="qualifications" type="radio"/> <span>2人或2人以上具备从业资格</span><br/><br/>
-                                    <input name="qualifications" type="radio"/> <span>不具备</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='1' /> <span>1人具备从业资格</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='2' /> <span>2人或2人以上具备从业资格</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='3'/> <span>不具备</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>04. 私募运行阶段</h1>
-                                    <input name="private" type="radio"/> <span>尚未成立公司</span><br/><br/>
-                                    <input name="private" type="radio"/> <span>初创型私募</span><br/><br/>
-                                    <input name="private" type="radio"/> <span>成长型私募</span><br/><br/>
+                                    <input name="private" type="radio" value='1' /> <span>尚未成立公司</span><br/><br/>
+                                    <input name="private" type="radio" value='2' /> <span>初创型私募</span><br/><br/>
+                                    <input name="private" type="radio" value='3' /> <span>成长型私募</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>05. 是否在基金业协会备案</h1>
-                                    <input name="qualifications" type="radio"/> <span>已备案登记</span><br/><br/>
-                                    <input name="qualifications" type="radio"/> <span>尚未备案登记</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='1' /> <span>已备案登记</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='2' /> <span>尚未备案登记</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>06. 发行产品情况</h1>
-                                    <input name="qualifications" type="radio"/> <span>未曾发行产品</span><br/><br/>
-                                    <input name="qualifications" type="radio"/> <span>已发行产品</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='1' /> <span>未曾发行产品</span><br/><br/>
+                                    <input name="qualifications" type="radio" value='2' /> <span>已发行产品</span><br/><br/>
                                 </li>
                             </ul>
                             <Link className="form-style" to="/issuefund">
-                                <button className="btn Issuing-fund g-my-50 " >提交信息</button>
+                                <button className="btn Issuing-fund g-my-50 " onClick={this.FundSubmission}>提交信息</button>
                             </Link>
                         </div>
                     </div>
-
                 </div>
-
+                <Modal isOpen={this.state.isModalOpen} onRequestHide={this.hideModal}>
+                    <ModalHeader>
+                        <ModalClose onClick={this.hideModal} />
+                        <ModalTitle>提示:</ModalTitle>
+                    </ModalHeader>
+                    <ModalBody>
+                        <p className={this.state.error ? 'text-red' : 'text-green'}>
+                            {this.state.actionResult}
+                        </p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className='btn'  onClick={this.hideModal}>
+                            <a style={{color:'#444444'}} >关闭</a>
+                        </button>
+                    </ModalFooter>
+                </Modal>
                 <Footer/>
             </div>
         );
     }
 }
 
-export default Issuefund;
+
+function mapStateToProps(state) {
+    console.log(state.fund.all);
+    return {
+        all:state.fund.all
+    };
+}
+
+export default connect(mapStateToProps, {fetchFundSubmission})(Issuefund);

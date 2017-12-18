@@ -99,7 +99,6 @@ class StrategyDetails extends Component{
         return(
             <div className="strategy-details">
                 <Header/>
-                <div className="strategy-details-banner">
                     <div className="fund-details-banner">
                         <div className="container">
                             <div className="row">
@@ -172,7 +171,6 @@ class StrategyDetails extends Component{
                             </div>
                         </div>
                     </div>
-                </div>
                 <div className="container g-mt-10 g-pb-150">
                     <div className="row">
                         <div className="col-lg-8 text-center">

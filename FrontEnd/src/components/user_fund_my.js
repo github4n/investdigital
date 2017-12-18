@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import {fetchFundMy } from '../actions/fund';
+
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
@@ -21,7 +23,7 @@ class UserFundmy extends Component{
         };
     }
     componentWillMount() {
-
+      this.props.fetchFundMy();
     }
     componentDidMount() {
         const data1=[
@@ -230,9 +232,10 @@ class UserFundmy extends Component{
 }
 
 function mapStateToProps(state) {
+    console.log(state.fund.all);
     return {
-
+      all:state.fund.all
     };
 }
 
-export default connect(mapStateToProps, {})(UserFundmy);
+export default connect(mapStateToProps, {fetchFundMy })(UserFundmy);

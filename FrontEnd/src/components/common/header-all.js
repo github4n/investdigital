@@ -6,23 +6,30 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class Header extends Component {
+class HeaderAll extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     renderUserInfo() {
+        // console.log(this.props.authenticated);
         if (this.props.authenticated) {
             const loginname = localStorage.getItem('loginname');
             return (
                 <div className="navbar-custom-menu">
                     <ul className="nav navbar-nav">
-                        <li className="ordermenu-style dropdown user user-menu">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                        <li className="ordermenu-styleall dropdown user user-menu pull-right g-ml-10">
+                            <a href="/signout" className="dropdown-toggle">
+                                <span className="hidden-xs"> [退出]</span>
+                            </a>
+                        </li>
+                        <li className="ordermenu-styleall dropdown user user-menu pull-right">
+                            <a href="/myfund" className="dropdown-toggle">
                                 <span className="hidden-xs">{loginname}</span>
                             </a>
                         </li>
+
                     </ul>
                 </div>
             );
@@ -64,4 +71,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { })(Header);
+export default connect(mapStateToProps, { })(HeaderAll);

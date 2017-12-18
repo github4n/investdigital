@@ -2,7 +2,7 @@
  * Created by fengxiaoli on 2017/12/12.
  */
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import {  Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signinAction } from '../../actions/auth';
 import { Alert } from 'antd';
@@ -26,7 +26,6 @@ class Signin extends Component {
         const { from } =  { from: { pathname: '/' } };
         if (this.props.loggedIn) {
             // location.reload();
-            // alert('密码错误');
             return (
                 <Redirect to={from} />
             );
@@ -38,7 +37,7 @@ class Signin extends Component {
         }
     }
     render() {
-        console.log(this.props.errorMessage);
+        // console.log(this.props.errorMessage);
         return (
             <div className="mainbgc">
             <Header />
@@ -63,7 +62,9 @@ class Signin extends Component {
                                 <div className="form-group">
                                     <button className="btn form-login" onClick={this.handlePhoneSubmit.bind(this)}>登录</button>
                                 </div>
-                                {this.renderAlert()}
+                                <div className="form-group inputwidth">
+                                    {this.renderAlert()}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,7 +75,6 @@ class Signin extends Component {
     }
 }
 function mapStateToProps(state) {
-    // console.log(state.auth.error);
     return {
         loggedIn: state.auth.authenticated,
         errorMessage: state.auth.error

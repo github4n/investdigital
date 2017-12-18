@@ -54,7 +54,9 @@ class Emiallogin extends Component {
                             <div className="form-group">
                                 <button className="btn form-login" onClick={this.handleEmailSubmit.bind(this)}>登录</button>
                             </div>
-                            {this.renderAlert()}
+                            <div className="form-group inputwidth">
+                                {this.renderAlert()}
+                            </div>
                         </div>
                     </div>
                 </div>
