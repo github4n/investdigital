@@ -34,6 +34,10 @@ public class Strategy {
 
     private double score;
 
+    private Long initMoney;
+
+    private String description;
+
 
 
 

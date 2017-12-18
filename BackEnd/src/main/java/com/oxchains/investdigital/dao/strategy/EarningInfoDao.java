@@ -1,6 +1,7 @@
 package com.oxchains.investdigital.dao.strategy;
 
 import com.oxchains.investdigital.entity.strategy.EarningInfo;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface EarningInfoDao extends CrudRepository<EarningInfo,Long>{
-    List<EarningInfo> findAllByStrategyIdAndTimeStampBetween(Long strategyId,long beginTime,long endtime);
+    List<EarningInfo> findAllByStrategyIdAndTimeStampBetween(Long strategyId, long beginTime, long endtime, Sort sort);
 }

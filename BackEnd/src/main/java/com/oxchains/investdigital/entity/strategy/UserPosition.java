@@ -18,6 +18,7 @@ public class UserPosition {
     private double openAvgPrice;
     private Long num;
     private Long userId;
+    private Double totalProfilLoss;
     @Transient
     private String fundName;
     @Transient

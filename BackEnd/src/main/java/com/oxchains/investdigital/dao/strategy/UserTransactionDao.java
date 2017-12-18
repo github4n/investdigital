@@ -6,11 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by xuqi on 2017/12/15.
  */
 @Repository
 public interface UserTransactionDao extends CrudRepository<UserTransaction,Long>{
-    Page<UserTransaction> findAll(Pageable pageable);
-    Page<UserTransaction> findByUserId(Long userId,Pageable pageable);
+    List<UserTransaction> findByUserId(Long userId);
 }
