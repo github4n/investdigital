@@ -29,6 +29,20 @@ public class DateUtil {
         calendar.add(Calendar.DATE,day);
         return calendar.getTime().getTime();
     }
+
+    public static long getFromThisYearMillis() {
+        Calendar Cld= Calendar.getInstance();
+        int YY = Cld.get(Calendar.YEAR) ;
+
+        String d = YY + "-01-01 00:00:00";
+
+        try {
+            return getTimeMillis(d, "yyyy-MM-dd HH:mm:ss");
+        } catch (ParseException e) {
+            return 0;
+        }
+
+    }
     /*
     * 获取当前时间格式为 YY-MM-dd HH:mm:ss
     * */
@@ -88,10 +102,5 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Date date = sdf.parse(str);
         return  date.getTime();
-    }
-
-    public static void main(String[] args) throws Exception{
-        System.out.println(dateToStamp("20170101 000000","yyyyMMdd HHmmss"));
-
     }
 }

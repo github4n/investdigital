@@ -15,8 +15,7 @@ public class FundVO extends Fund{
     private FundReturn returns;
     private List<String> tags;
     private List<FundReturnDetail> details;
-
-
+    private Echart echart;
     public List<String> getTags() {
         return tags;
     }
@@ -47,6 +46,14 @@ public class FundVO extends Fund{
 
     public void setDetails(List<FundReturnDetail> details) {
         this.details = details;
+    }
+
+    public Echart getEchart() {
+        return echart;
+    }
+
+    public void setEchart(Echart echart) {
+        this.echart = echart;
     }
 
     public FundVO(){}
