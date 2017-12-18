@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {fetchStrategyBrinsion} from '../../actions/strategy';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
@@ -21,9 +22,15 @@ class StrateBar extends Component{
         };
     }
     componentWillMount() {
-
+        const strategyId = this.props.strategyId;
+        this.props.fetchStrategyBrinsion({strategyId});
     }
-    componentDidMount() {
+    componentDidUpdate() {
+        const strategy_brinsion=this.props.strategy_brinsion;
+        const data1=(strategy_brinsion.activeReturn*100).toFixed(2);
+        const data2=(strategy_brinsion.assetAllocation*100).toFixed(2);
+        const data3=(strategy_brinsion.stockConfig*100).toFixed(2);
+        console.log(data1, data2, data3);
         var myChart = echarts.init(document.getElementById("bar-figure"));
         // 绘制图表
         myChart.setOption({
@@ -33,6 +40,19 @@ class StrateBar extends Component{
                     type: 'shadow'
                 }
             },
+            // legend: {
+            //     orient:'vertical',
+            //     align:"left",
+            //     y: 'bottom',
+            //     x: 'right',
+            //     itemWidth: 10,             // 图例图形宽度
+            //     itemHeight: 10,
+            //     data:[
+            //         {name:'主动收益', icon: 'circle'},
+            //         {name:'资产配置', icon: 'circle'},
+            //         {name:'选股配置', icon: 'circle'},
+            //     ]
+            // },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -62,7 +82,7 @@ class StrateBar extends Component{
             yAxis: {
                 splitLine:{show: false}, //去除网格线
                 type: 'category',
-                data: ['主动收益'],
+                data: ['资产配置'],
                 axisTick: {
                     show: false
                 },
@@ -82,7 +102,7 @@ class StrateBar extends Component{
                 {
                     name: '主动收益',
                     type: 'bar',
-                    data: [18203],
+                    data: [data1],
                     itemStyle:{
                         normal:{
                             color:'#f57b31',
@@ -92,7 +112,7 @@ class StrateBar extends Component{
                 {
                     name: '资产配置',
                     type: 'bar',
-                    data: [-19325],
+                    data: [data2],
                     itemStyle:{
                         normal:{
                             color:'#f5422e',
@@ -102,7 +122,7 @@ class StrateBar extends Component{
                 {
                     name: '选股配置',
                     type: 'bar',
-                    data: [-14325],
+                    data: [data3],
                     itemStyle:{
                         normal:{
                             color:'#f5db43',
@@ -114,10 +134,15 @@ class StrateBar extends Component{
     }
 
     render(){
+        console.log(this.props.strategy_brinsion);
         return(
             <div className="col-sm-12 g-pb-20">
                 <div className="bar-figure">
                     <div className="strategy-chart" id="bar-figure" style={{height:"300px"}}></div>
+                    <div className="title">
+                        <div className="g-py-45">主动收益</div>
+                        <div className="g-py-45">选股配置</div>
+                    </div>
                 </div>
             </div>
         );
@@ -126,8 +151,8 @@ class StrateBar extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        strategy_brinsion:state.strategy.strategy_brinsion
     };
 }
 
-export default connect(mapStateToProps, {})(StrateBar);
+export default connect(mapStateToProps, {fetchStrategyBrinsion})(StrateBar);

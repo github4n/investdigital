@@ -30,9 +30,7 @@ class ListFundall extends Component{
         this.props.fetchAllFund();
     }
     componentDidUpdate() {
-
         const data1 = this.props.data || [];
-
         data1.map((item, i)=> {
             const dataX=item.echart.xAxis;
             const data=item.echart.yAxis;

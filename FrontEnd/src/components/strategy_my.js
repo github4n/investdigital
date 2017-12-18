@@ -59,11 +59,6 @@ class StrategyMy extends Component{
                 xAxis : [
                     {
                         type : 'category',
-                        // boundaryGap : false,
-                        axisLabel :{
-                            interval:0,
-                            rotate: 60
-                        },
                         data : dataX
                     }
                 ],
@@ -81,9 +76,6 @@ class StrategyMy extends Component{
                         itemStyle: {
                             normal: {
                                 areaStyle: {type: 'default'},
-                                lineStyle:{
-                                    color:'blue'
-                                }
                             }
                         },
                         data:data
@@ -120,9 +112,9 @@ class StrategyMy extends Component{
         return this.props.strategy_user.data.map((item, index)=>{
             return(
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
-                    <Link to="/strategy/details">
-                        <div className="col-sm-2">
-                            <img style={{width:"100%"}} className="g-mt-50" src="/public/img/u158.png" alt=""/>
+                    <Link to={`/strategy/details/${item.id}`}>
+                        <div className="col-sm-2 text-center">
+                            <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u158.png" alt=""/>
                             <span className="rank">{item.rank}</span>
                         </div>
                         <div className="col-sm-5">
@@ -170,7 +162,7 @@ class StrategyMy extends Component{
     render(){
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
         if(this.props.strategy_user===null){
-           return(<div></div>);
+           return(<div className="text-center h3">loading</div>);
         }
         return(
             <div className="strategy-all-content clearfix">

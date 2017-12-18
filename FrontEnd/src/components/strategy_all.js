@@ -57,11 +57,6 @@ class StrategyAll extends Component{
                 xAxis : [
                     {
                         type : 'category',
-                        // boundaryGap : false,
-                        axisLabel :{
-                            interval:0,
-                            rotate: 60
-                        },
                         data : dataX
                     }
                 ],
@@ -125,9 +120,7 @@ class StrategyAll extends Component{
     renderTags(item){
         return item.tags.map((item, index)=>{
             return(
-                <div className="g-my-10" key={index}>
-                    <span className="strategy-choiceness-tip g-px-5 g-py-5 g-mr-10">{item.tagName}</span>
-                </div>
+                <span className="strategy-choiceness-tip g-px-5 g-py-5 g-mr-10" key={index}>{item.tagName}</span>
             );
         });
     }
@@ -135,16 +128,23 @@ class StrategyAll extends Component{
         return this.props.strategy_all.data.map((item, index)=>{
             return(
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
-                    <Link to="/strategy/details">
-                        <div className="col-sm-2">
-                            <img style={{width:"100%"}} className="g-mt-50" src="/public/img/u158.png" alt=""/>
-                            <span className="rank">{item.rank}</span>
+                    <Link to={`/strategy/details/${item.id}`}>
+                        <div className="col-sm-2 text-center" style={{position:"relative"}}>
+                            {(index+1)==1 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u76.png" alt=""/> :
+                                ((index+1) == 2 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u116.png" alt=""/> :
+                                    ((index+1) ==3 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u138.png" alt=""/> :
+                                        <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u158.png" alt=""/>)
+                                )
+                            }
+                            <span className="rank">{index+1}</span>
                         </div>
                         <div className="col-sm-5">
                             <div className="strategy-choiceness-item clearfix" style={{padding:"20px 0"}}>
                                 <div className="strategy-choiceness-title">
                                     <span className="h4">{item.title}</span>
-                                    {this.renderTags(item)}
+                                    <div className="g-my-10" >
+                                        {this.renderTags(item)}
+                                    </div>
                                     <div className="g-py-10 strategy-choiceness-user">
                                         <div className="photo">
                                             <img src={`${ROOT_AVATAR}/${item.imageUrl}`} alt=""/>
@@ -174,7 +174,7 @@ class StrategyAll extends Component{
                             </div>
                         </div>
                         <div className="col-sm-5">
-                            <div className="strategy-chart g-mt-20" id={`main1${index}`} style={{height:"180px"}}></div>
+                            <div className="strategy-chart g-mt-20" id={`main1${index}`} style={{height:"180px", width:"248px"}}></div>
                         </div>
                     </Link>
                 </li>
@@ -185,7 +185,7 @@ class StrategyAll extends Component{
     render(){
         const totalNum = this.props.strategy_all && this.props.strategy_all.rowCount;
         if(this.props.strategy_all===null){
-            return(<div></div>);
+            return(<div className="text-center h3">loading</div>);
         }
         return(
             <div className="strategy-all-content clearfix">

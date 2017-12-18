@@ -58,7 +58,7 @@ ReactDOM.render(
                         <Route path="/fundlist" component={Fundlist} />
                         <Route path="/funddetails/:id" component={FundDetails} />
 
-                        <Route path="/strategy/details" component={StrategyDetails} />
+                        <Route path="/strategy/details/:id" component={StrategyDetails} />
                         <Route path="/strategy" component={Strategy} />
                         <Route path="/mystrategy" component={MyStrategy} />
                         <Route path="/" component={Home} />

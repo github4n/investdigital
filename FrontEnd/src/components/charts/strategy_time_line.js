@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {fetchRunChart} from '../../actions/strategy';
 import { DatePicker } from 'antd';
 const { RangePicker} = DatePicker;
 // 引入 ECharts 主模块
@@ -20,30 +21,37 @@ class StrateTimeLine extends Component{
         this.state={
             pageSize:10,
             active:0,
+            index:4
         };
     }
     componentWillMount() {
-
+        const strategyId = this.props.strategyId;
+        const beginTime=0;
+        const endTime =0;
+        this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
     handleChange(date, dateString){
         console.log(date, dateString);
+        let date1=[];
+        dateString.map((item, index)=>{
+            date1.push(Date.parse(new Date(item)));
+        });
+        const strategyId = this.props.strategyId;
+        let beginTime=date1[0];
+        let endTime=date1[1];
+        console.log(date1);
+        this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
-    componentDidMount() {
-        var base = +new Date(1968, 9, 3);
-        var oneDay = 24 * 3600 * 1000;
-        var date = [];
-
-        var data = [Math.random() * 300];
-        var data2 = [Math.random() * 10];
-
-        for (var i = 1; i < 20000; i++) {
-            var now = new Date(base += oneDay);
-            date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-            data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-            data2.push(Math.round((Math.random() - 1) + data2[i - 1]));
-        }
-        console.log(date, data);
-            var myChart = echarts.init(document.getElementById("earning-figure"));
+    componentDidUpdate() {
+        let dataX=[], data=[];
+        this.props.run_chart.map((item, index)=>{
+            let date=new Date(parseInt(item.timeStamp)).toLocaleString().replace(/:\d{1,2}$/, ' ');
+            // let date=new Date(item.timeStamp).toLocaleString();
+            let earning = ((item.earning)*100).toFixed(2);
+            dataX.push(date);
+            data.push(earning);
+        });
+            let myChart = echarts.init(document.getElementById("earning-figure"));
             // 绘制图表
             myChart.setOption({
                 tooltip: {
@@ -58,7 +66,7 @@ class StrateTimeLine extends Component{
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: date
+                    data: dataX
                 },
                 yAxis: {
                     type: 'value',
@@ -86,9 +94,9 @@ class StrateTimeLine extends Component{
                 }],
                 series: [
                     {
-                        name:'模拟数据',
+                        name:'收益',
                         type:'line',
-                        smooth:false,
+                        smooth:true,
                         symbol: 'none',
                         sampling: 'average',
                         itemStyle: {
@@ -108,18 +116,6 @@ class StrateTimeLine extends Component{
                             }
                         },
                         data: data
-                    },
-                    {
-                        name:'模拟数据',
-                        type:'line',
-                        smooth:false,
-                        sampling: 'average',
-                        data: data2,
-                        itemStyle: {
-                            normal: {
-                                color: 'blue'
-                            }
-                        },
                     }
                 ]
             });
@@ -141,6 +137,7 @@ class StrateTimeLine extends Component{
             );
         });
     }
+
     render(){
         return(
             <div className="col-sm-12 g-py-20">
@@ -162,8 +159,7 @@ class StrateTimeLine extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        run_chart:state.strategy.run_chart
     };
 }
-
-export default connect(mapStateToProps, {})(StrateTimeLine);
+export default connect(mapStateToProps, {fetchRunChart})(StrateTimeLine);

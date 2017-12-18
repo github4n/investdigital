@@ -3,27 +3,26 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchEarningDay} from  '../actions/strategy';
+import {fetchEarningMonthly} from  '../actions/strategy';
 import {ROOT_AVATAR} from '../actions/types';
 
-class EarningsDay extends Component{
+class EarningsMonthly extends Component{
     constructor(props) {
         super(props);
         this.state={
             pageNum:1,
             pageSize:8,
-            desc:'dailyReturn'
+            desc:'monthlyReturn'
         };
     }
     componentWillMount() {
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
-        this.props.fetchEarningDay({pageSize, pageNum, desc});
+        this.props.fetchEarningMonthly({pageSize, pageNum, desc});
     }
     renderList(){
-        return this.props.earnings_day.map((item, index)=>{
-            // console.log(item);
+        return this.props.earnings_monthly.map((item, index)=>{
             return(
                 <li className="strate-earnings-content-item  strategy-choiceness-item clearfix" key={index} style={{margin:0}}>
                     <div className="col-sm-2">{index+1}</div>
@@ -32,7 +31,7 @@ class EarningsDay extends Component{
                         <span className="g-pl-10">{item.loginname}</span>
                     </div>
                     <div className="col-sm-2">
-                        {((item.dailyReturn)*100).toFixed(2)}%
+                        {((item.monthlyReturn)*100).toFixed(2)}%
                     </div>
                 </li>
             );
@@ -40,7 +39,7 @@ class EarningsDay extends Component{
     }
 
     render(){
-        if(this.props.earnings_day === null){
+        if(this.props.earnings_monthly === null){
             return(<div className="text-center h4">loading</div>);
         }
         return(
@@ -60,10 +59,10 @@ class EarningsDay extends Component{
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        earnings_day:state.strategy.earnings_day
+        earnings_monthly:state.strategy.earnings_monthly
     };
 }
 
-export default connect(mapStateToProps, {fetchEarningDay})(EarningsDay);
+export default connect(mapStateToProps, {fetchEarningMonthly})(EarningsMonthly);
