@@ -1,12 +1,11 @@
-package com.oxchains.investdigital.dao;
+package com.oxchains.investdigital.dao.strategy;
 
-import com.oxchains.investdigital.entity.Strategy;
+import com.oxchains.investdigital.entity.strategy.Strategy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

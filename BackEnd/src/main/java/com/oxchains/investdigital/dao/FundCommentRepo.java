@@ -1,11 +1,11 @@
 package com.oxchains.investdigital.dao;
 
-import com.oxchains.investdigital.entity.FundIssuance;
+
+import com.oxchains.investdigital.entity.FundComment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author ccl
@@ -14,8 +14,7 @@ import java.util.Optional;
  * @desc:
  */
 @Repository
-public interface FundIssuanceRepo extends CrudRepository<FundIssuance,Long> {
-
-    FundIssuance findByInvestDigitalNo(String investNo);
-
+public interface FundCommentRepo extends CrudRepository<FundComment,Long> {
+    List<FundComment> findByFundIdAndUserId(Long fundId,Long userId);
+    List<FundComment> findByFundId(Long fundId);
 }

@@ -1,4 +1,4 @@
-package com.oxchains.investdigital.entity;
+package com.oxchains.investdigital.entity.strategy;
 
 import lombok.Data;
 
