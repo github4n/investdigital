@@ -55,7 +55,7 @@ class MessageBoard extends Component{
             }
         ];
         return data.map((item, index)=>{
-            console.log(item);
+            // console.log(item);
             return(
                 <li className="message-board-item g-py-20 g-mx-20 clearfix" key={index}>
                     <div className="col-sm-2 photo">

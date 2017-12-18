@@ -9,6 +9,7 @@ import {
     USER_FUND_MY,
     START_FUND_GOOD,
     All_FUND_LIST,
+    FUND_DETAIL,
     getAuthorizedHeader,
     requestError
 } from './types';
@@ -66,8 +67,8 @@ export function fetchStartFund(callback) {
     return function (dispatch) {
         axios.get(`${ROOT_URLCF}/fund/starFunds`, { headers: getAuthorizedHeader() } )
             .then(response => {
-                // console.log('明星基金产品');
-                // console.log(response);
+                console.log('明星基金产品');
+                console.log(response);
                 dispatch({ type: START_FUND_GOOD, payload: response });
             })
             .catch(err => dispatch(requestError(err.message)));
@@ -82,9 +83,26 @@ export function fetchAllFund(callback) {
     return function (dispatch) {
         axios.get(`${ROOT_URLCF}/fund/allFunds`, { headers: getAuthorizedHeader() } )
             .then(response => {
-                // console.log('全部基金');
-                // console.log(response);
+                console.log('全部基金');
+                console.log(response);
                 dispatch({ type: All_FUND_LIST, payload: response });
+            })
+            .catch(err => dispatch(requestError(err.message)));
+    };
+}
+
+
+/**
+ * 基金详情
+ */
+export function fetchFundDetail({fundId}, callback) {
+    // console.log();
+    return function (dispatch) {
+        axios.get(`${ROOT_URLCF}/fund/fundInfo?fundId=${fundId}`, { headers: getAuthorizedHeader() } )
+            .then(response => {
+                console.log('基金详情');
+                console.log(response);
+                dispatch({ type: FUND_DETAIL, payload: response });
             })
             .catch(err => dispatch(requestError(err.message)));
     };

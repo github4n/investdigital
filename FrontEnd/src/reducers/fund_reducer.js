@@ -6,7 +6,8 @@ import {
     FUND_SUBMISSION,
     USER_FUND_MY,
     START_FUND_GOOD,
-    All_FUND_LIST
+    All_FUND_LIST,
+    FUND_DETAIL
 } from '../actions/types';
 
 const INITIAL_STATE = { all: null, data: [], myfund:[], error:null};
@@ -21,6 +22,8 @@ export default function (state = INITIAL_STATE, action) {
             return { ...state, all: action.payload.data.data };
         case All_FUND_LIST:
             return { ...state, data: action.payload.data.data };
+        case FUND_DETAIL:
+            return { ...state, all: action.payload.data.data };
     }
     return state;
 }

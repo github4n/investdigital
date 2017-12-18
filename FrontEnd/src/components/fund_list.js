@@ -19,6 +19,12 @@ import echarts from 'echarts/lib/echarts';
 import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/toolbox';
+
+import 'echarts/lib/component/dataZoom';
+
+
+
 
 class FundList extends Component {
     constructor(props) {
@@ -29,74 +35,93 @@ class FundList extends Component {
     componentWillMount(){
         this.props.fetchStartFund();
     }
-    componentWillReceiveProps() {
-        const data = this.props.all || [];
-        // console.log(data);
-        data.map((item, i)=>{
-            // console.log(item);
-            item.map((item, index)=> {
-                const myChart = echarts.init((document.getElementById(`strategy${i}`).getElementsByClassName(`main${index}`))[0]);
 
-                // let dataX=[], data=[];
-                // item.details.map((val, index)=>{
-                //     let date=new Date(val.timeStamp).toLocaleDateString();
-                //     let earning = ((val.earning)*100).toFixed(2);
-                //      dataX.push(date);
-                //     data.push(earning);
-                // });
+    componentDidUpdate() {
+        const data = this.props.all || [];
+        data.map((item, i)=>{
+            item.map((item, index)=> {
+                const myChart1 = echarts.init((document.getElementById(`strategy${i}`).getElementsByClassName(`main${index}`))[0]);
+                const dataX= item.echart.xAxis;
+                const data=item.echart.yAxis;
+                const dataY1 = data[0].data;
+                const dataY2 = data[1].data;
+
+                const name1 = data[0].name;
+                const name2 = data[1].name;
 
                 // 绘制图表
-                myChart.setOption({
+                myChart1.setOption({
                     tooltip: {
                         trigger: 'axis'
                     },
-                    grid: {
-                        x: 40,
-                        y:40
+                    legend:{
+                        data:[name1, name2 ],
+                        // bottom:0
                     },
-                    backgroundColor:"#E2EFF9",
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '0%',
+                    },
+                    dataZoom : [ {
+                        xAxis: 0,
+                        type : 'inside',
+                        start : 0,
+                        end : 100,
+                    }, ],
                     xAxis : [
                         {
                             type : 'category',
-                            // boundaryGap : false,
+                            interval:50, //每隔区域20
                             axisLabel :{
-                                interval:0
+
                             },
-                            data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                            axisLine:{
+                                show: false,
+                            },
+                            data:dataX
                         }
                     ],
                     yAxis : [
                         {
-                            type : 'value'
-                        }
+                            type : 'value',
+                            axisLine:{
+                                show: false,
+                            },
+                        },
                     ],
                     series : [
                         {
-                            name:'成交',
+                            name:name1,
                             type:'line',
-                            borderColor:'blue',
-                            // smooth:true,
                             itemStyle: {
                                 normal: {
-                                    areaStyle: {type: 'default'},
                                     lineStyle:{
-                                        color:'red'
+                                        color:'blue',
+                                        opacity:"0.6"
+
                                     }
                                 }
                             },
-                            data:[10, 12, 21, 54, 260, 830, 710]
+                            data:dataY1
                         },
                         {
-                            name:'预购',
+                            name:name2,
                             type:'line',
+                            itemStyle: {
+                                normal: {
+                                    lineStyle:{
+                                        color:'red',
+                                        opacity:"0.6"
 
-                            borderColor:'red',
-                            data:[30, 182, 434, 791, 390, 30, 10]
-
-                        },
+                                    }
+                                }
+                            },
+                            data:dataY2
+                        }
                     ]
                 });
-            });
+              });
         });
     }
     renderList2(item){

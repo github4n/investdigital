@@ -113,18 +113,14 @@ class Listfundmy extends Component{
             });
         });
     }
-    // rendertabs(){
-    //     const data = this.props.myfund ||[];
-    //     // console.log(data);
-    //     return data.map((item, index)=> {
-    //         const tabs = item.tags;
-    //         return tabs.map((item, index)=> {
-    //             return (
-    //                 {/*<span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>*/}
-    //             );
-    //         });
-    //     });
-    // }
+    renderTags(item){
+        return item.tags.map((item, index)=>{
+            return(
+                <span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>
+
+            );
+        });
+    }
     renderList(){
         const data = this.props.myfund || [];
         if(data ==! data){
@@ -136,30 +132,15 @@ class Listfundmy extends Component{
         }else {
             return data.map((item, index)=>{
                 const tabs = item.tags;
-                console.log(tabs);
-
-                // for(var i = 0;i<tabs.length;i++) {
-                    console.log(index);
-                //     return tabs[i];
-                // }
                 return(
                     <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
-                        {/*<Link to={`/funddetails/${item.id}`}>*/}
-                        <Link to={`/funddetails`}>
+                        <Link to={`/funddetails/${item.id}`}>
                             <div className="col-lg-6">
                                 <div className="strategy-choiceness-item  clearfix" style={{padding:"20px 0"}}>
                                     <div className="strategy-choiceness-title">
                                         <span className="h4" style={{color:'black'}}>{item.fundName} ({item.fundCode})</span>
                                         <div className="g-my-10">
-                                            {/*tabs.map((item, index)=>{*/}
-                                               {/*return (*/}
-                                                     {/*<span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>*/}
-                                                   {/*);*/}
-                                                {/*})*/}
-                                            <span className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{tabs[index]}</span>
-                                            {/*<span className="strategy-choiceness-tip g-px-15 g-py-5 g-mx-10">有止损线</span>*/}
-                                            {/*<span className="strategy-choiceness-tip g-px-15 g-py-5 g-mx-10">无认购费</span>*/}
-                                            {/*<span className="strategy-choiceness-tip g-px-15 g-py-5 g-ml-10">官方基金</span>*/}
+                                            {this.renderTags(item)}
                                         </div>
                                         <div className="g-py-10 strategy-choiceness-user">
                                             <div className="photo">

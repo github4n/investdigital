@@ -26,9 +26,20 @@ class Issuefund extends Component {
             isModalOpen: false,
             error: null,
             actionResult: '',
-            radio:"",
+            radio1:"",
+            radio2:"",
+            // radio3:"",
+            // radio4:"",
+            // radio5:"",
+            // radio6:"",
         };
         this.FundSubmission= this.FundSubmission.bind(this);
+        this.radioChange1= this.radioChange1.bind(this);
+        this.radioChange2= this.radioChange2.bind(this);
+        // this.radioChange3= this.radioChange3.bind(this);
+        // this.radioChange4= this.radioChange4.bind(this);
+        // this.radioChange5= this.radioChange5.bind(this);
+        // this.radioChange6= this.radioChange6.bind(this);
     }
     hideModal = () => {
         this.setState({
@@ -60,12 +71,26 @@ class Issuefund extends Component {
            this.setState({ isModalOpen: true, error: err, actionResult: err || '提交成功!' });
        });
     }
-    radioChange(e){
-        console.log(e);
-        this.setState({
-            radio:e,
-        });
+    radioChange1(e) {
+        this.setState({radio1:e.target.value});
     }
+    radioChange2(e) {
+        this.setState({radio2:e.target.value});
+    }
+    // radioChange3(e) {
+    //     this.setState({radio3:e.target.value});
+    // }
+    // radioChange4(e) {
+    //     this.setState({radio4:e.target.value});
+    // }
+    // radioChange5(e) {
+    //     this.setState({radio5:e.target.value});
+    // }
+    // radioChange6(e) {
+    //     this.setState({radio6:e.target.value});
+    // }
+
+
     render() {
         return (
             <div>
@@ -103,39 +128,39 @@ class Issuefund extends Component {
                             <ul>
                                 <li className="input-radio">
                                     <h1>01.资产管理规模</h1>
-                                    <input name="size" type="radio" value='1' checked={this.state.radio === 1} onChange={() => this.radioChange.bind(this)}/> <span>300万元以下</span><br/><br/>
-                                    <input name="size" type="radio" value='2' checked={this.state.radio === 2} onChange={() => this.radioChange.bind(this)}/> <span>300万元-500万</span><br/><br/>
-                                    <input name="size" type="radio" value='3' checked={this.state.radio === 3} onChange={() => this.radioChange.bind(this)}/> <span>500万以上</span><br/><br/>
+                                    <input name="size" type="radio" value='1' checked={this.state.radio1 === "1"} onChange={this.radioChange1}/> <span>300万元以下</span><br/><br/>
+                                    <input name="size" type="radio" value='2' checked={this.state.radio1 === "2"} onChange={this.radioChange1}/> <span>300万元-500万</span><br/><br/>
+                                    <input name="size" type="radio" value='3' checked={this.state.radio1 === "3"} onChange={this.radioChange1}/> <span>500万以上</span><br/><br/>
                                 </li>
                                 <li className="input-radio">
                                     <h1>02. 拟发行私募时间？</h1>
-                                    <input name="time" type="radio" value='1' checked={this.state.radio === 1} onChange={() => this.radioChange.bind(this)}/> <span>立刻发行</span><br/><br/>
-                                    <input name="time" type="radio" value='2' checked={this.state.radio === 2} onChange={() => this.radioChange.bind(this)}/> <span>3个月内</span><br/><br/>
-                                    <input name="time" type="radio" value='3' checked={this.state.radio === 3} onChange={() => this.radioChange.bind(this)}/> <span>3-6个月内</span><br/><br/>
-                                    <input name="time" type="radio" value='4' checked={this.state.radio === 4} onChange={() => this.radioChange.bind(this)}/> <span>无法确定</span><br/><br/>
+                                    <input name="time" type="radio" value='1' checked={this.state.radio2 === "1"} onChange={ this.radioChange2}/> <span>立刻发行</span><br/><br/>
+                                    <input name="time" type="radio" value='2' checked={this.state.radio2 === "2"} onChange={this.radioChange2}/> <span>3个月内</span><br/><br/>
+                                    <input name="time" type="radio" value='3' checked={this.state.radio2 === "3"} onChange={this.radioChange2}/> <span>3-6个月内</span><br/><br/>
+                                    <input name="time" type="radio" value='4' checked={this.state.radio2 === "4"} onChange={this.radioChange2}/> <span>无法确定</span><br/><br/>
                                 </li>
-                                <li className="input-radio">
-                                    <h1>03. 是否具备基金从业资格</h1>
-                                    <input name="qualifications" type="radio" value='1' /> <span>1人具备从业资格</span><br/><br/>
-                                    <input name="qualifications" type="radio" value='2' /> <span>2人或2人以上具备从业资格</span><br/><br/>
-                                    <input name="qualifications" type="radio" value='3'/> <span>不具备</span><br/><br/>
-                                </li>
-                                <li className="input-radio">
-                                    <h1>04. 私募运行阶段</h1>
-                                    <input name="private" type="radio" value='1' /> <span>尚未成立公司</span><br/><br/>
-                                    <input name="private" type="radio" value='2' /> <span>初创型私募</span><br/><br/>
-                                    <input name="private" type="radio" value='3' /> <span>成长型私募</span><br/><br/>
-                                </li>
-                                <li className="input-radio">
-                                    <h1>05. 是否在基金业协会备案</h1>
-                                    <input name="qualifications" type="radio" value='1' /> <span>已备案登记</span><br/><br/>
-                                    <input name="qualifications" type="radio" value='2' /> <span>尚未备案登记</span><br/><br/>
-                                </li>
-                                <li className="input-radio">
-                                    <h1>06. 发行产品情况</h1>
-                                    <input name="qualifications" type="radio" value='1' /> <span>未曾发行产品</span><br/><br/>
-                                    <input name="qualifications" type="radio" value='2' /> <span>已发行产品</span><br/><br/>
-                                </li>
+                                {/*<li className="input-radio">*/}
+                                    {/*<h1>03. 是否具备基金从业资格</h1>*/}
+                                    {/*<input name="qualifications" type="radio" value='1' checked={this.state.radio3 === "1"} onChange={this.radioChange3}/> <span>1人具备从业资格</span><br/><br/>*/}
+                                    {/*<input name="qualifications" type="radio" value='2' checked={this.state.radio3 === "2"} onChange={this.radioChange3}/> <span>2人或2人以上具备从业资格</span><br/><br/>*/}
+                                    {/*<input name="qualifications" type="radio" value='3'checked={this.state.radio3 === "3"} onChange={this.radioChange3}/> <span>不具备</span><br/><br/>*/}
+                                {/*</li>*/}
+                                {/*<li className="input-radio">*/}
+                                    {/*<h1>04. 私募运行阶段</h1>*/}
+                                    {/*<input name="private" type="radio" value='1' checked={this.state.radio4 === "1"} onChange={this.radioChange4}/> <span>尚未成立公司</span><br/><br/>*/}
+                                    {/*<input name="private" type="radio" value='2' checked={this.state.radio4 === "2"} onChange={this.radioChange4}/> <span>初创型私募</span><br/><br/>*/}
+                                    {/*<input name="private" type="radio" value='3' checked={this.state.radio4 === "3"} onChange={this.radioChange4}/> <span>成长型私募</span><br/><br/>*/}
+                                {/*</li>*/}
+                                {/*<li className="input-radio">*/}
+                                    {/*<h1>05. 是否在基金业协会备案</h1>*/}
+                                    {/*<input name="qualifications" type="radio" value='1' checked={this.state.radio5 === "1"} onChange={this.radioChange5}/> <span>已备案登记</span><br/><br/>*/}
+                                    {/*<input name="qualifications" type="radio" value='2' checked={this.state.radio5 === "2"} onChange={this.radioChange5}/> <span>尚未备案登记</span><br/><br/>*/}
+                                {/*</li>*/}
+                                {/*<li className="input-radio">*/}
+                                    {/*<h1>06. 发行产品情况</h1>*/}
+                                    {/*<input name="qualifications" type="radio" value='1' checked={this.state.radio6 === "1"} onChange={this.radioChange6}/> <span>未曾发行产品</span><br/><br/>*/}
+                                    {/*<input name="qualifications" type="radio" value='2' checked={this.state.radio6 === "2"} onChange={this.radioChange6}/> <span>已发行产品</span><br/><br/>*/}
+                                {/*</li>*/}
                             </ul>
                             <Link className="form-style" to="/issuefund">
                                 <button className="btn Issuing-fund g-my-50 " onClick={this.FundSubmission}>提交信息</button>
