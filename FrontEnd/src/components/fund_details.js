@@ -16,15 +16,25 @@ class StrategyDetails extends Component{
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
-        // console.log(this.props.match.params.id);
+    componentWillMount() {
         const fundId = this.props.match.params.id;
         this.props.fetchFundDetail({fundId});
+    }
+
+    renderTags(){
+        const data = this.props.all || [];
+       const tags = data.tags;
+        // return tags.map((item, index)=>{
+        //     return(
+        //         <span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>
+        //
+        //     );
+        // });
     }
     render(){
         const data = this.props.all || [];
         const returns = data.returns;
-        console.log(returns);
+        console.log(data.tags);
         return(
             <div className="strategy-details">
                 <Header/>
@@ -35,47 +45,48 @@ class StrategyDetails extends Component{
                                     <div>
                                         <h3 className="h2">{data.issueUserName}</h3>
                                         <div className="g-my-20">
+                                            {/*{this.renderTags()}*/}
                                             <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10">无认购费</span>
                                             <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10" style={{width:110 +'px'}}>自有基金跟投</span>
-                                            <span className="pull-right fund-share g-px-10 g-py-5 text-center g-mr-10">订阅</span>
-                                            <span className="pull-right fund-share g-px-10 g-py-5 text-center g-mr-10">分享</span>
+                                            <span className="pull-right fund-share g-px-10 g-py-5 text-center"><i className="fa fa-share-alt  fund-detail-share"></i>订阅</span>
+                                            <span className="pull-right fund-share g-px-10 g-py-5 text-center "> <i className="fa fa-share-alt  fund-detail-share"></i>分享</span>
                                         </div>
                                     </div>
                                     <hr/>
                                     <div>
                                         <div className="strategy-details-info-main">
                                             <div className="col-lg-5">
-                                                {/*<span className="info1">{data.returns.totalReturn}</span>*/}
+                                                <span className="info1">{data.returns ? data.returns.totalReturn : "--"}%</span>
                                                 <span className="info2">总收益</span>
                                             </div>
                                             <div className="col-lg-7 text-right">
-                                                <span className="info2 g-pt-15">净值日期:2017-11-17</span>
+                                                <span className="info2 g-pt-15">净值日期:{data.startTimeStr}</span>
                                             </div>
                                         </div>
                                         <div className="col-lg-12 strategy-details-info-list">
                                             <ul>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">15.65%</div>
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.monthChange : "--"} %</div>
                                                     <div className="g-py-7 title">近1个月</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    {/*<div className="g-py-7 number">{data.returns.month3Change}</div>*/}
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.month3Change : "--"}%</div>
                                                     <div className="g-py-7 title">近3个月</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">--</div>
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.month3Change : "--"}%</div>
                                                     <div className="g-py-7 title">近1年</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">15.65%</div>
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.thisYearChange : "--"}%</div>
                                                     <div className="g-py-7 title">今年收益</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">15.65%</div>
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.netAssetValue : "--"}%</div>
                                                     <div className="g-py-7 title">单位净值</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">15.65%</div>
+                                                    <div className="g-py-7 number">{data.returns ? data.returns.totalReturn : "--"}%</div>
                                                     <div className="g-py-7 title">累计净值</div>
                                                 </li>
                                             </ul>

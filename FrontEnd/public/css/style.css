@@ -770,6 +770,10 @@ ul{list-style: none;}
     font-style: normal;
     font-size: 14px;
 }
+.ant-radio-wrapper
+{
+    font-size: 14px!important;
+}
 .base-info
 {
     background-color: rgba(250, 250, 250, 1);
@@ -999,4 +1003,14 @@ ul{list-style: none;}
     /*background-image: url('../../public/img/right_u747.png');*/
     /*-webkit-background-size: 100% 100%;*/
     /*background-size: 100%;*/
+}
+.fund-detail-share
+{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #444444;
+    padding-top: 5px;
+    margin-right: 5px;
 }

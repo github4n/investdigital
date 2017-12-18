@@ -5,110 +5,114 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Pagination} from 'nl-design';
+import {fetchStartFund } from '../actions/fund';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
 import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/toolbox';
+
+import 'echarts/lib/component/dataZoom';
+
 import {fetchFundMy } from '../actions/fund';
 
 class Listfundmy extends Component{
     constructor(props) {
         super(props);
         this.state={
-            pageSize:10
+            pageSize:5
         };
-        // this.rendertabs = this.rendertabs.bind(this);
     }
     componentWillMount(){
         const userId = localStorage.getItem('userId');
         this.props.fetchFundMy({userId});
     }
-    componentDidMount() {
-        const data2=[
-            {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }
-        ];
-
+    componentDidUpdate() {
+        const data2 = this.props.myfund || [];
         data2.map((item, i)=> {
-            var myChart = echarts.init(document.getElementById(`main2${i}`));
+            const dataX=item.echart.xAxis;
+            const data=item.echart.yAxis;
+            const dataY1 = data[0].data;
+            const dataY2 = data[1].data;
+            const name1 = data[0].name;
+            const name2 = data[1].name;
+
+            const myChart = echarts.init(document.getElementById(`main2${i}`));
             // 绘制图表
             myChart.setOption({
                 tooltip: {
                     trigger: 'axis'
                 },
-                grid: {
-                    x: 40,
-                    y:40
+                legend:{
+                    data:[name1, name2 ],
+
                 },
-                backgroundColor:"#E2EFF9",
+                grid: {
+                    // left: '3%',
+                    // right: '4%',
+                    // bottom: '3%',
+                    left: '10%',
+                    right: '1%',
+                    bottom: '10%'
+                },
+                dataZoom : [ {
+                    xAxis: 0,
+                    type : 'inside',
+                    start : 0,
+                    end : 100,
+                }, ],
                 xAxis : [
                     {
                         type : 'category',
-                        // boundaryGap : false,
+                        interval:50, //每隔区域20
                         axisLabel :{
-                            interval:0
+
                         },
-                        data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        axisLine:{
+                            show: false,
+                        },
+                        data:dataX
                     }
                 ],
                 yAxis : [
                     {
-                        type : 'value'
-                    }
+                        type : 'value',
+                        axisLine:{
+                            show: false,
+                        },
+                    },
                 ],
                 series : [
                     {
-                        name:'成交',
+                        name:name1,
                         type:'line',
-                        borderColor:'blue',
-                        // smooth:true,
                         itemStyle: {
                             normal: {
-                                areaStyle: {type: 'default'},
                                 lineStyle:{
-                                    color:'red'
+                                    color:'blue',
+                                    opacity:"0.8"
+
                                 }
                             }
                         },
-                        data:[10, 12, 21, 54, 260, 830, 710]
+                        data:dataY1
                     },
                     {
-                        name:'预购',
+                        name:name2,
                         type:'line',
+                        itemStyle: {
+                            normal: {
+                                lineStyle:{
+                                    color:'red',
+                                    opacity:"1"
 
-                        borderColor:'red',
-                        data:[30, 182, 434, 791, 390, 30, 10]
-
-                    },
+                                }
+                            }
+                        },
+                        data:dataY2
+                    }
                 ]
             });
         });

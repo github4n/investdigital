@@ -24,8 +24,6 @@ import 'echarts/lib/component/toolbox';
 import 'echarts/lib/component/dataZoom';
 
 
-
-
 class FundList extends Component {
     constructor(props) {
         super(props);
@@ -45,7 +43,6 @@ class FundList extends Component {
                 const data=item.echart.yAxis;
                 const dataY1 = data[0].data;
                 const dataY2 = data[1].data;
-
                 const name1 = data[0].name;
                 const name2 = data[1].name;
 
@@ -59,9 +56,9 @@ class FundList extends Component {
                         // bottom:0
                     },
                     grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '0%',
+                        left: '10%',
+                        right: '1%',
+                        bottom: '10%'
                     },
                     dataZoom : [ {
                         xAxis: 0,
@@ -72,9 +69,8 @@ class FundList extends Component {
                     xAxis : [
                         {
                             type : 'category',
-                            interval:50, //每隔区域20
+                            interval:20, //每隔区域20
                             axisLabel :{
-
                             },
                             axisLine:{
                                 show: false,
@@ -98,7 +94,7 @@ class FundList extends Component {
                                 normal: {
                                     lineStyle:{
                                         color:'blue',
-                                        opacity:"0.6"
+                                        opacity:"0.8"
 
                                     }
                                 }
@@ -112,7 +108,7 @@ class FundList extends Component {
                                 normal: {
                                     lineStyle:{
                                         color:'red',
-                                        opacity:"0.6"
+                                        opacity:"1"
 
                                     }
                                 }
@@ -126,9 +122,8 @@ class FundList extends Component {
     }
     renderList2(item){
         return item.map((item, index)=>{
-            // console.log(item);
             return(
-                <Link className="col-sm-3 strategy-choiceness-item strategy-choiceness-up id-boxshadow g-mb-20 g-mt-10" to="/strategy/details" key={index}>
+                <Link className="col-sm-3 strategy-choiceness-item strategy-choiceness-up id-boxshadow g-mb-20 g-mt-10" to={`/funddetails/${item.id}`} key={index}>
                     <div className="strategy-choiceness-title">
                         <span className="h4">{item.fundName} {item.fundCode}</span>
                         <span className="pull-right strategy-choiceness-tip g-px-5 g-py-5">收益之王</span>

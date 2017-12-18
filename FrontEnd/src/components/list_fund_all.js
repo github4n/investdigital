@@ -52,9 +52,9 @@ class ListFundall extends Component{
 
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
+                    left: '10%',
+                    right: '5%',
+                    bottom: '10%'
                 },
                 dataZoom : [ {
                     xAxis: 0,
@@ -91,7 +91,7 @@ class ListFundall extends Component{
                             normal: {
                                 lineStyle:{
                                     color:'blue',
-                                    opacity:"0.6"
+                                    opacity:"0.8"
 
                                 }
                             }
@@ -105,7 +105,7 @@ class ListFundall extends Component{
                             normal: {
                                 lineStyle:{
                                     color:'red',
-                                    opacity:"0.6"
+                                    opacity:"1"
 
                                 }
                             }
@@ -154,7 +154,6 @@ class ListFundall extends Component{
             );
         }else {
             return data.map((item, index)=>{
-                const tabs = item.tags;
                 return(
                     <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
                         <Link to={`/funddetails/${item.id}`}>
