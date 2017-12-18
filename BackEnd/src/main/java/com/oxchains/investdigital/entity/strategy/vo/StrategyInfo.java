@@ -32,6 +32,8 @@ public class StrategyInfo extends Strategy{
         this.setStrategyType(strategy.getStrategyType());//类型
         this.setUserId(strategy.getUserId()); //用户id
         this.setScore(strategy.getScore());
+        this.setInitMoney(strategy.getInitMoney());
+        this.setDescription(strategy.getDescription());
     }
     public void setTags(List<StrategyTags> tags){
         this.tags = tags;
@@ -45,6 +47,7 @@ public class StrategyInfo extends Strategy{
         this.dailyReturn = earning.getDailyReturn();
         this.annualizedReturn = earning.getAnnualizedReturn();
         this.totalReturn = earning.getTotalReturn();
+        this.monthlyReturn =earning.getMonthlyReturn();
     }
     public void setSubscribe(Subscribe subscribe){
         this.totalSubscribed = subscribe.getTotalSubscribed();

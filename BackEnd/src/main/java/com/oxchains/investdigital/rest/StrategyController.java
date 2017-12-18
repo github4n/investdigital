@@ -63,17 +63,21 @@ public class StrategyController {
         pojo.setStrategyId(strategyId);
         pojo.setBeginTime(beginTime);
         pojo.setEndTime(endTime);
+        if(beginTime == 0){
+            pojo.setBeginTime(1492963200000L);
+        }
+        if(beginTime == 0){
+            pojo.setEndTime(1513180800000L);
+        }
+
         this.checkPojo(pojo);
         return strategyService.getRunChart(pojo);
     }
     //获取用户持仓
-    @PostMapping("/getUserPosition/{userId}/{pageSize}/{pageNum}/{desc}")
-    public RestResp getUserPosition(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageNum")Integer pageNum,@PathVariable("desc")String desc,@PathVariable("userId")Long userId){
+    @PostMapping("/getUserPosition/{strategyId}")
+    public RestResp getUserPosition(@PathVariable("strategyId")Long strategyId){
         Pojo pojo = new Pojo();
-        pojo.setPageSize(pageSize);
-        pojo.setPageNum(pageNum);
-        pojo.setDesc(desc);
-        pojo.setUserId(userId);
+        pojo.setStrategyId(strategyId);
         this.checkPojo(pojo);
         return strategyService.getUserPosition(pojo);
     }
@@ -88,18 +92,21 @@ public class StrategyController {
         return strategyService.getStrategyComment(strategyId,pageSize,pageNum);
     }
     //获取用户最近交易
-    @PostMapping("/getUserTransaction/{userId}/{pageSize}/{pageNum}/{desc}")
-    public RestResp getStrategyTransaction(@PathVariable("userId") Long userId,@PathVariable("pageSize") Integer pageSize,@PathVariable("pageNum")Integer pageNum,@PathVariable("desc")String desc){
+    @PostMapping("/getUserTransaction/{strategyId}")
+    public RestResp getStrategyTransaction(@PathVariable("strategyId")Long  strategyId){
         Pojo pojo = new Pojo();
-        pojo.setUserId(userId);
-        pojo.setPageNum(pageNum);
-        pojo.setPageSize(pageSize);
-        pojo.setDesc(desc);
+        pojo.setStrategyId(strategyId);
         this.checkPojo(pojo);
         return strategyService.getUserTransaction(pojo);
     }
     @RequestMapping("/getStrategyFactors/{strategyId}/{startTime}/{endTime}")
-    public RestResp getStrategyFactors(@PathVariable("strategyId") Long strategyId,@PathVariable("startTime")Long startTime,@PathVariable("endTime")Long endTime){
+    public RestResp getStrategyFactors(@PathVariable("strategyId") Long strategyId,@PathVariable("startTime") Long startTime,@PathVariable("endTime")Long endTime){
+        if(endTime == 0){
+            endTime = 1493568000000L;
+        }
+        if(startTime == 0){
+            startTime = 1488297600000L;
+        }
         return strategyService.getStrategyFactors(strategyId,startTime,endTime);
     }
     //获取策略brinsion分析
@@ -123,10 +130,14 @@ public class StrategyController {
            pojo.setDesc("id");
        }
        if(pojo.getBeginTime() == 0){
-           pojo.setBeginTime(1513180800000L);
-       }
-       if(pojo.getEndTime() == 0){
            pojo.setEndTime(1513094400000L);
        }
+        if(pojo.getEndTime() == 0){
+            pojo.setBeginTime(1513180800000L);
+        }
+    }
+    @RequestMapping("/data/{id}")
+    public String data(Long id){
+        return strategyService.run(id);
     }
 }

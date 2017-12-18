@@ -335,7 +335,8 @@ public class StrategyService {
     public RestResp getRunChart(Pojo pojo) {
         List<EarningInfo> earningInfos = null;
         try {
-            earningInfos = earningInfoDao.findAllByStrategyIdAndTimeStampBetween(pojo.getStrategyId(), pojo.getBeginTime(), pojo.getEndTime());
+            Sort sort = new Sort(Sort.Direction.ASC,"timeStamp");
+            earningInfos = earningInfoDao.findAllByStrategyIdAndTimeStampBetween(pojo.getStrategyId(), pojo.getBeginTime(), pojo.getEndTime(),sort);
         } catch (Exception e) {
             LOG.error("get run chart faild :{}",e.getMessage(),e);
             return  RestResp.fail();
@@ -345,7 +346,8 @@ public class StrategyService {
     public  List<EarningInfo> getRunChartAll(Pojo pojo) {
         List<EarningInfo> earningInfos = null;
         try {
-            earningInfos = earningInfoDao.findAllByStrategyIdAndTimeStampBetween(pojo.getStrategyId(), pojo.getBeginTime(), pojo.getEndTime());
+            Sort sort = new Sort(Sort.Direction.ASC,"timeStamp");
+            earningInfos = earningInfoDao.findAllByStrategyIdAndTimeStampBetween(pojo.getStrategyId(), pojo.getBeginTime(), pojo.getEndTime(),sort);
         } catch (Exception e) {
             LOG.error("get run chart faild :{}",e.getMessage(),e);
         }
@@ -356,13 +358,11 @@ public class StrategyService {
     * 获取用户持仓
     * */
     public RestResp getUserPosition(Pojo pojo){
-        List<UserPosition> content = null;
-        Page<UserPosition> userPositions = null;
+        List<UserPosition> userPositions = null;
         try {
-        Pageable pageable = new PageRequest(pojo.getPageNum()-1,pojo.getPageSize(),new Sort(Sort.Direction.DESC,pojo.getDesc()));
-             userPositions = userPositionDao.findAll(pageable);
-             content = userPositions.getContent();
-            for (UserPosition userPosition:content) {
+            Strategy strategy = strategyDao.findOne(pojo.getStrategyId());
+            userPositions = userPositionDao.findByUserId(strategy.getUserId());
+            for (UserPosition userPosition:userPositions) {
                 Fund fund = fundRepo.findOne(userPosition.getFundId());
                 userPosition.setFundName(fund.getFundName());
                 userPosition.setFundSymbol(fund.getFundSymbol());
@@ -370,25 +370,32 @@ public class StrategyService {
         } catch (Exception e) {
             LOG.error("get user position error : {}",e.getMessage(),e);
         }
-        return RestRespPage.success(content,userPositions.getTotalElements());
+        return RestResp.success(userPositions);
     }
     /**
      * 获取用户的交易情况
      * */
     public RestResp getUserTransaction(Pojo pojo){
         try {
-            Pageable pageable = new PageRequest(pojo.getPageNum()-1,pojo.getPageSize(),new Sort(Sort.Direction.DESC,"time"));
-            Page<UserTransaction> page = transactionDao.findByUserId(pojo.getUserId(),pageable);
-            List<UserTransaction> content = page.getContent();
-            List<TxInfo> infoList = new ArrayList<>(content.size());
+            Strategy strategy = strategyDao.findOne(pojo.getStrategyId());
+            List<UserTransaction> transactionList = transactionDao.findByUserId(strategy.getUserId());
+            List<TxInfo> infoList = new ArrayList<>(transactionList.size());
             TxInfo txInfo = null;
-            for (UserTransaction transaction:content) {
+            long i = 0;
+            for (UserTransaction transaction:transactionList) {
+                Fund fund = fundRepo.findOne(transaction.getFundId());
+                transaction.setFundName(fund.getFundName());
+                transaction.setFundSymbol(fund.getFundSymbol());
                 txInfo = new TxInfo();
-                txInfo.setUserTransaction(transaction);
-                txInfo.setFund(fundRepo.findOne(transaction.getFundId()));
+                transaction.setTxTypeValue(transaction.getTxType() == 1?"买入":"卖出");
+                txInfo.setTime(transaction.getTime());
+                List<UserTransaction> userTransactions = new ArrayList<>();
+                userTransactions.add(transaction);
+                txInfo.setChildren(userTransactions);
+                txInfo.setId(++i);
                 infoList.add(txInfo);
             }
-            return RestRespPage.success(infoList,page.getTotalElements());
+            return RestResp.success(infoList);
         } catch (Exception e) {
             LOG.error("get user transaction faild : {}",e.getMessage(),e);
         }
@@ -429,9 +436,14 @@ public class StrategyService {
             List<Portfolio> portfolioList = protfolioDao.findByStrategyIdAndTimeBetween(strategyId, startTime, endTime);
             factorsInfoList = new ArrayList<>(benchmarkList.size());
             FactorsInfo factorsInfo = null;
+            List<String> stringList = new ArrayList<>(list.size());
+            for (Factors f : list) {
+                stringList.add(f.getName());
+            }
+
             for (int i = 0; i <benchmarkList.size();i++){
                 factorsInfo = new FactorsInfo();
-                factorsInfo.setFactors(list);
+                factorsInfo.setFactors(stringList);
                 factorsInfo.setBenchmark(benchmarkList.get(i).getValue().split(","));
                 factorsInfo.setPortfolio(portfolioList.get(i).getValue().split(","));
                 factorsInfo.setTime(DateUtil.stampToDate(portfolioList.get(i).getTime(),"yyyy-MM-dd"));
@@ -442,27 +454,26 @@ public class StrategyService {
         }
         return RestRespPage.success(factorsInfoList);
     }
-    public String run(){
-        List<String> t = new ArrayList<>();
-        t.add("很好啊");t.add("不错啊");t.add("还可以");t.add("太坑了");t.add("这什么鬼东西");t.add("我去");t.add("能六个微信么");
-        t.add("好厉害");t.add("怎么不回复啊");t.add("楼上的呢");t.add("??");t.add(".....");t.add("这能挣多少钱啊");t.add("膜拜");
-        t.add("牛逼");t.add("闷声发大财");t.add("小气");t.add("看他的秘诀");t.add("555");t.add("666");t.add("我的天");
+    public String run(Long id){
         Random random = new Random();
         Iterator<Strategy> iterator = strategyDao.findAll().iterator();
-        List<Strategy> strategyList = IteratorUtils.toList(iterator);
-        Iterator<User> iterator1 = userRepo.findAll().iterator();
-        List<User> userList = IteratorUtils.toList(iterator1);
-        for (Strategy strategy: strategyList) {
-             int k = random.nextInt(30);
-            for (int i = 0;i<k;i++){
-                StrategyComment strategyComment = new StrategyComment();
-                strategyComment.setStrategyId(strategy.getId());
-                strategyComment.setUserId(userList.get(random.nextInt(40)).getId());
-                strategyComment.setContent(t.get(random.nextInt(21)));
-                strategyComment.setTime(System.currentTimeMillis());
-                commentDao.save(strategyComment);
+        List<Strategy> list = IteratorUtils.toList(iterator);
+            Long timeStamp = 1490976000000L;
+            Double earing = 0D;
+            while(timeStamp<1513526400000L){
+                if (random.nextInt(2)==1){
+                    earing =earing + random.nextDouble();
+                }
+                else{
+                    earing =earing - random.nextDouble();
+                }
+                EarningInfo earningInfo = new EarningInfo();
+                earningInfo.setEarning(earing);
+                earningInfo.setStrategyId(id);
+                earningInfo.setTimeStamp(timeStamp);
+                earningInfoDao.save(earningInfo);
+                timeStamp += 60000;
             }
-        }
         return "s";
     }
 }

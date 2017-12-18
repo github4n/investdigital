@@ -103,12 +103,4 @@ public class DateUtil {
         Date date = sdf.parse(str);
         return  date.getTime();
     }
-
-    public static void main(String[] args) throws Exception{
-        System.out.println(getTimeMillis("2017-12-10","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2017-12-13","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2017-12-15","yyyy-MM-dd"));
-        System.out.println(getTimeMillis("2017-12-16","yyyy-MM-dd"));
-
-    }
 }

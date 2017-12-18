@@ -14,5 +14,7 @@ import java.util.List;
 @Repository
 public interface UserPositionDao extends CrudRepository<UserPosition,Long>{
     Page<UserPosition> findAll(Pageable pageable);
+   List<UserPosition> findByUserId(Long userId);
     List<UserPosition> findByUserIdAndAndFundId(Long userId,Long fundId);
+
 }

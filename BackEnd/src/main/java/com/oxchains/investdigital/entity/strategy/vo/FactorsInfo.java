@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class FactorsInfo {
     private String time;
-    private List<Factors> factors;
+    private List<String> factors;
     private String benchmark[];
     private String portfolio[];
     private Brinson brinson;
