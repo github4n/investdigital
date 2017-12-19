@@ -57,6 +57,7 @@ hr{
     background-color: rgba(255, 255, 255, 1);
     border: none;
     margin: 0 15px;
+    cursor: pointer;
 }
 .strategy-choiceness-user{
     position: relative;
@@ -183,9 +184,13 @@ hr{
 }
 .rank{
     position: absolute;
-    top: 84px;
-    left: 44px;
+    top: 48px;
+    left: 43px;
     font-size: 20px;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    text-align: center;
 }
 
 /*策略详情*/
@@ -354,4 +359,10 @@ hr{
 }
 .slick-prev{
     left: 4px;
+}
+.bar-figure .title{
+    position: absolute;
+    top: 45px;
+    left: 26px;
+    font-weight: 500;
 }

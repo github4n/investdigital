@@ -143,13 +143,6 @@ class FundIssuance extends Component {
                            </div>
                            <div className='container col-lg-12 clear g-my-30'>
                                {rowLink.map(this.rowRender)}
-                               {/*<div className='col-lg-4 fa-bz-3 pull-right'>*/}
-                                   {/*<div className='text-center'>*/}
-                                       {/*<h2>资本引介</h2>*/}
-                                       {/*<hr/>*/}
-                                   {/*</div>*/}
-                                   {/*<p className="g-px-50">专属天使计划种子基金和成长基金，为优秀基金团队提供资金支持</p>*/}
-                               {/*</div>*/}
                            </div>
                        </div>
                    </div>

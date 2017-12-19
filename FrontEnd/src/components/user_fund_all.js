@@ -10,7 +10,7 @@ import echarts from 'echarts/lib/echarts';
 import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
-
+import {fetchFundMy } from '../actions/fund';
 
 class UserFundall extends Component{
     constructor(props) {
@@ -19,92 +19,104 @@ class UserFundall extends Component{
            index:0
         };
     }
-    componentDidMount() {
-        const data=[
-            {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }
-        ];
-
+    componentWillMount(){
+        const userId = localStorage.getItem('userId');
+        this.props.fetchFundMy({userId});
+    }
+    componentDidUpdate() {
+        const data = this.props.myfund || [];
         data.map((item, i)=> {
-            var myChart = echarts.init(document.getElementById(`main${i}`));
+            const dataX=item.echart.xAxis;
+            const data=item.echart.yAxis;
+            const dataY1 = data[0].data;
+            const dataY2 = data[1].data;
+            const name1 = data[0].name;
+            const name2 = data[1].name;
+
+            const myChart = echarts.init(document.getElementById(`main${i}`));
             // 绘制图表
             myChart.setOption({
                 tooltip: {
                     trigger: 'axis'
                 },
-                grid: {
-                    x: 40,
-                    y:40
+                legend:{
+                    data:[name1, name2 ],
+
                 },
-                backgroundColor:"#E2EFF9",
+                grid: {
+                    // left: '3%',
+                    // right: '4%',
+                    // bottom: '3%',
+                    left: '10%',
+                    right: '1%',
+                    bottom: '10%'
+                },
+                dataZoom : [ {
+                    xAxis: 0,
+                    type : 'inside',
+                    start : 0,
+                    end : 100,
+                }, ],
                 xAxis : [
                     {
                         type : 'category',
-                        // boundaryGap : false,
+                        interval:50, //每隔区域20
                         axisLabel :{
-                            interval:0
+
                         },
-                        data : ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        axisLine:{
+                            show: false,
+                        },
+                        data:dataX
                     }
                 ],
                 yAxis : [
                     {
-                        type : 'value'
-                    }
+                        type : 'value',
+                        axisLine:{
+                            show: false,
+                        },
+                    },
                 ],
                 series : [
                     {
-                        name:'成交',
+                        name:name1,
                         type:'line',
-                        borderColor:'blue',
-                        // smooth:true,
                         itemStyle: {
                             normal: {
-                                areaStyle: {type: 'default'},
                                 lineStyle:{
-                                    color:'red'
+                                    color:'blue',
+                                    opacity:"0.8"
+
                                 }
                             }
                         },
-                        data:[10, 12, 21, 54, 260, 830, 710]
+                        data:dataY1
                     },
                     {
-                        name:'预购',
+                        name:name2,
                         type:'line',
+                        itemStyle: {
+                            normal: {
+                                lineStyle:{
+                                    color:'red',
+                                    opacity:"1"
 
-                        borderColor:'red',
-                        data:[30, 182, 434, 791, 390, 30, 10]
-
-                    },
+                                }
+                            }
+                        },
+                        data:dataY2
+                    }
                 ]
             });
+        });
+    }
+    renderTags(item){
+        return item.tags.map((item, index)=>{
+            return(
+                <span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>
+
+            );
         });
     }
     handleClick (index) {
@@ -125,94 +137,68 @@ class UserFundall extends Component{
         });
     }
     renderList(){
-        const data=[
-            {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }, {
-                title:"希瓦圣剑1号（P000039)",
-                name:"梁宏",
-                all:"29.31%",
-                danwei:"2.2451",
-                zhangdie:"+109.14%",
-                time:"2017-6-20"
-            }
-        ];
-
-        return data.map((item, index)=>{
-            return(
-                <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
-                    <Link to="/strategy/details">
-                        <div className="col-lg-6">
-                            <div className="strategy-choiceness-item  clearfix" style={{padding:"20px 0"}}>
-                                <div className="strategy-choiceness-title">
-                                    <span className="h4" style={{color:'black'}}>{item.title}</span>
-                                    <div className="g-my-10">
-                                        <span className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">自有基金跟投</span>
-                                        <span className="strategy-choiceness-tip g-px-15 g-py-5 g-mx-10">有止损线</span>
-                                        <span className="strategy-choiceness-tip g-px-15 g-py-5 g-mx-10">无认购费</span>
-                                        <span className="strategy-choiceness-tip g-px-15 g-py-5 g-ml-10">官方基金</span>
-                                    </div>
-                                    <div className="g-py-10 strategy-choiceness-user">
-                                        <div className="photo">
-                                            <img src="/public/img/touxiang.png" alt=""/>
-                                            <span className="g-pl-5">{item.name}</span>
-                                        </div>
-                                        <span className="my-fund-item-line"></span>
-                                    </div>
-                                    <div className="strategy-choiceness-number row g-pt-10 text-center">
-                                        <div className="col-lg-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.all}</h5>
-                                            <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>总收益</h5>
-                                        </div>
-                                        <div className="col-lg-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.danwei}</h5>
-                                            <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>单位净值</h5>
-                                        </div>
-                                        <div className="col-lg-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.zhangdie}</h5>
-                                            <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>涨跌幅</h5>
-                                        </div>
-                                        <div className="col-lg-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.time}</h5>
-                                            <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>开始时间</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 g-px-0">
-                            <div className=" my-fund-border g-px-20 g-mt-20" >
-                                <div className="col-lg-4 g-pl-30" style={{height:"180px"}}>
-                                    <ul className="my-fund-echart">
-                                        {this.renderSelect()}
-                                    </ul>
-                                </div>
-                                <div className="col-lg-8" id={`main${index}`} style={{height:"180px"}}></div>
-                            </div>
-                        </div>
-                    </Link>
+        const data = this.props.myfund || [];
+        if(data ==! data){
+            return (
+                <li className="text-center">
+                    <h1> {this.props.error}</h1>
                 </li>
             );
-        });
+        }else {
+            return data.map((item, index) => {
+                return (
+                    <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
+                        <Link to="/strategy/details">
+                            <div className="col-lg-6">
+                                <div className="strategy-choiceness-item  clearfix" style={{padding: "20px 0"}}>
+                                    <div className="strategy-choiceness-title">
+                                        <span className="h4" style={{color: 'black'}}>{item.fundName} ({item.fundCode})</span>
+                                        <div className="g-my-10">
+                                            {this.renderTags(item)}
+                                        </div>
+                                        <div className="g-py-10 strategy-choiceness-user">
+                                            <div className="photo">
+                                                <img src="/public/img/touxiang.png" alt=""/>
+                                                <span className="g-pl-5">{item.issueUserName}</span>
+                                            </div>
+                                            <span className="my-fund-item-line"></span>
+                                        </div>
+                                        <div className="strategy-choiceness-number row g-pt-10 text-center">
+                                            <div className="col-lg-3" style={{padding:0}}>
+                                                <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.returns.totalReturn}</h5>
+                                                <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>总收益</h5>
+                                            </div>
+                                            <div className="col-lg-3" style={{padding:0}}>
+                                                <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.returns.netAssetValue}</h5>
+                                                <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>单位净值</h5>
+                                            </div>
+                                            <div className="col-lg-3" style={{padding:0}}>
+                                                <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.returns.untilNowChange}</h5>
+                                                <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>涨跌幅</h5>
+                                            </div>
+                                            <div className="col-lg-3" style={{padding:0}}>
+                                                <h5 className="g-pt-5"  style={{fontSize:"16px", color:'#FC5D45'}}>{item.startTimeStr}</h5>
+                                                <h5 className="g-pt-5" style={{fontSize:"14px", color:'#6C6C6C'}}>开始时间</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6 g-px-0">
+                                <div className=" my-fund-border g-px-20 g-mt-20">
+                                    <div className="col-lg-4 g-pl-30" style={{height: "180px"}}>
+                                        <ul className="my-fund-echart">
+                                            {this.renderSelect()}
+                                        </ul>
+                                    </div>
+                                    <div className="col-lg-8" id={`main${index}`} style={{height: "180px"}}></div>
+                                </div>
+                            </div>
+                        </Link>
+                    </li>
+                );
+            });
+        }
     }
     render(){
         return(
@@ -230,8 +216,9 @@ class UserFundall extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        myfund:state.fund.myfund,
+        error:state.fund.error
     };
 }
 
-export default connect(mapStateToProps, {})(UserFundall);
+export default connect(mapStateToProps, { fetchFundMy })(UserFundall);

@@ -148,7 +148,9 @@ class Signup extends Component {
                                 <div className="">
                                     <button type="submit" className="btn form-register" style={{color:'white'}}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
                                 </div>
-                                {this.renderAlert()}
+                                <div style={{width:'85%'}}>
+                                    {this.renderAlert()}
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -166,8 +168,8 @@ class Signup extends Component {
                         </p>
                     </ModalBody>
                     <ModalFooter>
-                        <button className='btn btn-default' onClick={this.hideModal}>
-                            <a href={url}>关闭</a>
+                        <button className='btn'  onClick={this.hideModal}>
+                            <a style={{color:'#444444'}} href={url}>关闭</a>
                         </button>
                     </ModalFooter>
                 </Modal>

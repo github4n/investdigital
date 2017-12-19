@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {fetchStrategyPlate} from '../../actions/strategy';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
@@ -21,10 +22,18 @@ class StratePie extends Component{
         };
     }
     componentWillMount() {
-
+        const strategyId = this.props.strategyId;
+        this.props.fetchStrategyPlate({strategyId});
     }
-    componentDidMount() {
-        var myChart = echarts.init(document.getElementById("pie-figure"));
+    componentDidUpdate() {
+        let data=[], pieItem=[], legend=[], legendItem=[];
+        this.props.strategy_plate.sectorsList.slice(0, 6).map((item, index)=>{
+            pieItem={value:item.value, name:item.name};
+            legendItem={name:item.name, icon: 'circle'};
+            data.push(pieItem);
+            legend.push(legendItem);
+        });
+        let myChart = echarts.init(document.getElementById("pie-figure"));
         // 绘制图表
         myChart.setOption({
             tooltip: {
@@ -38,23 +47,11 @@ class StratePie extends Component{
                 x: 'right',
                 itemWidth: 10,             // 图例图形宽度
                 itemHeight: 10,
-                data:[
-                    {
-                        name:'直接访问', icon: 'circle'
-                    },  {
-                        name:'邮件营销', icon: 'circle'
-                    }, {
-                        name:'联盟广告', icon: 'circle'
-                    }, {
-                        name:'视频广告', icon: 'circle'
-                    }, {
-                        name:'搜索引擎', icon: 'circle'
-                    }
-                ]
+                data:legend
             },
             series: [
                 {
-                    name:'访问来源',
+                    name:'收益',
                     type:'pie',
                     radius: ['30%', '70%'],
                     center: ['50%', '40%'],
@@ -77,49 +74,18 @@ class StratePie extends Component{
                             show: false
                         }
                     },
-                    data:[
-                        {
-                            value:600,
-                            name:'直接访问',
-                            itemStyle:{
-                                normal:{
-                                    color:'#d43941',
-                                }
-                            }
-                        }, {
-                            value:310,
-                            name:'邮件营销',
-                            itemStyle:{
-                                normal:{
-                                    color:'#dd514e',
-                                }
-                            }
-                        }, {
-                            value:234,
-                            name:'联盟广告',
-                            itemStyle:{
-                                normal:{
-                                    color:'#e07b6d',
-                                }
-                            }
-                        }, {
-                            value:135,
-                            name:'视频广告',
-                            itemStyle:{
-                                normal:{
-                                    color:'#ffb4a2',
-                                }
-                            }
-                        }, {
-                            value:48,
-                            name:'搜索引擎',
-                            itemStyle:{
-                                normal:{
-                                    color:'#ffdbd2',
-                                }
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {type: 'default'},
+                            color: function(params) {
+                                let colorList = [
+                                    '#F5422E', '#D43941', '#DD514E', '#E07B6D', '#FFB4A2', '#FFDBD2'
+                                ];
+                                return colorList[params.dataIndex];
                             }
                         }
-                    ]
+                    },
+                    data:data
                 }
             ]
         });
@@ -138,8 +104,8 @@ class StratePie extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        strategy_plate:state.strategy.strategy_plate
     };
 }
 
-export default connect(mapStateToProps, {})(StratePie);
+export default connect(mapStateToProps, {fetchStrategyPlate})(StratePie);
