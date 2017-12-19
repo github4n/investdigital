@@ -75,7 +75,7 @@ export function fetchStrategyInfo({strategyId}) {
     return function (dispatch) {
         axios.post(`${ROOT_STRATEGY}/strategy/catStrategyInfo/${strategyId}`)
             .then(response => {
-                // console.log(response);
+                console.log(response);
                 if (response.data.status == 1) {
                     dispatch({ type: FETCH_STRATEGY_INFO, payload: response.data.data});
                 }
@@ -88,9 +88,9 @@ export function fetchStrategyInfo({strategyId}) {
 /**
  * 获取日收益
  */
-export function fetchEarningDay({pageSize, pageNum, desc}) {
+export function fetchEarningDay({desc}) {
     return function (dispatch) {
-        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${pageSize}/${pageNum}/${desc}`)
+        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${desc}`)
             .then(response => {
                 if (response.data.status == 1) {
                     dispatch({ type: FETCH_EARNINGS_DAY, payload: response.data.data});
@@ -102,9 +102,9 @@ export function fetchEarningDay({pageSize, pageNum, desc}) {
 /**
  * 获取周收益
  */
-export function fetchEarningWeekly({pageSize, pageNum, desc}) {
+export function fetchEarningWeekly({desc}) {
     return function (dispatch) {
-        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${pageSize}/${pageNum}/${desc}`)
+        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${desc}`)
             .then(response => {
                 // console.log(response);
                 if (response.data.status == 1) {
@@ -118,9 +118,9 @@ export function fetchEarningWeekly({pageSize, pageNum, desc}) {
 /**
  * 获取月收益
  */
-export function fetchEarningMonthly({pageSize, pageNum, desc}) {
+export function fetchEarningMonthly({desc}) {
     return function (dispatch) {
-        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${pageSize}/${pageNum}/${desc}`)
+        axios.post(`${ROOT_STRATEGY}/strategy/getStrategyTrunk/${desc}`)
             .then(response => {
                 // console.log(response);
                 if (response.data.status == 1) {

@@ -16,10 +16,8 @@ class EarningsMonthly extends Component{
         };
     }
     componentWillMount() {
-        const pageNum=this.state.pageNum;
-        const pageSize=this.state.pageSize;
         const desc=this.state.desc;
-        this.props.fetchEarningMonthly({pageSize, pageNum, desc});
+        this.props.fetchEarningMonthly({desc});
     }
     renderList(){
         return this.props.earnings_monthly.map((item, index)=>{
@@ -31,7 +29,7 @@ class EarningsMonthly extends Component{
                         <span className="g-pl-10">{item.loginname}</span>
                     </div>
                     <div className="col-sm-2">
-                        {((item.monthlyReturn)*100).toFixed(2)}%
+                        {(item.monthlyReturn).toFixed(2)}%
                     </div>
                 </li>
             );
