@@ -23,7 +23,7 @@ class UserFundmy extends Component{
         };
     }
     componentWillMount() {
-      this.props.fetchFundMy();
+      // this.props.fetchFundMy();
     }
     componentDidMount() {
         const data1=[
@@ -238,4 +238,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {fetchFundMy })(UserFundmy);
+export default connect(mapStateToProps, {fetchFundMy})(UserFundmy);
