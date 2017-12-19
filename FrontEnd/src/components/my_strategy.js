@@ -5,21 +5,28 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Header from './common/header-all';
 import {Table, Pagination} from 'nl-design';
+import {fetchUserStrategy} from '../actions/strategy';
 
 class MyStrategy extends Component{
     constructor(props) {
         super(props);
         this.state={
-            pageSize:10
+            pageNum:1,
+            pageSize:10,
+            desc:'id'
         };
     }
     componentWillMount() {
-
+        const userId=243461;
+        const pageNum=this.state.pageNum;
+        const pageSize=this.state.pageSize;
+        const desc=this.state.desc;
+        this.props.fetchUserStrategy({pageSize, pageNum, desc, userId});
     }
     render(){
         const columns = [{
             title: '名称',
-            key: 'name',
+            key: 'title',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571"},
             render: (id) => {
@@ -27,17 +34,17 @@ class MyStrategy extends Component{
             }
         }, {
             title: '分类',
-            key: 'classify',
+            key: 'strategyType',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571"},
         }, {
             title: '备注',
-            key: 'remark',
+            key: 'description',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571", color:"#4374F9"},
         }, {
             title: '最后修改时间',
-            key: 'time',
+            key: 'lastUpdateTime',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571"},
         }, {
@@ -54,28 +61,18 @@ class MyStrategy extends Component{
                 );
             },
         }];
-        const data = [{
-            key: '1',
-            name: 'John Brown',
-            classify: 32,
-            remark: 'New York No. 1 Lake Park',
-            time:'2017-11-23 14:42:23'
-        }, {
-            key: '2',
-            name: 'Jim Green',
-            classify: 42,
-            remark: 'London No. 1 Lake Park',
-            time:'2017-11-23 14:42:23'
-        }, {
-            key: '3',
-            name: 'Joe Black',
-            classify: 32,
-            remark: 'Sidney No. 1 Lake Park',
-            time:'2017-11-23 14:42:23'
-        }];
         const style = {
             tableProps: { className: 'no-striped text-center'},
         };
+        const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
+        if(this.props.strategy_user===null){
+            return(<div className="text-center h3">loading</div>);
+        }
+        const data=this.props.strategy_user.data;
+        data.map((item, index)=>{
+            item.lastUpdateTime == new Date(item.lastUpdateTime).toLocaleDateString();
+        });
+        console.log(data);
         return(
             <div>
                 <Header/>
@@ -96,7 +93,7 @@ class MyStrategy extends Component{
                         <Table columns={columns} dataSource={data} tableStyle={style.tableStyle} tableClass={style.tableProps} />
                     </div>
                     <div className="strategy-table-pagination">
-                        <Pagination  defaultPageSize={this.state.pageSize} total={100}/>
+                        <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}/>
                     </div>
                 </div>
             </div>
@@ -106,7 +103,7 @@ class MyStrategy extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        strategy_user:state.strategy.strategy_user
     };
 }
-export default connect(mapStateToProps, {})(MyStrategy);
+export default connect(mapStateToProps, {fetchUserStrategy})(MyStrategy);
