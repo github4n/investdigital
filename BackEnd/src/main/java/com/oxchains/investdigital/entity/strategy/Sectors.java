@@ -2,10 +2,7 @@ package com.oxchains.investdigital.entity.strategy;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by xuqi on 2017/12/15.
@@ -17,4 +14,6 @@ public class Sectors {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    @Transient
+    private double value;
 }

@@ -1,4 +1,5 @@
 package com.oxchains.investdigital.entity.strategy.vo;
+import com.oxchains.investdigital.common.StrategyParam;
 import com.oxchains.investdigital.entity.User;
 import com.oxchains.investdigital.entity.strategy.*;
 import lombok.Data;
@@ -20,16 +21,17 @@ public class StrategyInfo extends Strategy{
     private String loginname; //用户名
     private String imageUrl; //头像
     private List<StrategyTags> tags; //标签
-    List<EarningInfo> earningInfoList;
+    private EarningData earningData;
+    private String strategyTypeValue;
     public void setStrategy(Strategy strategy){
         this.setId(strategy.getId());          //策略编号
         this.setBeginTime(strategy.getBeginTime());//发布开始时间
         this.setLastUpdateTime(strategy.getLastUpdateTime());//最后一次修改时间
-        this.setMaxDrawdown(strategy.getMaxDrawdown());//最大回撤
-        this.setRank(strategy.getRank());//排名
+        this.setMaxDrawdown(strategy.getMaxDrawdown()*100);//最大回撤
         this.setStrategyRunId(strategy.getStrategyRunId());//涨跌图 图片id
         this.setTitle(strategy.getTitle()); //标题
         this.setStrategyType(strategy.getStrategyType());//类型
+        this.strategyTypeValue = StrategyParam.StrategyType.getValue(strategy.getStrategyType());
         this.setUserId(strategy.getUserId()); //用户id
         this.setScore(strategy.getScore());
         this.setInitMoney(strategy.getInitMoney());
@@ -43,11 +45,11 @@ public class StrategyInfo extends Strategy{
         this.imageUrl = user.getImage();
     }
     public void setEarning(Earning earning){
-        this.weeklyReturn = earning.getWeeklyReturn();
-        this.dailyReturn = earning.getDailyReturn();
-        this.annualizedReturn = earning.getAnnualizedReturn();
-        this.totalReturn = earning.getTotalReturn();
-        this.monthlyReturn =earning.getMonthlyReturn();
+        this.weeklyReturn = earning.getWeeklyReturn()*100;
+        this.dailyReturn = earning.getDailyReturn()*100;
+        this.annualizedReturn = earning.getAnnualizedReturn()*100;
+        this.totalReturn = earning.getTotalReturn()*100;
+        this.monthlyReturn =earning.getMonthlyReturn()*100;
     }
     public void setSubscribe(Subscribe subscribe){
         this.totalSubscribed = subscribe.getTotalSubscribed();
