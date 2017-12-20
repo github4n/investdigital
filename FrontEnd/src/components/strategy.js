@@ -21,7 +21,7 @@ class Strategy extends Component{
                         <span className="strategy-line"></span>
                     </div>
                 </div>
-                <div className="strategy-content container g-pt-100 g-pb-150">
+                <div className="strategy-content container strategy-container g-pt-100 g-pb-150">
                     <div className="row strategy-choiceness">
                         <div className="col-sm-12">
                             <StrategyGreat/>

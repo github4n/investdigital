@@ -16,10 +16,8 @@ class EarningsDay extends Component{
         };
     }
     componentWillMount() {
-        const pageNum=this.state.pageNum;
-        const pageSize=this.state.pageSize;
         const desc=this.state.desc;
-        this.props.fetchEarningDay({pageSize, pageNum, desc});
+        this.props.fetchEarningDay({desc});
     }
     renderList(){
         return this.props.earnings_day.map((item, index)=>{
@@ -32,7 +30,7 @@ class EarningsDay extends Component{
                         <span className="g-pl-10">{item.loginname}</span>
                     </div>
                     <div className="col-sm-2">
-                        {((item.dailyReturn)*100).toFixed(2)}%
+                        {(item.dailyReturn).toFixed(2)}%
                     </div>
                 </li>
             );
