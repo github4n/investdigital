@@ -1,6 +1,7 @@
 package com.oxchains.investdigital.rest;
 
 import com.oxchains.investdigital.common.RestResp;
+import com.oxchains.investdigital.common.RestRespPage;
 import com.oxchains.investdigital.entity.FundIssuance;
 import com.oxchains.investdigital.entity.PurchaserInfo;
 import com.oxchains.investdigital.service.FundService;
@@ -32,12 +33,12 @@ public class FundController {
     }
 
     @GetMapping(value = "/allFunds")
-    public RestResp allFunds(String change,String status, String character, String type, String strategy){
-        return fundService.getFunds();
+    public RestResp allFunds(String change, String status, String character, String type, String strategy, Integer pageSize, Integer pageNum){
+        return fundService.getFunds(pageSize,pageNum);
     }
     @GetMapping(value = "/myFunds")
-    public RestResp myFunds(Long userId){
-        return fundService.getMyFunds(userId);
+    public RestResp myFunds(Long userId,Integer pageSize,Integer pageNum){
+        return fundService.getMyFunds(userId,pageSize,pageNum);
     }
 
     @GetMapping(value = "/change")
@@ -50,8 +51,8 @@ public class FundController {
         return fundService.getFundInfo(fundId);
     }
     @GetMapping(value = "/comment")
-    public RestResp fundComment(Long fundId){
-        return fundService.fundComment(fundId);
+    public RestResp fundComment(Long fundId,Integer pageSize,Integer pageNum){
+        return fundService.fundComment(fundId,pageSize,pageNum);
     }
     @PostMapping(value = "/buyer")
     public RestResp purchaserInfo(@RequestBody PurchaserInfo purchaserInfo){

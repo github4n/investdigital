@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.oxchains.investdigital.common.DateUtil;
 import com.oxchains.investdigital.common.NumberFormatUtil;
 import com.oxchains.investdigital.common.RestResp;
+import com.oxchains.investdigital.common.RestRespPage;
 import com.oxchains.investdigital.dao.*;
 
 import com.oxchains.investdigital.entity.*;
@@ -164,8 +165,10 @@ public class FundService {
         return dataToEchart(list);
     }
 
-    public RestResp getFunds() {
-        Pageable pager = new PageRequest(0, 10);
+    public RestResp getFunds(Integer pageSize,Integer pageNum) {
+        pageNum = pageNum == null?1:pageNum;
+        pageSize = pageSize == null ?10 :pageSize;
+        Pageable pager = new PageRequest((pageNum-1)*pageSize, pageSize);
         Page<FundReturn> page = fundReturnRepo.findFundReturns(pager);
         List<FundReturn> list = page.getContent();
         if (null == list || list.size() < 1) {
@@ -194,7 +197,7 @@ public class FundService {
                 }
             }
         }
-        return RestResp.success("获取数据成功", result);
+        return RestRespPage.success(result,page.getTotalElements());
     }
 
     public RestResp getFundInfo(Long fundId) {
@@ -236,8 +239,12 @@ public class FundService {
         return tags;
     }
 
-    public RestResp getMyFunds(Long userId) {
-        List<Fund> funds = fundRepo.findByIssueUser(userId);
+    public RestResp getMyFunds(Long userId,Integer pageSize,Integer pageNum) {
+        pageNum = pageNum == null?1:pageNum;
+        pageSize = pageSize == null ?10 :pageSize;
+        Pageable pager = new PageRequest((pageNum-1)*pageSize, pageSize);
+        Page<Fund> page = fundRepo.findByIssueUser(userId,pager);
+        List<Fund> funds = page.getContent();//fundRepo.findByIssueUser(userId);
         if (null != funds && funds.size() > 0) {
             List<Long> fundIds = new ArrayList<>();
             for (Fund fund : funds) {
@@ -262,13 +269,17 @@ public class FundService {
                 }
             }
 
-            return RestResp.success("获取数据成功", result);
+            return RestRespPage.success( result,page.getTotalElements());
         }
         return RestResp.fail("您暂未发行基金");
     }
 
-    public RestResp fundComment(Long fundId) {
-        List<FundComment> comments = fundCommentRepo.findByFundId(fundId);
+    public RestResp fundComment(Long fundId,Integer pageSize,Integer pageNum) {
+        pageNum = pageNum == null?1:pageNum;
+        pageSize = pageSize == null ?10 :pageSize;
+        Pageable pager = new PageRequest((pageNum-1)*pageSize, pageSize);
+        Page<FundComment> page = fundCommentRepo.findByFundId(fundId,pager);
+        List<FundComment> comments = page.getContent();//fundCommentRepo.findByFundId(fundId);
         if (comments != null && comments.size() > 0) {
             Iterable<User> users = userRepo.findAll();
             for (int i = 0; i < comments.size(); i++) {
@@ -280,9 +291,9 @@ public class FundService {
                 }
             }
 
-            return RestResp.success("获取数据成功", comments);
+            return RestRespPage.success(comments,page.getTotalElements());
         }
-        return RestResp.success("无评论数据", null);
+        return RestResp.fail("无评论数据", null);
     }
 
     public RestResp addPurchaser(PurchaserInfo purchaserInfo) {
