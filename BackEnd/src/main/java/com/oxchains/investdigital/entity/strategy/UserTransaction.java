@@ -26,4 +26,6 @@ public class UserTransaction {
     private String fundSymbol;
     @Transient
     private String txTypeValue;
+    @Transient
+    private String date;
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -120,11 +121,11 @@ public class StrategyService {
                         List<Csi> csiList = csiDao.findByTimeBetween(pojo.getBeginTime(), pojo.getEndTime());
                         earningData.setEarningInfo(earningInfoList,csiList);
                         strategyInfo.setEarningData(earningData);
-                        infoList.add(strategyInfo);
                     }
                     else{
-                         strategyInfo.setRank(earningDao.countByTotalReturnGreaterThan(earning.getTotalReturn()));
+                        strategyInfo.setRank(earningDao.countByTotalReturnGreaterThan(earning.getTotalReturn()));
                     }
+                    infoList.add(strategyInfo);
                 }
             }
         } catch (Exception e) {
@@ -313,10 +314,13 @@ public class StrategyService {
         try {
             Strategy strategy = strategyDao.findOne(pojo.getStrategyId());
             userPositions = userPositionDao.findByUserId(strategy.getUserId());
+            DecimalFormat df = new DecimalFormat("#.##");
             userPositions.stream().forEach(userPosition -> {
                 Fund fund = fundRepo.findOne(userPosition.getFundId());
                 userPosition.setFundName(fund.getFundName());
                 userPosition.setFundSymbol(fund.getFundSymbol());
+                userPosition.setOpenAvgPrice(Double.parseDouble(df.format(userPosition.getOpenAvgPrice())));
+                userPosition.setTotalProfilLoss(Double.parseDouble(df.format(userPosition.getTotalProfilLoss())));
             });
         } catch (Exception e) {
             LOG.error("get user position error : {}",e.getMessage(),e);
@@ -332,18 +336,21 @@ public class StrategyService {
             Strategy strategy = strategyDao.findOne(pojo.getStrategyId());
             List<UserTransaction> transactionList = transactionDao.findByUserId(strategy.getUserId());
             List<TxInfo> infoList = new ArrayList<>(transactionList.size());
+            DecimalFormat df = new DecimalFormat("#.##");
             transactionList.stream().forEach(userTransaction -> {
                 Fund fund = fundRepo.findOne(userTransaction.getFundId());
                 userTransaction.setFundName(fund.getFundName());
                 userTransaction.setFundSymbol(fund.getFundSymbol());
+                userTransaction.setTxPrice(Double.parseDouble(df.format(userTransaction.getTxPrice())));
                 TxInfo txInfo = new TxInfo();
                 userTransaction.setTxTypeValue(userTransaction.getTxType() == 1?"买入":"卖出");
-                txInfo.setTime(userTransaction.getTime());
+                userTransaction.setDate(DateUtil.stampToDate(userTransaction.getTime(),"HH:mm:ss"));
+                txInfo.setDate(DateUtil.stampToDate(userTransaction.getTime(),"yyyy/MM/dd"));
 
                 List<UserTransaction> userTransactions = new ArrayList<>();
                 userTransactions.add(userTransaction);
                 txInfo.setChildren(userTransactions);
-                txInfo.setId(userTransaction.getId());
+                txInfo.setId((long) (transactionList.indexOf(userTransaction)+1));
                 infoList.add(txInfo);
             });
             return RestResp.success(infoList);
