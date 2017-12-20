@@ -17,7 +17,7 @@ class MyStrategy extends Component{
         };
     }
     componentWillMount() {
-        const userId=243461;
+        const userId= localStorage.getItem('userId');
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
@@ -34,7 +34,7 @@ class MyStrategy extends Component{
             }
         }, {
             title: '分类',
-            key: 'strategyType',
+            key: 'strategyTypeValue',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571"},
         }, {
@@ -44,7 +44,7 @@ class MyStrategy extends Component{
             dataStyle: { fontSize: '14px', lineHeight:"3.428571", color:"#4374F9"},
         }, {
             title: '最后修改时间',
-            key: 'lastUpdateTime',
+            key: 'lastUpdateTimeValue',
             headerProps: {className: 'header-style'},
             dataStyle: { fontSize: '14px', lineHeight:"3.428571"},
         }, {
@@ -69,9 +69,6 @@ class MyStrategy extends Component{
             return(<div className="text-center h3">loading</div>);
         }
         const data=this.props.strategy_user.data;
-        data.map((item, index)=>{
-            item.lastUpdateTime == new Date(item.lastUpdateTime).toLocaleDateString();
-        });
         return(
             <div>
                 <Header/>
