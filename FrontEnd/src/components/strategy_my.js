@@ -24,14 +24,14 @@ class StrategyMy extends Component{
         };
     }
     componentWillMount() {
-        const userId=243461;
+        const userId= localStorage.getItem('userId');
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
         this.props.fetchUserStrategy({pageSize, pageNum, desc, userId});
     }
     handlePagination(pageNum) {
-        const userId=243461;
+        const userId= localStorage.getItem('userId');
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
         this.props.fetchUserStrategy(pageSize, pageNum, desc, userId);
