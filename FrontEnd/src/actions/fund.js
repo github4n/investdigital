@@ -10,6 +10,8 @@ import {
     START_FUND_GOOD,
     All_FUND_LIST,
     FUND_DETAIL,
+    FUND_DETAIL_MESSAGE,
+    FUND_DETAIL_CHANGE,
     getAuthorizedHeader,
     requestError
 } from './types';
@@ -45,10 +47,10 @@ export function fetchFundSubmission({formdata}, callback) {
 /**
  * 我的基金
  */
-export function fetchFundMy({userId}, callback) {
+export function fetchFundMy({userId, pageNum, pageSize}, callback) {
     // console.log();
     return function (dispatch) {
-        axios.get(`${ROOT_URLCF}/fund/myFunds?userId=${userId}`, { headers: getAuthorizedHeader() } )
+        axios.get(`${ROOT_URLCF}/fund/myFunds?userId=${userId}&pageNum=${pageNum}&pageSize=${pageSize}`, { headers: getAuthorizedHeader() } )
        .then(response => {
            console.log('我的基金');
            console.log(response);
@@ -78,10 +80,10 @@ export function fetchStartFund(callback) {
 /**
  * 基金排行榜全部基金
  */
-export function fetchAllFund(callback) {
-    // console.log();
+export function fetchAllFund({ pageNum, pageSize}, callback) {
+    console.log(`${pageNum}, ${pageSize}`);
     return function (dispatch) {
-        axios.get(`${ROOT_URLCF}/fund/allFunds`, { headers: getAuthorizedHeader() } )
+        axios.get(`${ROOT_URLCF}/fund/allFunds?pageNum=${pageNum}&pageSize=${pageSize}`, { headers: getAuthorizedHeader() } )
             .then(response => {
                 console.log('全部基金');
                 console.log(response);
@@ -103,6 +105,38 @@ export function fetchFundDetail({fundId}, callback) {
                 console.log('基金详情');
                 console.log(response);
                 dispatch({ type: FUND_DETAIL, payload: response });
+            })
+            .catch(err => dispatch(requestError(err.message)));
+    };
+}
+
+
+/**
+ * 基金详情留言板
+ */
+export function fetchFundComment({ fundId, pageNum, pageSize}) {
+    // console.log();
+    return function (dispatch) {
+        axios.get(`${ROOT_URLCF}/fund/comment?fundId=${fundId}&pageNum=${pageNum}&pageSize=${pageSize}`, { headers: getAuthorizedHeader() } )
+            .then(response => {
+                console.log('基金详情留言板');
+                console.log(response);
+                dispatch({ type: FUND_DETAIL_MESSAGE, payload: response });
+            })
+            .catch(err => dispatch(requestError(err.message)));
+    };
+}
+/**
+ * 基金详情走势
+ */
+export function fetchFundDetailChange({fundId}, callback) {
+    // console.log();
+    return function (dispatch) {
+        axios.get(`${ROOT_URLCF}/fund/fundInfo?fundId=${fundId}`, { headers: getAuthorizedHeader() } )
+            .then(response => {
+                console.log('基金详情基金走势');
+                console.log(response);
+                dispatch({ type: FUND_DETAIL_CHANGE, payload: response });
             })
             .catch(err => dispatch(requestError(err.message)));
     };

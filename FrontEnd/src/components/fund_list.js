@@ -21,6 +21,7 @@ import  'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/toolbox';
 
+import $ from 'jquery';
 import 'echarts/lib/component/dataZoom';
 
 
@@ -38,27 +39,31 @@ class FundList extends Component {
         const data = this.props.all || [];
         data.map((item, i)=>{
             item.map((item, index)=> {
-                const myChart1 = echarts.init((document.getElementById(`strategy${i}`).getElementsByClassName(`main${index}`))[0]);
+                // console.log(item);
+                // const myChart1 = echarts.init((document.getElementById(`strategy${i}`).getElementsByClassName(`main${index}`))[0]);
+                const myChart1 = echarts.init(((document.querySelectorAll(`[data-index='${i}']`))[0].getElementsByClassName(`main${index}`))[0]);
+
                 const dataX= item.echart.xAxis;
                 const data=item.echart.yAxis;
                 const dataY1 = data[0].data;
                 const dataY2 = data[1].data;
                 const name1 = data[0].name;
                 const name2 = data[1].name;
-
                 // 绘制图表
                 myChart1.setOption({
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'axis',
+                        formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                     },
                     legend:{
-                        data:[name1, name2 ],
+                        // data:[name1, name2 ],
                         // bottom:0
                     },
                     grid: {
-                        left: '10%',
+                        left: '14%',
                         right: '1%',
-                        bottom: '10%'
+                        bottom: '10%',
+                        top:'10%'
                     },
                     dataZoom : [ {
                         xAxis: 0,
@@ -81,6 +86,13 @@ class FundList extends Component {
                     yAxis : [
                         {
                             type : 'value',
+                            axisLabel: {
+                                formatter: '{value}%',
+                                show: true,
+                                textStyle: {
+                                    color: '#252535'
+                                }
+                            },
                             axisLine:{
                                 show: false,
                             },
@@ -137,15 +149,15 @@ class FundList extends Component {
                         <div className={`strategy-chart main${index}`} style={{height:"180px", width:"240px"}}></div>
                         <div className="strategy-choiceness-number row g-pt-10 text-center">
                             <div className="col-sm-4">
-                                <h5 className="g-pt-5">{item.returns.totalReturn}</h5>
+                                <h5 className="g-pt-5">{(item.returns.totalReturn).toFixed(2)}%</h5>
                                 <h5 className="g-pt-5">总收益</h5>
                             </div>
                             <div className="col-sm-4">
-                                <h5 className="g-pt-5">{item.returns.netAssetValue}</h5>
+                                <h5 className="g-pt-5">{(item.returns.netAssetValue).toFixed(2)}%</h5>
                                 <h5 className="g-pt-5">单位净值</h5>
                             </div>
                             <div className="col-sm-4">
-                                <h5 className="g-pt-5">{item.returns.untilNowChange}</h5>
+                                <h5 className="g-pt-5">{(item.returns.untilNowChange).toFixed(2)}%</h5>
                                 <h5 className="g-pt-5">涨跌幅</h5>
                             </div>
                         </div>
@@ -156,9 +168,7 @@ class FundList extends Component {
     }
     renderList(){
         const data = this.props.all || [];
-        // console.log(data);
         return data.map((item, index)=>{
-            // console.log(item);
             return(
                 <div id={`strategy${index}`} key={index}>
                     {this.renderList2(item)}
@@ -167,6 +177,23 @@ class FundList extends Component {
             );
         });
     }
+
+    moveLeft() {
+        $('#imgLeft1').attr({'src': '/public/img/left_u750.png'}).css('z-index', '-1');
+    }
+
+    outLeft() {
+        $('#imgLeft1').attr({'src': '/public/img/left_u749.png'}).css('z-index', '-3');    }
+
+    moveRight() {
+
+        $('#imgRight1').attr({'src': '/public/img/right_u747.png'}).css('z-index', '-1');
+    }
+
+    outRight() {
+        $('#imgRight1').attr({'src': '/public/img/right_u746.png'}).css('z-index', '-3');
+    }
+
     render() {
         const settings = {
             dots: true,
@@ -181,9 +208,12 @@ class FundList extends Component {
                 <div className='fund clear'>
                     <div className="fund-banner-list">
                         <div className="fund-bgc">
-                            <div className="col-lg-6 fund-list-bgc1">
+                            <div className="col-lg-6" style={{padding: 0}} onMouseEnter={this.moveLeft.bind(this)} onMouseOut={this.outLeft.bind(this)}>
+                                <img id="imgLeft1" src="../../public/img/left_u749.png" className="fund-list-banner-left"/>
+                                <img id="imgLeft2" src="../../public/img/left_u752.png" className="fund-list-banner-left" style={{zIndex: "-2"}}/>
                                 {/*<img src="../../public/img/left_u750.png" alt=""/>*/}
                                <div className="fund-banner-title">
+
                                    <div className="title-border-left g-px-20">
                                        <h2 className="g-mb-20">基金精英荟</h2>
                                        <h1 className="g-mr-10">124.20%</h1>
@@ -195,7 +225,9 @@ class FundList extends Component {
                                    </div>
                                </div>
                             </div>
-                            <div className="col-lg-6 fund-list-bgc2">
+                            <div className="col-lg-6" onMouseEnter={this.moveRight.bind(this)} onMouseOut={this.outRight.bind(this)}>
+                                <img id="imgRight1" src="../../public/img/right_u746.png" className="fund-list-banner-right" />
+                                <img id="imgRight2" src="../../public/img/right-u751.png" className="fund-list-banner-right" style={{zIndex: "-2"}}/>
                                 {/*<img src="../../public/img/right_u747.png" alt=""/>*/}
                                 <div className="fund-banner-title">
                                     <div className="title-border-right g-px-20">

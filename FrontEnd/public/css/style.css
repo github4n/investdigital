@@ -908,6 +908,7 @@ ul{list-style: none;}
     height: 120px;
     border-left: 12px solid rgba(246, 183, 7, 1);
     display: inline-block;
+    z-index: -1;
 }
 .title-border-left>h2,.title-border-right>h2
 {
@@ -995,13 +996,21 @@ ul{list-style: none;}
 .fund-list-bgc1
 {
     /*background-image: url('../../public/img/left_u750.png');*/
-    /*-webkit-background-size: 100% 100%;*/
+    /*position: relative;*/
+    /*top:-70px;*/
+    /*left:70px;*/
+    display: inline-block;
+    -webkit-background-size: 100% 100%;
     /*background-size:100%;*/
 }
 .fund-list-bgc2
 {
-    /*background-image: url('../../public/img/right_u747.png');*/
-    /*-webkit-background-size: 100% 100%;*/
+    /*background-image: url('../../public/img/right_u746.png');*/
+    position: relative;
+    top:-850px;
+    left:750px;
+    display: inline-block;
+    -webkit-background-size: 100% 100%;
     /*background-size: 100%;*/
 }
 .fund-detail-share
@@ -1013,4 +1022,18 @@ ul{list-style: none;}
     color: #444444;
     padding-top: 5px;
     margin-right: 5px;
+}
+.fund-list-banner-left {
+    position: absolute;
+    z-index: -3;
+    width: 120%;
+    height: 120%;
+    margin-left: 0%;
+}
+.fund-list-banner-right {
+    position: absolute;
+    z-index: -3;
+    width: 120%;
+    height: 120%;
+    margin-left: -18%;
 }

@@ -12,7 +12,7 @@ import  'echarts/lib/chart/line';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 
-import { fetchFundDetail } from '../../actions/fund';
+import { fetchFundDetailChange } from '../../actions/fund';
 
 class StrateTimeLine extends Component{
     constructor(props) {
@@ -35,102 +35,6 @@ class StrateTimeLine extends Component{
     componentDidUpdate() {
 
         const data = this.props.all || [];
-        console.log(data.echart);
-
-        // var base = +new Date(1968, 9, 3);
-        // var oneDay = 24 * 3600 * 1000;
-        // var date = [];
-        //
-        // var data = [Math.random() * 300];
-        // var data2 = [Math.random() * 10];
-        //
-        // for (var i = 1; i < 20000; i++) {
-        //     var now = new Date(base += oneDay);
-        //     date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-        //     data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-        //     data2.push(Math.round((Math.random() - 1) + data2[i - 1]));
-        // }
-        // // console.log(date, data);
-        // var myChart = echarts.init(document.getElementById("earning-figure"));
-        // // 绘制图表
-        // myChart.setOption({
-        //     tooltip: {
-        //         trigger: 'axis',
-        //         position: function (pt) {
-        //             return [pt[0], '10%'];
-        //         },
-        //     },
-        //     grid:{
-        //         y:10
-        //     },
-        //     xAxis: {
-        //         type: 'category',
-        //         boundaryGap: false,
-        //         data: date
-        //     },
-        //     yAxis: {
-        //         type: 'value',
-        //         show: true,
-        //         boundaryGap: [0, '100%'],
-        //         name:"sdfdef",
-        //     },
-        //     dataZoom: [{
-        //         show:true,
-        //         type: 'inside',
-        //         start: 0,
-        //         end: 10
-        //     }, {
-        //         start: 0,
-        //         end: 10,
-        //         handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-        //         handleSize: '80%',
-        //         handleStyle: {
-        //             color: '#fff',
-        //             shadowBlur: 3,
-        //             shadowColor: 'rgba(0, 0, 0, 0.6)',
-        //             shadowOffsetX: 2,
-        //             shadowOffsetY: 2
-        //         }
-        //     }],
-        //     series: [
-        //         {
-        //             name:'模拟数据',
-        //             type:'line',
-        //             smooth:false,
-        //             symbol: 'none',
-        //             sampling: 'average',
-        //             itemStyle: {
-        //                 normal: {
-        //                     color: 'rgb(255, 70, 131)'
-        //                 }
-        //             },
-        //             areaStyle: {
-        //                 normal: {
-        //                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-        //                         offset: 0,
-        //                         color: 'rgb(255, 158, 68)'
-        //                     }, {
-        //                         offset: 1,
-        //                         color: 'rgb(255, 70, 131)'
-        //                     }])
-        //                 }
-        //             },
-        //             data: data
-        //         },
-        //         {
-        //             name:'模拟数据',
-        //             type:'line',
-        //             smooth:false,
-        //             sampling: 'average',
-        //             data: data2,
-        //             itemStyle: {
-        //                 normal: {
-        //                     color: 'blue'
-        //                 }
-        //             },
-        //         }
-        //     ]
-        // });
         const myChart = echarts.init(document.getElementById("earning-figure"));
         const dataX= data.echart.xAxis;
         const dataY=data.echart.yAxis;
@@ -142,14 +46,15 @@ class StrateTimeLine extends Component{
         // 绘制图表
         myChart.setOption({
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
             },
             legend:{
-                data:[name1, name2 ],
+                // data:[name1, name2 ],
                 // bottom:45
             },
             grid: {
-                left: '10%',
+                left: '12%',
                 right: '1%',
                 bottom: '10%'
             },
@@ -174,6 +79,13 @@ class StrateTimeLine extends Component{
             yAxis : [
                 {
                     type : 'value',
+                    axisLabel: {
+                        formatter: '{value}%',
+                        show: true,
+                        textStyle: {
+                            color: '#252535'
+                        }
+                    },
                     axisLine:{
                         show: false,
                     },
@@ -214,7 +126,12 @@ class StrateTimeLine extends Component{
 
     }
     handleClick (index) {
+        console.log(index);
         this.setState({index});
+        const day = index;
+        const fundId = localStorage.getItem("fundId");
+        this.props.fetchFundDetailChange({day, fundId});
+
     }
     renderSelect(){
         const selectItem=[
@@ -224,7 +141,7 @@ class StrateTimeLine extends Component{
         ];
         return selectItem.map((item, index)=>{
             return(
-                <li className={ `pull-left shouyi-time g-mr-10 ${index === this.state.index ? "active  g-mr-5" : "g-mr-5"} `} onClick={ this.handleClick.bind(this, index)} key={index}>{item.title}</li>
+                <li  className={ `pull-left shouyi-time g-mr-10 ${index === this.state.index ? "active  g-mr-5" : "g-mr-5"} `} onClick={ this.handleClick.bind(this, index)} key={index}>{item.title}</li>
             );
         });
     }
@@ -253,4 +170,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchFundDetail })(StrateTimeLine);
+export default connect(mapStateToProps, { fetchFundDetailChange })(StrateTimeLine);

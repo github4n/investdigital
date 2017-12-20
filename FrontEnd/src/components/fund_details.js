@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import MessageBoard from './message_board';
+import MessageBoard from './fund_message_board';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import Header from './common/header-all';
@@ -18,6 +18,7 @@ class StrategyDetails extends Component{
     }
     componentWillMount() {
         const fundId = this.props.match.params.id;
+        localStorage.setItem("fundId", fundId);
         this.props.fetchFundDetail({fundId});
     }
 
@@ -33,8 +34,6 @@ class StrategyDetails extends Component{
     }
     render(){
         const data = this.props.all || [];
-        const returns = data.returns;
-        console.log(data.tags);
         return(
             <div className="strategy-details">
                 <Header/>
@@ -56,7 +55,7 @@ class StrategyDetails extends Component{
                                     <div>
                                         <div className="strategy-details-info-main">
                                             <div className="col-lg-5">
-                                                <span className="info1">{data.returns ? data.returns.totalReturn : "--"}%</span>
+                                                <span className="info1">{data.returns ? (data.returns.totalReturn).toFixed(2) : "--"}%</span>
                                                 <span className="info2">总收益</span>
                                             </div>
                                             <div className="col-lg-7 text-right">
@@ -66,27 +65,27 @@ class StrategyDetails extends Component{
                                         <div className="col-lg-12 strategy-details-info-list">
                                             <ul>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.monthChange : "--"} %</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.monthChange).toFixed(2) : "--"} %</div>
                                                     <div className="g-py-7 title">近1个月</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.month3Change : "--"}%</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.month3Change).toFixed(2) : "--"}%</div>
                                                     <div className="g-py-7 title">近3个月</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.month3Change : "--"}%</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.month3Change).toFixed(2) : "--"}%</div>
                                                     <div className="g-py-7 title">近1年</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.thisYearChange : "--"}%</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.thisYearChange).toFixed(2) : "--"}%</div>
                                                     <div className="g-py-7 title">今年收益</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.netAssetValue : "--"}%</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.netAssetValue).toFixed(2) : "--"}%</div>
                                                     <div className="g-py-7 title">单位净值</div>
                                                 </li>
                                                 <li className="col-lg-2">
-                                                    <div className="g-py-7 number">{data.returns ? data.returns.totalReturn : "--"}%</div>
+                                                    <div className="g-py-7 number">{data.returns ? (data.returns.totalReturn).toFixed(2) : "--"}%</div>
                                                     <div className="g-py-7 title">累计净值</div>
                                                 </li>
                                             </ul>
@@ -125,56 +124,56 @@ class StrategyDetails extends Component{
                                 <div className="strategy-choiceness-number row g-pt-10 text-center">
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5" >开放日</h5>
-                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>每季30日</h5>
+                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>{data.info ? data.info.openday :'--'}</h5>
                                     </div>
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5"  >封闭期(月)</h5>
-                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>3</h5>
+                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>{data.info ? data.info.closePeriod :'--'}</h5>
                                     </div>
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5" >成立日期</h5>
-                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>2016-10-11</h5>
+                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>{data ? data.startTimeStr :'--'}</h5>
                                     </div>
                                 </div>
                                 <div className="strategy-choiceness-number fund-b-border row g-pt-10 g-pb-30 text-center g-mb-20">
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5" >业绩提成比率</h5>
-                                        <h5 className="g-pt-5" style={{color:'#F2BA49'}}>20%</h5>
+                                        <h5 className="g-pt-5" style={{color:'#F2BA49'}}>{data.info ? (((data.info.perFee)*100).toFixed(2)) :'--'}%</h5>
                                     </div>
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5" >投顾/管理费率</h5>
-                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>1.50%</h5>
+                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>{data.info ? data.info.openday :'--'}</h5>
                                     </div>
                                     <div className="col-lg-4" style={{padding:0, fontSize:"14px"}}>
                                         <h5 className="g-pt-5" >起购金额</h5>
-                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>100万元</h5>
+                                        <h5 className="g-pt-5" style={{ color:'#F2BA49'}}>{data.info ? data.info.purchaseAmount :'--'} 万</h5>
                                     </div>
                                 </div>
                                 <h1 className="section-tilte g-py-10 " style={{fontSize:20 +'px'}}>产品信息</h1>
                                 <ul className="g-pl-20 g-pb-20 g-pt-10" style={{fontSize:14 +'px'}}>
                                     <li className="g-mb-20">
                                     <span>产品全称&#x3000;&#x3000;&#x3000;&nbsp;</span>
-                                        <span>私募工场天猊2号私募证券投资基金</span>
+                                        <span>{data ? data.fundName :'--'}</span>
                                     </li>
                                     <li className="g-my-20">
                                         <span>托管人&#x3000;&#x3000;&#x3000;&#x3000;&nbsp;</span>
-                                        <span>中国国际金融股份有限公司</span>
+                                        <span>{data.info ? data.info.custody_user :'--'}</span>
                                     </li>
                                     <li className="g-my-20">
                                         <span>投顾公司&#x3000;&#x3000;&#x3000;&nbsp;</span>
-                                        <span>上海天猊投资管理有限公司</span>
+                                        <span>{data.info ? data.info.investAdviserCompany :'--'}</span>
                                     </li>
                                     <li className="g-my-20">
                                         <span>经纪服务商</span>
-                                        <span>&#x3000;&#x3000;&nbsp;中国国际金融股份有限公司</span>
+                                        <span>&#x3000;&#x3000;&nbsp;{data.info ? data.info.brokerCompany :'--'}</span>
                                     </li>
                                     <li className="g-my-20">
                                         <span>投顾所在地区</span>
-                                        <span>&#x3000;&nbsp;上海</span>
+                                        <span>&#x3000;&nbsp;{data.info ? data.info.investAdviserRegion :'--'}</span>
                                     </li>
                                     <li className="g-my-20">
-                                        <span>基金期额&#x3000;&#x3000;&#x3000;&nbsp;</span>
-                                        <span>--</span>
+                                        <span>基金期限&#x3000;&#x3000;&#x3000;&nbsp;</span>
+                                        <span>{data.info ? data.info.deadline :'--'}</span>
                                     </li>
                                 </ul>
                             </div>
