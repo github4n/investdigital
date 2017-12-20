@@ -72,7 +72,6 @@ class MyStrategy extends Component{
         data.map((item, index)=>{
             item.lastUpdateTime == new Date(item.lastUpdateTime).toLocaleDateString();
         });
-        console.log(data);
         return(
             <div>
                 <Header/>

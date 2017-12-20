@@ -37,49 +37,87 @@ class StrategyAll extends Component{
     componentDidUpdate() {
         this.props.strategy_all.data.map((item, i)=> {
             let myChart1 = echarts.init(document.getElementById(`main1${i}`));
-            let dataX=[], data=[];
-            item.earningInfoList.map((val, index)=>{
-                let date=new Date(val.timeStamp).toLocaleDateString();
-                let earning = ((val.earning)*100).toFixed(2);
-                dataX.push(date);
-                data.push(earning);
-            });
+            let dataX=item.earningData.time;
+            let data=item.earningData.data;
+            let csiData=item.earningData.csiData;
             // 绘制图表
             myChart1.setOption({
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                 },
                 grid: {
-                    x: 40,
-                    y:40
+                    left: '3%',   //图表距边框的距离
+                    right: '4%',
+                    top: '10%',
+                    bottom: '0%',
+                    containLabel: true
                 },
-                backgroundColor:"#E2EFF9",
+                backgroundColor:"rgba(233, 240, 249, .3)",
                 xAxis : [
                     {
                         type : 'category',
-                        data : dataX
+                        data : dataX,
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine:{
+                            lineStyle:{
+                                color: "gainsboro"
+                            }
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#252535',
+                            }
+                        }
                     }
                 ],
                 yAxis : [
                     {
-                        type : 'value'
+                        type : 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color: "gainsboro"
+                            }
+                        },
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#252535'
+                            },
+                            formatter: '{value}%'
+                        }
+
                     }
                 ],
                 series : [
                     {
-                        name:'成交',
+                        name:'收益',
                         type:'line',
-                        borderColor:'blue',
-                        // smooth:true,
+                        smooth:true,
                         itemStyle: {
                             normal: {
-                                areaStyle: {type: 'default'},
                                 lineStyle:{
-                                    color:'red'
+                                    color:'rgb(170, 70, 67)'
                                 }
                             }
                         },
                         data:data
+                    },
+                    {
+                        name:'沪深300',
+                        type:'line',
+                        smooth:true,
+                        itemStyle: {
+                            normal: {
+                                lineStyle:{
+                                    color:'rgb(69, 114, 167)'
+                                }
+                            }
+                        },
+                        data: csiData
                     }
                 ]
             });
@@ -130,13 +168,13 @@ class StrategyAll extends Component{
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
                     <Link to={`/strategy/details/${item.id}`}>
                         <div className="col-sm-2 text-center" style={{position:"relative"}}>
-                            {(index+1)==1 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u76.png" alt=""/> :
-                                ((index+1) == 2 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u116.png" alt=""/> :
-                                    ((index+1) ==3 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u138.png" alt=""/> :
+                            {(item.rank)==1 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u76.png" alt=""/> :
+                                ((item.rank) == 2 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u116.png" alt=""/> :
+                                    ((item.rank) ==3 ? <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u138.png" alt=""/> :
                                         <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u158.png" alt=""/>)
                                 )
                             }
-                            <span className="rank">{index+1}</span>
+                            <span className="rank">{item.rank}</span>
                         </div>
                         <div className="col-sm-5">
                             <div className="strategy-choiceness-item clearfix" style={{padding:"20px 0"}}>
@@ -154,15 +192,15 @@ class StrategyAll extends Component{
                                     </div>
                                     <div className="strategy-choiceness-number row g-pt-10 text-center" style={{fontSize:"12px"}}>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.totalReturn)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.totalReturn).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">累计收益</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.annualizedReturn)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.annualizedReturn).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">年化收益</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.maxDrawdown)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.maxDrawdown).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">最大回撤</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
@@ -174,7 +212,9 @@ class StrategyAll extends Component{
                             </div>
                         </div>
                         <div className="col-sm-5">
-                            <div className="strategy-chart g-mt-20" id={`main1${index}`} style={{height:"180px", width:"248px"}}></div>
+                            <div className="strategy-chart g-mt-15" id={`main1${index}`} style={{height:"190px", width:"280px"}}>
+                                <span className="loading"></span>
+                            </div>
                         </div>
                     </Link>
                 </li>
@@ -185,8 +225,13 @@ class StrategyAll extends Component{
     render(){
         const totalNum = this.props.strategy_all && this.props.strategy_all.rowCount;
         if(this.props.strategy_all===null){
-            return(<div className="text-center h3">loading</div>);
+            return(
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    <div className="loading"></div>
+                </div>
+            );
         }
+        console.log(this.props.strategy_all);
         return(
             <div className="strategy-all-content clearfix">
                 <div className="strategy-all-content-filtrate g-py-20 clearfix">

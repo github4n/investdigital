@@ -24,54 +24,86 @@ class StrategyGreat extends Component{
     componentDidUpdate(){
         let array=this.props.strategy_great;
         array=this.sliceArray(array, 3);
-        console.log(array);
         array.map((item, i)=>{
             item.map((item, index)=> {
-                let dataX=[], data=[];
-                item.earningInfoList.map((val, index)=>{
-                    let date=new Date(val.timeStamp).toLocaleDateString();
-                    let earning = ((val.earning)*100).toFixed(2);
-                    dataX.push(date);
-                    data.push(earning);
-                });
-                const myChart = echarts.init((document.getElementById(`strategy${i}`).getElementsByClassName(`main${index}`))[0]);
+                let dataX=item.earningData.time;
+                let data=item.earningData.data;
+                let csiData=item.earningData.csiData;
+                const myChart = echarts.init(((document.querySelectorAll(`[data-index='${i}']`))[0].getElementsByClassName(`main${index}`))[0]);
                 // 绘制图表
                 myChart.setOption({
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'axis',
+                        formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                     },
                     grid: {
-                        x: 40,
-                        y:40
+                        left: '3%',   //图表距边框的距离
+                        right: '4%',
+                        top: '10%',
+                        bottom: '0%',
+                        containLabel: true
                     },
-                    backgroundColor:"#E2EFF9",
+                    backgroundColor:"rgba(233, 240, 249, .3)",
                     xAxis : [
                         {
                             type : 'category',
-                            boundaryGap : true,
-                            data : dataX
+                            data : dataX,
+                            axisLine:{
+                                lineStyle:{
+                                    color: "gainsboro"
+                                }
+                            },
+                            axisLabel: {
+                                show: true,
+                                textStyle: {
+                                    color: '#252535'
+                                }
+                            }
                         }
                     ],
                     yAxis : [
                         {
-                            type : 'value'
+                            type : 'value',
+                            axisLabel: {
+                                show: true,
+                                textStyle: {
+                                    color: '#252535'
+                                },
+                                formatter: '{value}%'
+                            },
+                            axisLine:{
+                                lineStyle:{
+                                    color: "gainsboro"
+                                }
+                            }
                         }
                     ],
                     series : [
                         {
-                            name:'成交',
+                            name:'收益',
                             type:'line',
-                            borderColor:'blue',
-                            // smooth:true,
+                            smooth:true,
                             itemStyle: {
                                 normal: {
-                                    areaStyle: {type: 'default'},
                                     lineStyle:{
-                                        color:'red'
+                                        color:'rgb(170, 70, 67)'
                                     }
                                 }
                             },
                             data:data
+                        },
+                        {
+                            name:'沪深300',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {
+                                normal: {
+                                    lineStyle:{
+                                        color:'rgb(69, 114, 167)'
+                                    }
+                                }
+                            },
+                            data: csiData
                         }
                     ]
                 });
@@ -90,16 +122,14 @@ class StrategyGreat extends Component{
     renderTags(item){
         return item.tags.map((item, index)=>{
             return(
-                <div className="g-my-10" key={index}>
-                    <span className="strategy-choiceness-tip g-px-5 g-py-5 g-mr-10">{item.tagName}</span>
-                </div>
+                <span className="strategy-choiceness-tip g-px-5 g-py-5 g-mr-10 pull-right" key={index}>{item.tagName}</span>
             );
         });
     }
     renderList2(item){
         return item.map((item, index)=>{
             return(
-                <Link className="col-sm-3 strategy-choiceness-item strategy-choiceness-up id-boxshadow g-mb-20 g-mt-10" to="/strategy/details" key={index}>
+                <Link className="col-sm-3 strategy-choiceness-item strategy-choiceness-up id-boxshadow g-mb-20 g-mt-10" to={`/strategy/details/${item.id}`} key={index}>
                     <div className="strategy-choiceness-title">
                         <span className="h4">{item.title}</span>
                         {this.renderTags(item)}
@@ -110,7 +140,9 @@ class StrategyGreat extends Component{
                             </div>
                             <span className="strategy-choiceness-title-line"></span>
                         </div>
-                        <div className={`strategy-chart main${index}`} style={{height:"180px", width:"240px"}}></div>
+                        <div className={`strategy-chart main${index}`} style={{height:"190px", width:"270px"}}>
+                            <span className="loading"></span>
+                        </div>
                         <div className="strategy-choiceness-number row g-pt-10 text-center">
                             <div className="col-sm-4">
                                 <h5 className="g-pt-5">{((item.totalReturn)*100).toFixed(2)}%</h5>
@@ -133,10 +165,9 @@ class StrategyGreat extends Component{
     renderList(){
         let array=this.props.strategy_great;
         array=this.sliceArray(array, 3);
-        console.log(array);
         return array.map((item, index)=>{
             return(
-                <div id={`strategy${index}`} key={index}>
+                <div key={index}>
                     {this.renderList2(item)}
                 </div>
             );
@@ -144,7 +175,11 @@ class StrategyGreat extends Component{
     }
     render(){
         if(this.props.strategy_great === null){
-            return(<div className="text-center h3">loading</div>);
+            return(
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    <div className="loading"></div>
+                </div>
+            );
         }
         let settings = {
             dots: true,

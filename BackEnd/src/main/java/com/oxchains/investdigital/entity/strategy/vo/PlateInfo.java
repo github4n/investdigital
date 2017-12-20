@@ -12,5 +12,4 @@ import java.util.List;
 public class PlateInfo {
     private Long strategyId;
     private List<Sectors> sectorsList;
-    private double[] plateValue;
 }

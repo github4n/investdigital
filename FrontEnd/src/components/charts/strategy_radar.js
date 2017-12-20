@@ -45,6 +45,7 @@ class StrateRadar extends Component{
             let dataItem = {value:portfolioItem, name:item.time};
             data.push(dataItem);
         });
+        console.log(data);
         var myChart = echarts.init(document.getElementById("radar-figure"));
         // 绘制图表
         myChart.setOption({

@@ -43,14 +43,11 @@ class StrateTimeLine extends Component{
         this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
     componentDidUpdate() {
-        let dataX=[], data=[];
-        this.props.run_chart.map((item, index)=>{
-            let date=new Date(parseInt(item.timeStamp)).toLocaleString().replace(/:\d{1,2}$/, ' ');
-            // let date=new Date(item.timeStamp).toLocaleString();
-            let earning = ((item.earning)*100).toFixed(2);
-            dataX.push(date);
-            data.push(earning);
-        });
+        const run_chart=this.props.run_chart;
+        console.log(run_chart);
+        let dataX=run_chart.earningData.time;
+        let data=run_chart.earningData.data;
+        let csiData=run_chart.earningData.csiData;
             let myChart = echarts.init(document.getElementById("earning-figure"));
             // 绘制图表
             myChart.setOption({
@@ -59,6 +56,7 @@ class StrateTimeLine extends Component{
                     position: function (pt) {
                         return [pt[0], '10%'];
                     },
+                    formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                 },
                 grid:{
                     y:10
@@ -72,18 +70,17 @@ class StrateTimeLine extends Component{
                     type: 'value',
                     show: true,
                     boundaryGap: [0, '100%'],
-                    name:"sdfdef",
                 },
                 dataZoom: [{
                     show:true,
                     type: 'inside',
                     start: 0,
-                    end: 10
+                    end:100
                 }, {
                     start: 0,
                     end: 10,
                     handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                    handleSize: '80%',
+                    handleSize: '100%',
                     handleStyle: {
                         color: '#fff',
                         shadowBlur: 3,
@@ -94,28 +91,30 @@ class StrateTimeLine extends Component{
                 }],
                 series: [
                     {
-                        name:'收益',
+                        name:'策略累计收益',
                         type:'line',
                         smooth:true,
-                        symbol: 'none',
                         sampling: 'average',
                         itemStyle: {
                             normal: {
-                                color: 'rgb(255, 70, 131)'
-                            }
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: 'rgb(255, 158, 68)'
-                                }, {
-                                    offset: 1,
-                                    color: 'rgb(255, 70, 131)'
-                                }])
+                                color:'rgb(170, 70, 67)'
                             }
                         },
                         data: data
+                    },
+                    {
+                        name:'沪深300',
+                        type:'line',
+                        smooth:true,
+                        sampling: 'average',
+                        itemStyle: {
+                            normal: {
+                                lineStyle:{
+                                    color:'rgb(69, 114, 167)'
+                                }
+                            }
+                        },
+                        data: csiData
                     }
                 ]
             });
@@ -150,7 +149,9 @@ class StrateTimeLine extends Component{
                             <RangePicker onChange={this.handleChange.bind(this)} />
                         </div>
                     </div>
-                    <div className="strategy-chart g-mt-20" id="earning-figure" style={{height:"350px"}}></div>
+                    <div className="strategy-chart g-mt-20" id="earning-figure" style={{height:"350px"}}>
+                        <div className="loading"></div>
+                    </div>
                 </div>
             </div>
         );

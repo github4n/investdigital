@@ -57,8 +57,8 @@ class StrategyDetails extends Component{
         ];
         const columns2 = [{
             title: '时间',
-            dataIndex: 'time',
-            key: 'time',
+            dataIndex: 'date',
+            key: 'date',
             width: '20%',
         }, {
             title: '合约',
@@ -81,25 +81,15 @@ class StrategyDetails extends Component{
             key: 'txNum',
             width: '20%',
         }];
+        console.log(this.props.strategy_info);
         if(this.props.strategy_info === null){
             return(
-                <div className="h3 text-center">loading</div>
+                <div className="h3 text-center g-py-100">loading...</div>
             );
         }
         const info=this.props.strategy_info;
         const user_position=this.props.user_position;
         const user_transaction=this.props.user_transaction;
-        user_transaction.map((item, index)=>{
-            item.time=new Date(item.time).toLocaleDateString();
-            item.children.map((val, index)=>{
-                val.time=new Date(val.time).toLocaleTimeString();
-                val.txPrice=(val.txPrice).toFixed(2);
-            });
-        });
-        user_position.map((item, index)=>{
-            item.openAvgPrice = (item.openAvgPrice).toFixed(2);
-            item.totalProfilLoss ="¥"+(item.totalProfilLoss).toFixed(2)+"万";
-        });
         return(
             <div className="strategy-details">
                 <Header/>
@@ -118,7 +108,7 @@ class StrategyDetails extends Component{
                                     <div>
                                         <div className="strategy-details-info-main text-center">
                                             <div className="col-sm-5">
-                                                <span className="info1">{((info.totalReturn)*100).toFixed(2)}%</span>
+                                                <span className="info1">{(info.totalReturn).toFixed(2)}%</span>
                                                 <span className="info2">累计收益</span>
                                             </div>
                                             <div className="col-sm-4">
@@ -131,11 +121,11 @@ class StrategyDetails extends Component{
                                         <div className="col-sm-12 strategy-details-info-list">
                                             <ul>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">{((info.annualizedReturn)*100).toFixed(2)}%</div>
+                                                    <div className="g-py-7 number">{(info.annualizedReturn).toFixed(2)}%</div>
                                                     <div className="g-py-7 title">年化收益</div>
                                                 </li>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">{((info.maxDrawdown)*100).toFixed(2)}%</div>
+                                                    <div className="g-py-7 number">{(info.maxDrawdown).toFixed(2)}%</div>
                                                     <div className="g-py-7 title">最大回撤</div>
                                                 </li>
                                                 <li className="col-sm-3">
