@@ -228,7 +228,9 @@ class ListFundall extends Component{
         console.log(totalNum);
         if(this.props.data === null){
             return(
-                <div className="text-center h3">loading</div>
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    <div className="loading"></div>
+                </div>
             );
         }
         return(

@@ -229,7 +229,6 @@ class UserFundmy extends Component{
 }
 
 function mapStateToProps(state) {
-    console.log(state.strategy.strategy_user);
     return {
         strategy_user:state.strategy.strategy_user
     };

@@ -142,10 +142,10 @@ class Listfundmy extends Component{
     renderList(){
         const data = this.props.myfund.data || [];
         if(data ==! data){
-            return (
-                <li className="text-center">
-                    <h1> {this.props.error}</h1>
-                </li>
+            return(
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    <div className="loading"></div>
+                </div>
             );
         }else {
             return data.map((item, index)=>{

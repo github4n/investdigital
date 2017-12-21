@@ -54,9 +54,13 @@ class Issuefund extends Component {
            "fundAssociationRecord": value5,
            "productDistribution": value6,
        };
-       this.props.fetchFundSubmission({ formdata }, err => {
-           this.setState({ isModalOpen: true, error: err, actionResult: err || '提交成功!' });
-       });
+       if(this.props.authenticated){
+            this.props.fetchFundSubmission({ formdata }, err => {
+                this.setState({ isModalOpen: true, error: err, actionResult: err || '提交成功!' });
+            });
+        }else{
+            alert('请先登录');
+        }
     }
     onChange1 = (e) => {
         this.setState({
@@ -203,9 +207,10 @@ class Issuefund extends Component {
 
 
 function mapStateToProps(state) {
-    console.log(state.fund.all);
+    console.log(state.auth.authenticated);
     return {
-        all:state.fund.all
+        all:state.fund.all,
+        authenticated:state.auth.authenticated
     };
 }
 

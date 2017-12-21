@@ -143,7 +143,7 @@ class Signup extends Component {
                             <Field name="password" component={this.renderField} type="password" label="请输入密码" icon="lock" />
                             <div style={{width:85 +'%'}}>
                                 <div className=" checkbox-margin">
-                                    <input type="checkbox" defaultChecked className="checkbox-width" onChange={this.handleChange.bind(this)} /><span> 我已阅读themis用户手册及相关法律</span>
+                                    <input type="checkbox" defaultChecked className="checkbox-width" onChange={this.handleChange.bind(this)} /><span> 我已阅读investDigital用户手册及相关法律</span>
                                 </div>
                                 <div className="">
                                     <button type="submit" className="btn form-register" style={{color:'white'}}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
