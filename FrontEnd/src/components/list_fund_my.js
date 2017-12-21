@@ -141,13 +141,6 @@ class Listfundmy extends Component{
     }
     renderList(){
         const data = this.props.myfund.data || [];
-        if(data ==! data){
-            return(
-                <li className="text-center">
-                    <h1> 暂无数据</h1>
-                </li>
-            );
-        }else {
             return data.map((item, index)=>{
                 return(
                     <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
@@ -202,11 +195,17 @@ class Listfundmy extends Component{
                     </li>
                 );
             });
-        }
-
     }
     render(){
+        const data = this.props.myfund.data || [];
         const totalNum = this.props.myfund &&  this.props.myfund.rowCount;
+        if(data ==! data){
+            return(
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    暂无数据
+                </div>
+            );
+        }
         return(
             <div className="container g-pt-100 g-px-40 g-pb-100 clearfix">
                 <div className="clearfix">
