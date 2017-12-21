@@ -164,7 +164,7 @@ class ListFundall extends Component{
         if(data ==! data){
             return (
                 <li className="text-center">
-                    <h1> Loading...</h1>
+                    <h1> 暂无数据</h1>
                 </li>
             );
         }else {

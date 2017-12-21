@@ -203,7 +203,7 @@ class UserFundmy extends Component{
         if(this.props.strategy_user===null){
             return(
                 <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
+                    暂无数据
                 </div>
             );
         }

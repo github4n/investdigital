@@ -156,9 +156,9 @@ class UserFundall extends Component{
         const data = this.props.myfund.data || [];
         if(data ==! data){
             return(
-                <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
-                </div>
+                <li className="text-center">
+                    <h1> 暂无数据</h1>
+                </li>
             );
         }else {
             return data.map((item, index) => {
@@ -219,13 +219,15 @@ class UserFundall extends Component{
     render(){
         const totalNum = this.props.myfund &&  this.props.myfund.rowCount;
         // console.log(totalNum);
-        if(this.props.data === null){
+        if(this.props.myfund.data === null){
             return(
-                <div className="text-center h3">loading</div>
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    暂无数据
+                </div>
             );
         }
         return(
-            <div className="container g-pt-100 g-px-40 g-pb-200 clearfix">
+            <div className="container g-pt-100 g-px-40 g-pb-100 clearfix">
                 <div className="clearfix  ">
                     <ul className="clearfix">
                         {this.renderList()}

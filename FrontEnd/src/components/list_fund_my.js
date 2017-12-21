@@ -143,9 +143,9 @@ class Listfundmy extends Component{
         const data = this.props.myfund.data || [];
         if(data ==! data){
             return(
-                <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
-                </div>
+                <li className="text-center">
+                    <h1> 暂无数据</h1>
+                </li>
             );
         }else {
             return data.map((item, index)=>{
