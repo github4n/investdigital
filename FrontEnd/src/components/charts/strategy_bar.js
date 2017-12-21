@@ -30,8 +30,7 @@ class StrateBar extends Component{
         const data1=(strategy_brinsion.activeReturn*100).toFixed(2);
         const data2=(strategy_brinsion.assetAllocation*100).toFixed(2);
         const data3=(strategy_brinsion.stockConfig*100).toFixed(2);
-        console.log(data1, data2, data3);
-        var myChart = echarts.init(document.getElementById("bar-figure"));
+        let myChart = echarts.init(document.getElementById("bar-figure"));
         // 绘制图表
         myChart.setOption({
             tooltip: {
@@ -40,19 +39,6 @@ class StrateBar extends Component{
                     type: 'shadow'
                 }
             },
-            // legend: {
-            //     orient:'vertical',
-            //     align:"left",
-            //     y: 'bottom',
-            //     x: 'right',
-            //     itemWidth: 10,             // 图例图形宽度
-            //     itemHeight: 10,
-            //     data:[
-            //         {name:'主动收益', icon: 'circle'},
-            //         {name:'资产配置', icon: 'circle'},
-            //         {name:'选股配置', icon: 'circle'},
-            //     ]
-            // },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -134,7 +120,6 @@ class StrateBar extends Component{
     }
 
     render(){
-        console.log(this.props.strategy_brinsion);
         return(
             <div className="col-sm-12 g-pb-20">
                 <div className="bar-figure">

@@ -223,6 +223,7 @@ class StrategyAll extends Component{
     }
 
     render(){
+        const data= this.props.strategy_all && this.props.strategy_all.data;
         const totalNum = this.props.strategy_all && this.props.strategy_all.rowCount;
         if(this.props.strategy_all===null){
             return(
@@ -231,7 +232,6 @@ class StrategyAll extends Component{
                 </div>
             );
         }
-        console.log(this.props.strategy_all);
         return(
             <div className="strategy-all-content clearfix">
                 <div className="strategy-all-content-filtrate g-py-20 clearfix">
@@ -246,7 +246,7 @@ class StrategyAll extends Component{
                     </ul>
                 </div>
                 <div className="g-my-30">
-                    <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}  onChange={e => this.handlePagination(e)}/>
+                    {data==null?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
                 </div>
             </div>
 

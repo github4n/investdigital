@@ -76,7 +76,6 @@ export function fetchStrategyInfo({strategyId}) {
     return function (dispatch) {
         axios.post(`${ROOT_STRATEGY}/strategy/catStrategyInfo/${strategyId}`)
             .then(response => {
-                console.log(response);
                 if (response.data.status == 1) {
                     dispatch({ type: FETCH_STRATEGY_INFO, payload: response.data.data});
                 }

@@ -23,6 +23,12 @@ class MyStrategy extends Component{
         const desc=this.state.desc;
         this.props.fetchUserStrategy({pageSize, pageNum, desc, userId});
     }
+    handlePagination(pageNum) {
+        const userId= localStorage.getItem('userId');
+        const pageSize=this.state.pageSize;
+        const desc=this.state.desc;
+        this.props.fetchUserStrategy(pageSize, pageNum, desc, userId);
+    }
     render(){
         const columns = [{
             title: '名称',
@@ -65,10 +71,7 @@ class MyStrategy extends Component{
             tableProps: { className: 'no-striped text-center'},
         };
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
-        if(this.props.strategy_user===null){
-            return(<div className="text-center h3">loading</div>);
-        }
-        const data=this.props.strategy_user.data;
+        const data=this.props.strategy_user && this.props.strategy_user.data;
         return(
             <div>
                 <Header/>
@@ -83,13 +86,12 @@ class MyStrategy extends Component{
                             <div className="strategy-all-set text-center g-px-20 g-mr-10">向导式策略生成器</div>
                             <input className="strategy-input pull-right g-px-10" type="text" placeholder="搜索"/>
                         </div>
-
                     </div>
                     <div className="g-mt-20">
                         <Table columns={columns} dataSource={data} tableStyle={style.tableStyle} tableClass={style.tableProps} />
                     </div>
                     <div className="strategy-table-pagination">
-                        <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}/>
+                        {data==null?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
                     </div>
                 </div>
             </div>

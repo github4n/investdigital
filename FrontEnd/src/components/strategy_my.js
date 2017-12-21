@@ -199,11 +199,12 @@ class StrategyMy extends Component{
     }
 
     render(){
+        const data= this.props.strategy_user && this.props.strategy_user.data;
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
         if(this.props.strategy_user===null){
             return(
                 <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
+                   暂无数据
                 </div>
             );
         }
@@ -220,7 +221,7 @@ class StrategyMy extends Component{
                     </ul>
                 </div>
                 <div className="g-my-30">
-                    <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}  onChange={e => this.handlePagination(e)}/>
+                    {data==null?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
                 </div>
             </div>
 

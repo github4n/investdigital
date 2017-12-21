@@ -31,7 +31,6 @@ class StrateTimeLine extends Component{
         this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
     handleChange(date, dateString){
-        console.log(date, dateString);
         let date1=[];
         dateString.map((item, index)=>{
             date1.push(Date.parse(new Date(item)));
@@ -39,12 +38,10 @@ class StrateTimeLine extends Component{
         const strategyId = this.props.strategyId;
         let beginTime=date1[0];
         let endTime=date1[1];
-        console.log(date1);
         this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
     componentDidUpdate() {
         const run_chart=this.props.run_chart;
-        console.log(run_chart);
         let dataX=run_chart.earningData.time;
         let data=run_chart.earningData.data;
         let csiData=run_chart.earningData.csiData;
