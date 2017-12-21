@@ -188,7 +188,6 @@ class StrategyGreat extends Component{
             slidesToShow: 1,
             slidesToScroll: 1
         };
-        console.log(this.props.strategy_great);
         return(
             <div className="id-boxshadow g-pb-20 clearfix">
                 <div className="col-sm-12 title text-center g-py-20">InvestDigital策略精选</div>

@@ -19,7 +19,6 @@ class MessageBoard extends Component{
         };
     }
     componentWillMount() {
-        console.log(this.props.strategyId);
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const strategyId=this.props.strategyId;
@@ -32,7 +31,6 @@ class MessageBoard extends Component{
     }
     renderList(){
             return this.props.strategy_comment.data.map((item, index)=>{
-                // console.log(item);
                 return(
                     <li className="message-board-item g-py-20 g-mx-20 clearfix" key={index}>
                         <div className="col-sm-2 photo">

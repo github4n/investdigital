@@ -81,7 +81,6 @@ class StrategyDetails extends Component{
             key: 'txNum',
             width: '20%',
         }];
-        console.log(this.props.strategy_info);
         if(this.props.strategy_info === null){
             return(
                 <div className="h3 text-center g-py-100">loading...</div>
