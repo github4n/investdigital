@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import MessageBoard from './message_board';
 import { Table } from 'antd';
 import 'antd/dist/antd.css';
+import {fetchUserTransaction, fetchUserPosition, fetchStrategyInfo} from '../actions/strategy';
+import {ROOT_AVATAR} from '../actions/types';
 import Header from './common/header-all';
 import StrateTimeLine from './charts/strategy_time_line';
 import StrateRadar from './charts/strategy_radar';
@@ -15,89 +17,79 @@ import StrateBar from './charts/strategy_bar';
 class StrategyDetails extends Component{
     constructor(props) {
         super(props);
+        this.state={
+            color:true
+        };
     }
     componentWillMount() {
+        const strategyId = this.props.match.params.id;
+        this.props.fetchStrategyInfo({strategyId});
+        this.props.fetchUserTransaction({strategyId});
+        this.props.fetchUserPosition({strategyId});
+    }
+    renderTags(info){
+        return info.tags.map((item, index)=>{
+            return(
+                <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10" key={index}>{item.tagName}</span>
+            );
+        });
     }
     render(){
         const columns1 = [{
-            title: 'Name',
-            dataIndex: 'name',
+            title: '合约',
+            dataIndex: 'fundName',
+            key:'fundName',
             width: 150,
         }, {
-            title: 'Age',
-            dataIndex: 'age',
+            title: '仓位',
+            dataIndex: 'num',
+            key:'num',
             width: 150,
         }, {
-            title: 'Address',
-            dataIndex: 'address',
-        }];
-
-        const data1 = [];
-        for (let i = 0; i < 100; i++) {
-            data1.push({
-                key: i,
-                name: `Edward King ${i}`,
-                age: 32,
-                address: `London, Park Lane no. ${i}`,
-            });
+            title: '开仓均价',
+            dataIndex: 'openAvgPrice',
+            key:'openAvgPrice',
+        }, {
+            title: '累积盈亏',
+            dataIndex: 'totalProfilLoss',
+            key:'totalProfilLoss',
         }
+        ];
         const columns2 = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: '时间',
+            dataIndex: 'date',
+            key: 'date',
+            width: '20%',
         }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-            width: '12%',
-        }, {
-            title: 'Address',
-            dataIndex: 'address',
+            title: '合约',
+            dataIndex: 'fundName',
+            key: 'fundName',
             width: '30%',
-            key: 'address',
-        }];
-
-        const data2 = [{
-            key: 1,
-            name: 'John Brown sr.',
-            children: [{
-                key: 11,
-                name: 'John Brown',
-                age: 42,
-                address: 'New York No. 2 Lake Park',
-            }, {
-                key: 12,
-                name: 'John Brown jr.',
-                age: 30,
-                address: 'New York No. 3 Lake Park',
-
-            }, {
-                key: 13,
-                name: 'Jim Green sr.',
-                age: 72,
-                address: 'London No. 1 Lake Park',
-            }],
         }, {
-            key: 2,
-            name: 'Joe Black',
-            children: [{
-                key: 45,
-                name: 'John Brown',
-                age: 42,
-                address: 'New York No. 2 Lake Park',
-            }, {
-                key: 67,
-                name: 'John Brown jr.',
-                age: 30,
-                address: 'New York No. 3 Lake Park',
-
-            }, {
-                key: 88,
-                name: 'Jim Green sr.',
-                age: 72,
-                address: 'London No. 1 Lake Park',
-            }],
+            title: '买卖',
+            dataIndex: 'txTypeValue',
+            key: 'txTypeValue',
+            width: '10%',
+        }, {
+            title: '成交价',
+            dataIndex: 'txPrice',
+            key: 'txPrice',
+            width: '20%',
+        }, {
+            title: '成交量',
+            dataIndex: 'txNum',
+            key: 'txNum',
+            width: '20%',
         }];
+        console.log(this.props.strategy_info);
+        if(this.props.strategy_info === null){
+            return(
+                <div className="h3 text-center g-py-100">loading...</div>
+            );
+        }
+        const info=this.props.strategy_info;
+        const user_position=this.props.user_position;
+        const user_transaction=this.props.user_transaction;
         return(
             <div className="strategy-details">
                 <Header/>
@@ -107,43 +99,42 @@ class StrategyDetails extends Component{
                             <div className="row">
                                 <div className="col-sm-8">
                                     <div>
-                                        <h3 className="h2">交集原则</h3>
+                                        <h3 className="h2">{info.title}</h3>
                                         <div className="g-my-20">
-                                            <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10">收益之王</span>
-                                            <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10">精选之王</span>
+                                            {this.renderTags(info)}
                                         </div>
                                     </div>
                                     <hr/>
                                     <div>
                                         <div className="strategy-details-info-main text-center">
                                             <div className="col-sm-5">
-                                                <span className="info1">29.31%</span>
+                                                <span className="info1">{(info.totalReturn).toFixed(2)}%</span>
                                                 <span className="info2">累计收益</span>
                                             </div>
                                             <div className="col-sm-4">
-                                                <span className="info3">780.66</span>分
+                                                <span className="info3">{info.score}</span>分
                                             </div>
                                             <div className="col-sm-3">
-                                                <span className="info3">65</span>名
+                                                <span className="info3">{info.rank}</span>名
                                             </div>
                                         </div>
                                         <div className="col-sm-12 strategy-details-info-list">
                                             <ul>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">15.65%</div>
+                                                    <div className="g-py-7 number">{(info.annualizedReturn).toFixed(2)}%</div>
                                                     <div className="g-py-7 title">年化收益</div>
                                                 </li>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">15.65%</div>
-                                                    <div className="g-py-7 title">年化收益</div>
+                                                    <div className="g-py-7 number">{(info.maxDrawdown).toFixed(2)}%</div>
+                                                    <div className="g-py-7 title">最大回撤</div>
                                                 </li>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">15.65%</div>
-                                                    <div className="g-py-7 title">年化收益</div>
+                                                    <div className="g-py-7 number">{new Date(info.beginTime).toLocaleDateString()}</div>
+                                                    <div className="g-py-7 title">开始时间</div>
                                                 </li>
                                                 <li className="col-sm-3">
-                                                    <div className="g-py-7 number">15.65%</div>
-                                                    <div className="g-py-7 title">年化收益</div>
+                                                    <div className="g-py-7 number">{info.initMoney}</div>
+                                                    <div className="g-py-7 title">初始资金</div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -153,12 +144,12 @@ class StrategyDetails extends Component{
                                     <div className="user-des id-boxshadow">
                                         <div className="g-py-20 g-px-40 text-center">
                                             <div className="photo">
-                                                <img style={{width:"56px"}} src="/public/img/touxiang.png" alt=""/>
-                                                <div>skssfdsf</div>
+                                                <img style={{width:"56px"}} src={`${ROOT_AVATAR}/${info.imageUrl}`} alt=""/>
+                                                <div>{info.loginname}</div>
                                             </div>
                                             <hr/>
                                             <div className="signature">
-                                                bfjbjfbdjbfjcd思考方法额风格和办法
+                                                {info.description}
                                             </div>
                                         </div>
                                     </div>
@@ -172,34 +163,34 @@ class StrategyDetails extends Component{
                         <div className="col-sm-8 text-center">
                             <div className="id-boxshadow g-mb-10 clearfix">
                                 <div className="section-tilte g-py-10">收益走势图</div>
-                                <StrateTimeLine/>
+                                <StrateTimeLine strategyId={this.props.match.params.id}/>
                             </div>
                             <div className="id-boxshadow g-mb-10">
                                 <div className="section-tilte g-py-10">当前持仓</div>
-                                <Table columns={columns1} dataSource={data1} pagination={false} scroll={{ y: 240 }} />
+                                <Table columns={columns1} dataSource={user_position} pagination={false} scroll={{ y: 240 }} rowKey="id" />
                             </div>
                             <div className="id-boxshadow g-mb-10">
                                 <div className="section-tilte g-py-10">最新交易</div>
-                                <Table columns={columns2} dataSource={data2} pagination={false} scroll={{ y: 240 }} />
+                                <Table columns={columns2} dataSource={user_transaction} pagination={false} scroll={{ y: 240 }} rowKey="id"/>
                             </div>
                         </div>
                         <div className="col-sm-4">
                             <div className="id-boxshadow g-mb-10 clearfix">
                                 <div className="section-tilte g-py-10">风格分析</div>
-                                <StrateRadar/>
+                                <StrateRadar strategyId={this.props.match.params.id} />
                             </div>
                             <div className="id-boxshadow g-mb-10 clearfix">
                                 <div className="section-tilte g-py-10">板块分析</div>
-                                <StratePie/>
+                                <StratePie strategyId={this.props.match.params.id} />
                             </div>
                             <div className="id-boxshadow g-mb-10 clearfix">
                                 <div className="section-tilte g-py-10">Brinson分析</div>
-                                <StrateBar/>
+                                <StrateBar strategyId={this.props.match.params.id} />
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-sm-12"><MessageBoard/></div>
+                        <div className="col-sm-12"><MessageBoard strategyId={this.props.match.params.id} /></div>
                     </div>
                 </div>
             </div>
@@ -210,8 +201,10 @@ class StrategyDetails extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        strategy_info:state.strategy.strategy_info,
+        user_position:state.strategy.user_position,
+        user_transaction:state.strategy.user_transaction
     };
 }
 
-export default connect(mapStateToProps, {})(StrategyDetails);
+export default connect(mapStateToProps, {fetchStrategyInfo, fetchUserTransaction, fetchUserPosition})(StrategyDetails);

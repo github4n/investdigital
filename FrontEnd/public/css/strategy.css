@@ -9,6 +9,36 @@ hr{
     margin-top: 2rem !important;
     margin-bottom: 10px !important;
 }
+@media (min-width: 1200px){
+    .strategy-container{
+        width: 1314px;
+    }
+}
+.loading{
+    /*固定loading*/
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    /*垂直水平居中*/
+    margin: -20px 0 0 -20px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid;
+    border-color: #333 #333 transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    /*动画时间1s，线性变化，无限循环*/
+    animation: loading 1s linear infinite;
+}
+@keyframes loading{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
 .strategy a{
     color: rgb(85, 85, 85);
 }
@@ -57,6 +87,7 @@ hr{
     background-color: rgba(255, 255, 255, 1);
     border: none;
     margin: 0 15px;
+    cursor: pointer;
 }
 .strategy-choiceness-user{
     position: relative;
@@ -90,7 +121,7 @@ hr{
 .strategy-chart{
     height: 130px;
     width: 100%;
-    background-color: #bcddff;
+    /*background-color: #bcddff;*/
 }
 .strategy-choiceness-number{
     font-size: 14px;
@@ -183,9 +214,13 @@ hr{
 }
 .rank{
     position: absolute;
-    top: 84px;
-    left: 44px;
+    top: 52px;
+    left: 50px;
     font-size: 20px;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    text-align: center;
 }
 
 /*策略详情*/
@@ -355,3 +390,24 @@ hr{
 .slick-prev{
     left: 4px;
 }
+.bar-figure .title{
+    position: absolute;
+    top: 45px;
+    left: 26px;
+    font-weight: 500;
+}
+
+/*轮播样式修改*/
+.slick-dots li.slick-active button:before{
+    opacity: .75;
+    color: unset;
+    background-color: rgba(22, 122, 255, 1);
+    border-radius: 40px;
+    -moz-box-shadow: 0px 0px 5px rgba(22, 122, 255, 1);
+    -webkit-box-shadow: 0px 0px 5px rgba(22, 122, 255, 1);
+    width: 22px;
+    height: 10px;
+    border: none;
+    margin-top: 4px;
+}
+

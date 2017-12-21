@@ -6,23 +6,30 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class Header extends Component {
+class HeaderAll extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     renderUserInfo() {
+        // console.log(this.props.authenticated);
         if (this.props.authenticated) {
             const loginname = localStorage.getItem('loginname');
             return (
                 <div className="navbar-custom-menu">
                     <ul className="nav navbar-nav">
-                        <li className="ordermenu-style dropdown user user-menu">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                        <li className="ordermenu-styleall dropdown user user-menu pull-right g-ml-10">
+                            <a href="/signout" className="dropdown-toggle">
+                                <span className="hidden-xs"> [退出]</span>
+                            </a>
+                        </li>
+                        <li className="ordermenu-styleall dropdown user user-menu pull-right">
+                            <a href="/myfund" className="dropdown-toggle">
                                 <span className="hidden-xs">{loginname}</span>
                             </a>
                         </li>
+
                     </ul>
                 </div>
             );
@@ -42,7 +49,7 @@ class Header extends Component {
                             <li ><Link to="/" >首页</Link></li>
                             <li ><Link to="/strategy"  >策略英雄榜</Link></li>
                             <li ><Link to="/mystrategy" >我的策略</Link></li>
-                            <li ><Link to="/fundlist" >基金排行榜</Link></li>
+                            <li ><a href="/fundlist" >基金排行榜</a></li>
                             <li ><Link to="/fundissuance" >基金发行服务</Link></li>
                         </ul>
                     </div>
@@ -64,4 +71,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { })(Header);
+export default connect(mapStateToProps, { })(HeaderAll);

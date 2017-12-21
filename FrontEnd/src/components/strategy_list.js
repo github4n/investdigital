@@ -2,7 +2,6 @@
  * Created by zhangxiaojing on 2017/12/12.
  */
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import TabsControl from "./react_tab";
 import StrategyAll from './strategy_all';
 import StrategyMy from './strategy_my';
@@ -12,9 +11,6 @@ import StrategyMy from './strategy_my';
 class StrategyList extends Component{
     constructor(props) {
         super(props);
-    }
-    componentWillMount() {
-
     }
     render(){
         return(
@@ -27,10 +23,4 @@ class StrategyList extends Component{
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-
-    };
-}
-export default connect(mapStateToProps, {})(StrategyList);
+export default StrategyList;

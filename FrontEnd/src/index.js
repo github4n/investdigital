@@ -23,6 +23,8 @@ import Issuefund from './components/issue_fund';
 import Myfund from './components/my_fund';
 import Fundlist from './components/fund_list';
 import FundDetails from './components/fund_details';
+
+
 import MyStrategy from './components/my_strategy';
 import Strategy from './components/strategy';
 import StrategyDetails from './components/strategy_details';
@@ -54,9 +56,9 @@ ReactDOM.render(
                         <Route path="/issuefund" component={Issuefund} />
                         <Route path="/myfund" component={Myfund} />
                         <Route path="/fundlist" component={Fundlist} />
-                        <Route path="/funddetails" component={FundDetails} />
+                        <Route path="/funddetails/:id" component={FundDetails} />
 
-                        <Route path="/strategy/details" component={StrategyDetails} />
+                        <Route path="/strategy/details/:id" component={StrategyDetails} />
                         <Route path="/strategy" component={Strategy} />
                         <Route path="/mystrategy" component={MyStrategy} />
                         <Route path="/" component={Home} />

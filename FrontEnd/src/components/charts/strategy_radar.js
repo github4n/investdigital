@@ -3,9 +3,8 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
 import { DatePicker } from 'antd';
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+import {fetchStrategyFactors} from '../../actions/strategy';
 // 引入 ECharts 主模块
 import echarts from 'echarts/lib/echarts';
 // 引入柱状图
@@ -21,12 +20,32 @@ class StrateRadar extends Component{
         this.state={
             pageSize:10,
             active:0,
+
         };
     }
     componentWillMount() {
-
+        const strategyId = this.props.strategyId;
+        const beginTime = 0;
+        const endTime = 0;
+        this.props.fetchStrategyFactors({strategyId, beginTime, endTime});
     }
-    componentDidMount() {
+    componentDidUpdate() {
+        let legend=[], radarData=[], data=[];
+        for(let i in this.props.strategy_factors[0].factors){
+            let radarName={name:this.props.strategy_factors[0].factors[i], max:100};
+            radarData.push(radarName);
+        }
+        this.props.strategy_factors.map((item, index)=>{
+            let legendItem={name:item.time, icon: 'circle'};
+            legend.push(legendItem);
+            let portfolioItem=[];
+            item.portfolio.map((val, index)=>{
+                portfolioItem.push(parseFloat(val).toFixed(2));
+            });
+            let dataItem = {value:portfolioItem, name:item.time};
+            data.push(dataItem);
+        });
+        console.log(data);
         var myChart = echarts.init(document.getElementById("radar-figure"));
         // 绘制图表
         myChart.setOption({
@@ -36,64 +55,30 @@ class StrateRadar extends Component{
                 align:"left",
                 y: 'bottom',
                 x: 'right',
-                data: [
-                    {
-                        name:'预算分配', icon: 'circle'
-                    }, {
-                        name:'实际开销', icon: 'circle'
-                    }
-                ],
+                data:legend,
                 itemWidth: 10,             // 图例图形宽度
                 itemHeight: 10,
             },
             radar: {
-                // shape: 'circle',
-                // name: {
-                //     textStyle: {
-                //         // color: '#fff',
-                //         // backgroundColor: '#999',
-                //         // borderRadius: 2,
-                //         // padding: [3, 3]
-                //     }
-                // },
-                indicator: [
-                    { name: '销售', max: 6500},
-                    { name: '管理', max: 16000},
-                    { name: '信息技术', max: 30000},
-                    { name: '客服', max: 38000},
-                    { name: '研发', max: 52000},
-                    { name: '市场', max: 25000}
-                ]
+                indicator: radarData
             },
             series: [{
-                name: '预算 vs 开销（Budget vs spending）',
                 type: 'radar',
-                itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                // areaStyle: {normal: {}},
-                data : [
-                    {
-                        value : [4300, 10000, 2800, 35000, 50000, 19000],
-                        name : '预算分配',
-                        itemStyle:{
-                            normal:{
-                                color:'#e07b6d',
-                            }
-                        }
-                    },
-                    {
-                        value : [5000, 10000, 28000, 3100, 32000, 21000],
-                        name : '实际开销',
-                        itemStyle:{
-                            normal:{
-                                color:'#8da6e0',
-                            }
+                itemStyle: {
+                    normal: {
+                        areaStyle: {type: 'default'},
+                        color: function(params) {
+                            let colorList = [
+                                '#8da6e0', '#FCCE10', '#e07b6d'
+                            ];
+                            return colorList[params.dataIndex];
                         }
                     }
-                ]
+                },
+                data:data,
             }]
         });
     }
-
     render(){
         return(
             <div className="col-sm-12 g-pb-20">
@@ -109,8 +94,8 @@ class StrateRadar extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        strategy_factors:state.strategy.strategy_factors
     };
 }
 
-export default connect(mapStateToProps, {})(StrateRadar);
+export default connect(mapStateToProps, {fetchStrategyFactors})(StrateRadar);

@@ -4,11 +4,12 @@
 import axios from 'axios';
 import { browserHistory, hashHistory } from 'react-router';
 import {
-    ROOT_URLC,
+    ROOT_URLCF,
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR,
     EMAIL_SIGNUP_USER,
+    FETCH_VERIFY_CODE,
     getAuthorizedHeader
 } from './types';
 
@@ -21,18 +22,9 @@ export function authError(error) {
 
 function setAuthToLocalStorage(data) {
     localStorage.setItem('token', data.token);
-    localStorage.setItem('role', data.role.id);
     localStorage.setItem('userId', data.id); //用户ID
     localStorage.setItem('loginname', data.loginname); //用户登录名
     localStorage.setItem('mobilephone', data.mobilephone);//手机号
-    localStorage.setItem('createTime', data.createTime);//注册时间
-    localStorage.setItem('email', data.email);//邮箱
-    localStorage.setItem('firstBuyTime', data.userTxDetail.firstBuyTime); //第一次交易时间
-    localStorage.setItem('txNum', data.userTxDetail.txNum); //交易次数
-    localStorage.setItem('believeNum', data.userTxDetail.believeNum);//信任人数
-    localStorage.setItem('sellAmount', data.userTxDetail.sellAmount); //出售的累计交易数量
-    localStorage.setItem('buyAmount', data.userTxDetail.buyAmount); //购买的累计交易数量
-    localStorage.setItem('firstAddress', data.firstAddress); //用户中心 收款地址
 }
 
 /**
@@ -41,7 +33,7 @@ function setAuthToLocalStorage(data) {
 export function signinAction({ mobilephone, password }) {
     console.log(`点击登录按钮传过来的数据是 ${mobilephone},${password}`);
     return function (dispatch) {
-        axios.post(`${ROOT_URLC}/user/login`, { mobilephone, password })
+        axios.post(`${ROOT_URLCF}/user/login`, { mobilephone, password })
             .then(response => {
                 console.log(response);
                 if (response.data.status == 1) {
@@ -66,7 +58,7 @@ export function signinAction({ mobilephone, password }) {
 export function EmailsigninAction({ email, password }) {
     console.log(`点击邮箱登录按钮传过来的数据是 ${email},${password}`);
     return function (dispatch) {
-        axios.post(`${ROOT_URLC}/user/login`, { email, password })
+        axios.post(`${ROOT_URLCF}/user/login`, { email, password })
             .then(response => {
                 console.log(response);
                 if (response.data.status == 1) {
@@ -98,7 +90,7 @@ export function signoutUser() {
 export function signupUser({ loginname, mobilephone, vcode, password }, callback) {
     console.log(`手机注册传送的数据: ${loginname}, ${mobilephone},${vcode}, ${password}`);
     return function (dispatch) {
-        axios.post(`${ROOT_URLC}/user/register`, { loginname, mobilephone, vcode, password })
+        axios.post(`${ROOT_URLCF}/user/register`, { loginname, mobilephone, vcode, password })
             .then(response => {
                 console.log(response);
                 if (response.data.status == 1) {
@@ -119,7 +111,7 @@ export function signupUser({ loginname, mobilephone, vcode, password }, callback
 export function EmialsignupUser({ loginname, email, password }, callback) {
     console.log(`邮箱注册传送的数据: ${loginname}, ${email}, ${password}`);
     return function (dispatch) {
-        axios.post(`${ROOT_URLC}/user/register`, { loginname, email, password })
+        axios.post(`${ROOT_URLCF}/user/register`, { loginname, email, password })
             .then(response => {
                 console.log(response);
                 if (response.data.status == 1) {
@@ -132,6 +124,24 @@ export function EmialsignupUser({ loginname, email, password }, callback) {
             .catch((err) => {
                 dispatch(authError(err.message));
             });
+    };
+}
+
+/**
+ * 注册获取验证码 && 手机找回获取验证码
+ */
+
+export function GetverifyCode({ mobilephone }) {
+    console.log("点击发送验证码带过来的手机号" + mobilephone);
+    return function (dispatch) {
+        axios.get(`${ROOT_URLCF}/user/phoneVcode?mobilephone=${mobilephone}`, { headers: getAuthorizedHeader() })
+            .then(response => {
+                console.log("获取验证码的接口通了");
+                console.log(response);
+                dispatch({ type: FETCH_VERIFY_CODE, payload: response });
+
+            })
+            .catch(err => (err.message));
     };
 }
 

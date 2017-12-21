@@ -24,14 +24,14 @@ class StrategyMy extends Component{
         };
     }
     componentWillMount() {
-        const userId=243461;
+        const userId= localStorage.getItem('userId');
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
         this.props.fetchUserStrategy({pageSize, pageNum, desc, userId});
     }
     handlePagination(pageNum) {
-        const userId=243461;
+        const userId= localStorage.getItem('userId');
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
         this.props.fetchUserStrategy(pageSize, pageNum, desc, userId);
@@ -39,54 +39,83 @@ class StrategyMy extends Component{
     componentDidUpdate() {
         this.props.strategy_user.data.map((item, i)=> {
             let myChart2 = echarts.init(document.getElementById(`main2${i}`));
-            let dataX=[], data=[];
-            item.earningInfoList.map((val, index)=>{
-                let date=new Date(val.timeStamp).toLocaleDateString();
-                let earning = ((val.earning)*100).toFixed(2);
-                dataX.push(date);
-                data.push(earning);
-            });
+            let dataX=item.earningData.time;
+            let data=item.earningData.data;
+            let csiData=item.earningData.csiData;
             // 绘制图表
             myChart2.setOption({
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                 },
                 grid: {
-                    x: 40,
-                    y:40
+                    left: '3%',   //图表距边框的距离
+                    right: '4%',
+                    top: '10%',
+                    bottom: '0%',
+                    containLabel: true
                 },
-                backgroundColor:"#E2EFF9",
+                backgroundColor:"rgba(233, 240, 249, .3)",
                 xAxis : [
                     {
                         type : 'category',
-                        // boundaryGap : false,
-                        axisLabel :{
-                            interval:0,
-                            rotate: 60
+                        data : dataX,
+                        axisLine:{
+                            lineStyle:{
+                                color: "gainsboro"
+                            }
                         },
-                        data : dataX
+                        axisLabel: {
+                            show: true,
+                            textStyle: {
+                                color: '#252535'
+                            }
+                        }
                     }
                 ],
                 yAxis : [
                     {
-                        type : 'value'
+                        type : 'value',
+                        axisLabel: {
+                            formatter: '{value}%',
+                            show: true,
+                            textStyle: {
+                                color: '#252535'
+                            }
+                        },
+                        axisLine:{
+                            lineStyle:{
+                                color: "gainsboro"
+                            }
+                        }
                     }
                 ],
                 series : [
                     {
                         name:'收益',
                         type:'line',
-                        borderColor:'blue',
-                        // smooth:true,
+                        smooth:true,
                         itemStyle: {
                             normal: {
-                                areaStyle: {type: 'default'},
                                 lineStyle:{
-                                    color:'blue'
+                                    color:'rgb(170, 70, 67)'
                                 }
                             }
                         },
                         data:data
+                    },
+                    {
+                        name:'沪深300',
+                        type:'line',
+                        smooth:true,
+                        itemStyle: {
+                            normal: {
+                                lineStyle:{
+                                    color:'rgb(69, 114, 167)'
+                                }
+                            }
+                        },
+                        data: csiData
                     }
                 ]
             });
@@ -120,9 +149,9 @@ class StrategyMy extends Component{
         return this.props.strategy_user.data.map((item, index)=>{
             return(
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
-                    <Link to="/strategy/details">
-                        <div className="col-sm-2">
-                            <img style={{width:"100%"}} className="g-mt-50" src="/public/img/u158.png" alt=""/>
+                    <Link to={`/strategy/details/${item.id}`}>
+                        <div className="col-sm-2 text-center">
+                            <img style={{width:"70%"}} className="g-mt-30" src="/public/img/u158.png" alt=""/>
                             <span className="rank">{item.rank}</span>
                         </div>
                         <div className="col-sm-5">
@@ -139,15 +168,15 @@ class StrategyMy extends Component{
                                     </div>
                                     <div className="strategy-choiceness-number row g-pt-10 text-center" style={{fontSize:"12px"}}>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.totalReturn)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.totalReturn).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">累计收益</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.annualizedReturn)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.annualizedReturn).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">年化收益</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
-                                            <h5 className="g-pt-5">{((item.maxDrawdown)*100).toFixed(2)}%</h5>
+                                            <h5 className="g-pt-5">{(item.maxDrawdown).toFixed(2)}%</h5>
                                             <h5 className="g-pt-5">最大回撤</h5>
                                         </div>
                                         <div className="col-sm-3" style={{padding:0}}>
@@ -159,7 +188,9 @@ class StrategyMy extends Component{
                             </div>
                         </div>
                         <div className="col-sm-5">
-                            <div className="strategy-chart g-mt-20" id={`main2${index}`} style={{height:"180px", width:"248px"}}></div>
+                            <div className="strategy-chart g-mt-20" id={`main2${index}`} style={{height:"190px", width:"280px"}}>
+                                <span className="loading"></span>
+                            </div>
                         </div>
                     </Link>
                 </li>
@@ -170,7 +201,11 @@ class StrategyMy extends Component{
     render(){
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
         if(this.props.strategy_user===null){
-           return(<div></div>);
+            return(
+                <div className="text-center h3 col-sm-12 g-py-100">
+                    <div className="loading"></div>
+                </div>
+            );
         }
         return(
             <div className="strategy-all-content clearfix">

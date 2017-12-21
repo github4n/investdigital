@@ -5,23 +5,20 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import TabsControl from "./react_tab";
 import EarningsDay from './earnings_day';
+import EarningsWeekly from './earnings_weekly';
+import EarningsMonthly from './earning_monthly';
 
-
-
-class MessageBoard extends Component{
+class EarningsList extends Component{
     constructor(props) {
         super(props);
-    }
-    componentWillMount() {
-
     }
     render(){
         return(
             <div className="id-boxshadow">
                 <TabsControl>
                     <div name="日收益"><EarningsDay/></div>
-                    <div name="周收益"><EarningsDay/></div>
-                    <div name="月收益"><EarningsDay/></div>
+                    <div name="周收益"><EarningsWeekly/></div>
+                    <div name="月收益"><EarningsMonthly/></div>
                 </TabsControl>
             </div>
 
@@ -34,4 +31,4 @@ function mapStateToProps(state) {
 
     };
 }
-export default connect(mapStateToProps, {})(MessageBoard);
+export default connect(mapStateToProps, {})(EarningsList);

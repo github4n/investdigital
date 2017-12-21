@@ -4,7 +4,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Pagination} from 'nl-design';
+import {ROOT_AVATAR} from '../actions/types';
 import ReactQuill from 'react-quill';
+import {fetchStrategyComment} from '../actions/strategy';
 import 'react-quill/dist/quill.snow.css';
 
 
@@ -12,67 +14,48 @@ class MessageBoard extends Component{
     constructor(props) {
         super(props);
         this.state={
-            pageSize:10
+            pageNum:1,
+            pageSize:8,
         };
     }
     componentWillMount() {
-
+        console.log(this.props.strategyId);
+        const pageNum=this.state.pageNum;
+        const pageSize=this.state.pageSize;
+        const strategyId=this.props.strategyId;
+        this.props.fetchStrategyComment({strategyId, pageSize, pageNum});
+    }
+    handlePagination(pageNum) {
+        const strategyId=this.props.strategyId;
+        const pageSize=this.state.pageSize;
+        this.props.fetchStrategyComment({strategyId, pageSize, pageNum});
     }
     renderList(){
-        const data=[
-            {
-                title:"罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款",
-                aa:"wdnn",
-                name:"zhang",
-                youyi:"23%",
-                huiche:"23%",
-                dingyue:"12%",
-                time:"2017-6-30"
-            }, {
-                title:"罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款",
-                aa:"wdnn",
-                name:"zhang2",
-                youyi:"23%",
-                huiche:"23%",
-                dingyue:"12%",
-                time:"2017-6-30"
-            }, {
-                title:"罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款",
-                aa:"wdnn",
-                name:"zhang5",
-                youyi:"23%",
-                huiche:"23%",
-                dingyue:"12%",
-                time:"2017-6-30"
-            }, {
-                title:"罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款sjfb可就是被罚款被罚款 v部分额办法被罚款",
-                aa:"wdnn",
-                name:"zhang8",
-                youyi:"23%",
-                huiche:"23%",
-                dingyue:"12%",
-                time:"2017-6-30"
-            }
-        ];
-        return data.map((item, index)=>{
-            console.log(item);
-            return(
-                <li className="message-board-item g-py-20 g-mx-20 clearfix" key={index}>
-                    <div className="col-sm-2 photo">
-                        <img src="/public/img/touxiang.png" alt=""/>
-                    </div>
-                    <div className="col-sm-8">
-                        <span>{item.name}</span>
-                        <div>{item.title}</div>
-                    </div>
-                    <div className="col-sm-2">
-                        {item.time}
-                    </div>
-                </li>
-            );
-        });
-    }
+            return this.props.strategy_comment.data.map((item, index)=>{
+                // console.log(item);
+                return(
+                    <li className="message-board-item g-py-20 g-mx-20 clearfix" key={index}>
+                        <div className="col-sm-2 photo">
+                            <img src={`${ROOT_AVATAR}/${item.imageUrl}`} alt=""/>
+                        </div>
+                        <div className="col-sm-8">
+                            <span>{item.username}</span>
+                            <div>{item.content}</div>
+                        </div>
+                        <div className="col-sm-2">
+                            {new Date(item.time).toLocaleDateString()}
+                        </div>
+                    </li>
+                );
+            });
+        }
     render(){
+        const totalNum = this.props.strategy_comment && this.props.strategy_comment.rowCount;
+        if(this.props.strategy_comment === null){
+            return(
+                <div className="text-center h3">loading</div>
+            );
+        }
         return(
             <div className="id-boxshadow clearfix g-py-20">
                 <ul className="message-board clearfix">
@@ -84,7 +67,7 @@ class MessageBoard extends Component{
                     </li>
                 </ul>
                 <div className="g-my-30">
-                    <Pagination  defaultPageSize={this.state.pageSize} total={100}/>
+                    <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}  onChange={e => this.handlePagination(e)}/>
                 </div>
                 <div className="col-sm-12">
                     <div className="g-mx-20">
@@ -97,10 +80,9 @@ class MessageBoard extends Component{
         );
     }
 }
-
 function mapStateToProps(state) {
     return {
-
+        strategy_comment:state.strategy.strategy_comment
     };
 }
-export default connect(mapStateToProps, {})(MessageBoard);
+export default connect(mapStateToProps, {fetchStrategyComment})(MessageBoard);

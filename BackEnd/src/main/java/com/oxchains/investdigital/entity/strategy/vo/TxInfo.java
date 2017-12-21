@@ -11,6 +11,6 @@ import java.util.List;
 @Data
 public class TxInfo{
     private Long id;
-    private Long time;
+    private String date;
     private List<UserTransaction> children;
 }

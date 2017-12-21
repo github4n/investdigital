@@ -110,7 +110,7 @@ ul{list-style: none;}
     top: 0px;
     background-color: #ffffff;
     opacity: 0.6; */
-    background-color: none;
+    /*background-color: none;*/
     box-shadow: 0 0 10px #bbbbbb;
 }
 
@@ -124,28 +124,30 @@ ul{list-style: none;}
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover,.nav .open>a:active
 {
     color: white;
-    background-color: rgba(246, 183, 7, 1);
+    /*background-color: rgba(246, 183, 7, 1);*/
 }
-.ordermenu-style
+.ordermenu-style,.ordermenu-styleall
 {
     height: 53px;
     text-align: center;
     padding: 15px 0;
-    /* margin-top: 16px; */
+    font-size: 16px;
 }
 .ordermenu-style>a
 {
     height: 36px;
     padding: 0;
+    color: white!important;
 }
-.ordermenu-style>a:hover
+.ordermenu-style>a:hover,.ordermenu-style>a:active,.ordermenu-styleall>a:hover,.ordermenu-styleall>a:active
 {
-    color: white;
+    color: rgba(246, 183, 7, 1)!important;
 }
-.ordermenu-style:hover
+.ordermenu-styleall>a
 {
-    background-color: rgba(246, 183, 7, 1);
-    color: white;
+    height: 36px;
+    padding: 0;
+    color: black!important;
 }
 .nav>li>a
 {
@@ -325,8 +327,8 @@ ul{list-style: none;}
     border-width:0px;
     position: absolute;
     top: 23px;
-    transform: rotate(30deg);
-    animation: squareing 3s linear ; 
+    transform: rotate(45deg);
+    animation: squareing 4s linear ;
     background-color:rgba(246, 183, 7, 1);
 }
 .banner-square>img
@@ -741,6 +743,7 @@ ul{list-style: none;}
 /*申请表单*/
 .form-banner
 {
+    width: 100%;
     height: 160px;
     background-color: rgba(51, 51, 51, 1);
 }
@@ -766,6 +769,10 @@ ul{list-style: none;}
     font-weight: 500;
     font-style: normal;
     font-size: 14px;
+}
+.ant-radio-wrapper
+{
+    font-size: 14px!important;
 }
 .base-info
 {
@@ -854,7 +861,7 @@ ul{list-style: none;}
 /*基金详情*/
 .fund-details-banner
 {
-    height: 100%;
+    height: 400px;
     width: 100%;
     background: radial-gradient(#525358,#212123);
     /*background: rgba(0,0,0, 0.4);*/
@@ -870,7 +877,7 @@ ul{list-style: none;}
     font-weight:700;
     color: white;
 }
-.fund-detail-rengou
+.fund-detail-rengou,.fund-detail-rengou:hover,.fund-detail-rengou:active,.fund-detail-rengou:focus
 {
     background-color: rgba(246, 183, 7, 1);
     border-radius: 5px;
@@ -897,9 +904,11 @@ ul{list-style: none;}
 {
     position: relative;
     top:150px;
+    left:200px;
     height: 120px;
     border-left: 12px solid rgba(246, 183, 7, 1);
     display: inline-block;
+    z-index: -1;
 }
 .title-border-left>h2,.title-border-right>h2
 {
@@ -928,6 +937,7 @@ ul{list-style: none;}
 {
     position: relative;
     top:150px;
+    left:60px;
     height: 120px;
     border-right: 12px solid rgba(246, 183, 7, 1);
     display: inline-block;
@@ -937,7 +947,7 @@ ul{list-style: none;}
     height: 50px;
     position: relative;
     top:300px;
-    left: -280px;
+    left: -80px;
 }
 .official-btn>span
 {
@@ -955,7 +965,7 @@ ul{list-style: none;}
 }
 .official-btn-right
 {
-    left: -270px;
+    left: -200px;
 }
 .official-btn-right>span:nth-child(1)
 {
@@ -986,12 +996,44 @@ ul{list-style: none;}
 .fund-list-bgc1
 {
     /*background-image: url('../../public/img/left_u750.png');*/
-    /*-webkit-background-size: 100% 100%;*/
+    /*position: relative;*/
+    /*top:-70px;*/
+    /*left:70px;*/
+    display: inline-block;
+    -webkit-background-size: 100% 100%;
     /*background-size:100%;*/
 }
 .fund-list-bgc2
 {
-    /*background-image: url('../../public/img/right_u747.png');*/
-    /*-webkit-background-size: 100% 100%;*/
+    /*background-image: url('../../public/img/right_u746.png');*/
+    position: relative;
+    top:-850px;
+    left:750px;
+    display: inline-block;
+    -webkit-background-size: 100% 100%;
     /*background-size: 100%;*/
+}
+.fund-detail-share
+{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #444444;
+    padding-top: 5px;
+    margin-right: 5px;
+}
+.fund-list-banner-left {
+    position: absolute;
+    z-index: -3;
+    width: 120%;
+    height: 120%;
+    margin-left: 0%;
+}
+.fund-list-banner-right {
+    position: absolute;
+    z-index: -3;
+    width: 120%;
+    height: 120%;
+    margin-left: -18%;
 }

@@ -1,13 +1,10 @@
 package com.oxchains.investdigital.rest;
-import com.oxchains.investdigital.common.DateUtil;
 import com.oxchains.investdigital.common.RestResp;
 import com.oxchains.investdigital.entity.strategy.vo.Pojo;
 import com.oxchains.investdigital.service.StrategyService;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import java.text.ParseException;
 /**
  * Created by xuqi on 2017/12/13.
  */
@@ -35,12 +32,13 @@ public class StrategyController {
         Pojo pojo = new Pojo();
         pojo.setPageSize(pageSize);
         pojo.setPageNum(pageNum);
+        pojo.setDesc("totalReturn");
         this.checkPojo(pojo);
         RestResp restResp = strategyService.getGreatStrategy(pojo);
         return restResp;
     }
     //获取所有策略
-    @PostMapping("/getAllStrategy/{pageSize}/{pageNum}/{desc}")
+    @RequestMapping("/getAllStrategy/{pageSize}/{pageNum}/{desc}")
     public  RestResp getAllStrategy(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageNum")Integer pageNum,@PathVariable("desc")String desc){
         Pojo pojo = new Pojo();
         pojo.setPageSize(pageSize);
@@ -51,13 +49,25 @@ public class StrategyController {
         return restResp;
 
     }
+    //获取所有策略
+    @RequestMapping("/getStrategyTrunk/{desc}")
+    public  RestResp getStrategyTrunk(@PathVariable("desc")String desc){
+        Pojo pojo = new Pojo();
+        pojo.setPageSize(20);
+        pojo.setPageNum(1);
+        pojo.setDesc(desc);
+        this.checkPojo(pojo);
+        RestResp restResp = strategyService.getStrategyTrunk(pojo);
+        return restResp;
+
+    }
     //根据策略id获取策略详情
-    @PostMapping("/catStrategyInfo/{strategyId}")
+    @RequestMapping("/catStrategyInfo/{strategyId}")
     public RestResp catStrategyInfo(@PathVariable("strategyId")Long strategyId){
         return strategyService.catStrategyInfo(strategyId);
     }
     //获取策略的收益详情 涨跌幅
-    @PostMapping("/getRunChart/{strategyId}/{beginTime}/{endTime}")
+    @RequestMapping("/getRunChart/{strategyId}/{beginTime}/{endTime}")
     public RestResp getRunChart(@PathVariable("strategyId") Long strategyId,@PathVariable("beginTime") Long beginTime,@PathVariable("endTime") Long endTime){
         Pojo pojo = new Pojo();
         pojo.setStrategyId(strategyId);
@@ -73,8 +83,9 @@ public class StrategyController {
         this.checkPojo(pojo);
         return strategyService.getRunChart(pojo);
     }
+
     //获取用户持仓
-    @PostMapping("/getUserPosition/{strategyId}")
+    @RequestMapping("/getUserPosition/{strategyId}")
     public RestResp getUserPosition(@PathVariable("strategyId")Long strategyId){
         Pojo pojo = new Pojo();
         pojo.setStrategyId(strategyId);
@@ -92,7 +103,7 @@ public class StrategyController {
         return strategyService.getStrategyComment(strategyId,pageSize,pageNum);
     }
     //获取用户最近交易
-    @PostMapping("/getUserTransaction/{strategyId}")
+    @RequestMapping("/getUserTransaction/{strategyId}")
     public RestResp getStrategyTransaction(@PathVariable("strategyId")Long  strategyId){
         Pojo pojo = new Pojo();
         pojo.setStrategyId(strategyId);
@@ -126,18 +137,14 @@ public class StrategyController {
        if(pojo.getPageSize() == null || pojo.getPageSize() == 0){
            pojo.setPageSize(8);
        }
-       if(pojo.getDesc() == null || pojo.getDesc().equals(0)){
+       if(pojo.getDesc() == null || pojo.getDesc().equals("0")){
            pojo.setDesc("id");
        }
        if(pojo.getBeginTime() == 0){
-           pojo.setEndTime(1513094400000L);
+           pojo.setBeginTime(1506787200000L);
        }
         if(pojo.getEndTime() == 0){
-            pojo.setBeginTime(1513180800000L);
+            pojo.setEndTime(1512057600000L);
         }
-    }
-    @RequestMapping("/data/{id}")
-    public String data(Long id){
-        return strategyService.run(id);
     }
 }

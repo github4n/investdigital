@@ -40,9 +40,6 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 public class UserController {
     @Resource
     UserService userService;
-
-
-
     @PostMapping(value = "/register")
     public RestResp register(@RequestBody User user){
         return userService.addUser(user);

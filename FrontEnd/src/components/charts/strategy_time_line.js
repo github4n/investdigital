@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {fetchRunChart} from '../../actions/strategy';
 import { DatePicker } from 'antd';
 const { RangePicker} = DatePicker;
 // 引入 ECharts 主模块
@@ -20,30 +21,34 @@ class StrateTimeLine extends Component{
         this.state={
             pageSize:10,
             active:0,
+            index:4
         };
     }
     componentWillMount() {
-
+        const strategyId = this.props.strategyId;
+        const beginTime=0;
+        const endTime =0;
+        this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
     handleChange(date, dateString){
         console.log(date, dateString);
+        let date1=[];
+        dateString.map((item, index)=>{
+            date1.push(Date.parse(new Date(item)));
+        });
+        const strategyId = this.props.strategyId;
+        let beginTime=date1[0];
+        let endTime=date1[1];
+        console.log(date1);
+        this.props.fetchRunChart({strategyId, beginTime, endTime});
     }
-    componentDidMount() {
-        var base = +new Date(1968, 9, 3);
-        var oneDay = 24 * 3600 * 1000;
-        var date = [];
-
-        var data = [Math.random() * 300];
-        var data2 = [Math.random() * 10];
-
-        for (var i = 1; i < 20000; i++) {
-            var now = new Date(base += oneDay);
-            date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-            data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-            data2.push(Math.round((Math.random() - 1) + data2[i - 1]));
-        }
-        console.log(date, data);
-            var myChart = echarts.init(document.getElementById("earning-figure"));
+    componentDidUpdate() {
+        const run_chart=this.props.run_chart;
+        console.log(run_chart);
+        let dataX=run_chart.earningData.time;
+        let data=run_chart.earningData.data;
+        let csiData=run_chart.earningData.csiData;
+            let myChart = echarts.init(document.getElementById("earning-figure"));
             // 绘制图表
             myChart.setOption({
                 tooltip: {
@@ -51,6 +56,7 @@ class StrateTimeLine extends Component{
                     position: function (pt) {
                         return [pt[0], '10%'];
                     },
+                    formatter: '{b}<br/>{a0}&nbsp;{c0}%<br/>{a1}&nbsp;{c1}%'
                 },
                 grid:{
                     y:10
@@ -58,24 +64,23 @@ class StrateTimeLine extends Component{
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: date
+                    data: dataX
                 },
                 yAxis: {
                     type: 'value',
                     show: true,
                     boundaryGap: [0, '100%'],
-                    name:"sdfdef",
                 },
                 dataZoom: [{
                     show:true,
                     type: 'inside',
                     start: 0,
-                    end: 10
+                    end:100
                 }, {
                     start: 0,
                     end: 10,
                     handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                    handleSize: '80%',
+                    handleSize: '100%',
                     handleStyle: {
                         color: '#fff',
                         shadowBlur: 3,
@@ -86,40 +91,30 @@ class StrateTimeLine extends Component{
                 }],
                 series: [
                     {
-                        name:'模拟数据',
+                        name:'策略累计收益',
                         type:'line',
-                        smooth:false,
-                        symbol: 'none',
+                        smooth:true,
                         sampling: 'average',
                         itemStyle: {
                             normal: {
-                                color: 'rgb(255, 70, 131)'
-                            }
-                        },
-                        areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: 'rgb(255, 158, 68)'
-                                }, {
-                                    offset: 1,
-                                    color: 'rgb(255, 70, 131)'
-                                }])
+                                color:'rgb(170, 70, 67)'
                             }
                         },
                         data: data
                     },
                     {
-                        name:'模拟数据',
+                        name:'沪深300',
                         type:'line',
-                        smooth:false,
+                        smooth:true,
                         sampling: 'average',
-                        data: data2,
                         itemStyle: {
                             normal: {
-                                color: 'blue'
+                                lineStyle:{
+                                    color:'rgb(69, 114, 167)'
+                                }
                             }
                         },
+                        data: csiData
                     }
                 ]
             });
@@ -141,6 +136,7 @@ class StrateTimeLine extends Component{
             );
         });
     }
+
     render(){
         return(
             <div className="col-sm-12 g-py-20">
@@ -153,7 +149,9 @@ class StrateTimeLine extends Component{
                             <RangePicker onChange={this.handleChange.bind(this)} />
                         </div>
                     </div>
-                    <div className="strategy-chart g-mt-20" id="earning-figure" style={{height:"350px"}}></div>
+                    <div className="strategy-chart g-mt-20" id="earning-figure" style={{height:"350px"}}>
+                        <div className="loading"></div>
+                    </div>
                 </div>
             </div>
         );
@@ -162,8 +160,7 @@ class StrateTimeLine extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        run_chart:state.strategy.run_chart
     };
 }
-
-export default connect(mapStateToProps, {})(StrateTimeLine);
+export default connect(mapStateToProps, {fetchRunChart})(StrateTimeLine);
