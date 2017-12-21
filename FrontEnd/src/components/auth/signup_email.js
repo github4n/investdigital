@@ -65,7 +65,7 @@ class SignupEmial extends Component {
                             <input ref="password" className="form-control form-control-email " type="password" placeholder="请输入密码" icon="lock" />
                             <div style={{width:85 +'%'}}>
                                 <div className=" checkbox-margin">
-                                    <input type="checkbox" defaultChecked className="checkbox-width" /><span> 我已阅读themis用户手册及相关法律</span>
+                                    <input type="checkbox" defaultChecked className="checkbox-width" /><span> 我已阅读investDigital用户手册及相关法律</span>
                                 </div>
                                 <div className="">
                                     <button  className="btn  form-register" style={{color:'white'}} onClick={this.handleFormSubmit.bind(this)}><i className={`fa fa-spinner fa-spin ${this.state.spin ? '' : 'hidden'}`}></i> 注册</button>
