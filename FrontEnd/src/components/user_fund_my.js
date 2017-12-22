@@ -199,8 +199,9 @@ class UserFundmy extends Component{
     }
 
     render(){
+        const data = this.props.strategy_user;
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
-        if(this.props.strategy_user===null){
+        if(data ===null || totalNum == 0){
             return(
                 <div className="text-center h3 col-sm-12 g-py-100">
                     暂无数据
