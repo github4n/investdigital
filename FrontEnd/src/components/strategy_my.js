@@ -147,8 +147,7 @@ class StrategyMy extends Component{
     }
     renderList(){
         const data= this.props.strategy_user && this.props.strategy_user.data;
-        const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
-        if(data===null ||totalNum==0 ){
+        if(data == null ||data == '' ){
             return(
                 <div className="text-center h3 col-sm-12 g-py-10">
                     暂无数据
@@ -223,7 +222,7 @@ class StrategyMy extends Component{
                     </ul>
                 </div>
                 <div className="g-my-30">
-                    {data==null || totalNum == 0 ?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
+                    {data==null || data==''?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
                 </div>
             </div>
 

@@ -13,7 +13,6 @@ import  'echarts/lib/chart/line';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/toolbox';
-
 import 'echarts/lib/component/dataZoom';
 
 import {fetchFundMy } from '../actions/fund';

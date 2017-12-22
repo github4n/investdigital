@@ -17,14 +17,14 @@ class MyStrategy extends Component{
             desc:'id'
         };
     }
-    componentWillMount() {
+    componentWillMount(){
         const userId= localStorage.getItem('userId');
         const pageNum=this.state.pageNum;
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
         this.props.fetchUserStrategy({pageSize, pageNum, desc, userId});
     }
-    handlePagination(pageNum) {
+    handlePagination(pageNum){
         const userId= localStorage.getItem('userId');
         const pageSize=this.state.pageSize;
         const desc=this.state.desc;
@@ -90,10 +90,9 @@ class MyStrategy extends Component{
                     </div>
                     <div className="g-mt-20">
                         <Table columns={columns} dataSource={data} tableStyle={style.tableStyle} tableClass={style.tableProps} />
-                        {totalNum == 0 ? <div className="text-center h3 col-sm-12 g-py-10">暂无数据</div> : ""}
                     </div>
                     <div className="strategy-table-pagination">
-                        {data==null || totalNum == 0?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
+                        {data==null || data==''?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
                     </div>
                 </div>
                 <Footer/>
