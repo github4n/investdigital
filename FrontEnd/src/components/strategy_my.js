@@ -210,7 +210,6 @@ class StrategyMy extends Component{
     render(){
         const data= this.props.strategy_user && this.props.strategy_user.data;
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
-        console.log(this.props.strategy_user);
         return(
             <div className="strategy-all-content clearfix">
                 <div className="strategy-all-content-filtrate g-py-20 clearfix">
