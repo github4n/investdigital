@@ -13,7 +13,6 @@ class HeaderAll extends Component {
     }
 
     renderUserInfo() {
-        // console.log(this.props.authenticated);
         if (this.props.authenticated) {
             const loginname = localStorage.getItem('loginname');
             return (

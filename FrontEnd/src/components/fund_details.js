@@ -24,16 +24,18 @@ class StrategyDetails extends Component{
 
     renderTags(){
         const data = this.props.all || [];
-       const tags = data.tags;
-        // return tags.map((item, index)=>{
-        //     return(
-        //         <span key={index} className="strategy-choiceness-tip g-px-15 g-py-5 g-mr-10">{item}</span>
-        //
-        //     );
-        // });
+        const tags = data.tags || [];
+        console.log(tags);
+        return tags.map((item, index)=>{
+            return(
+                <span key={index} className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10" style={{width:110 +'px'}}>{item}</span>
+
+            );
+        });
     }
     render(){
         const data = this.props.all || [];
+        console.log(data.tags);
         return(
             <div className="strategy-details">
                 <Header/>
@@ -44,9 +46,9 @@ class StrategyDetails extends Component{
                                     <div>
                                         <h3 className="h2">{data.issueUserName}</h3>
                                         <div className="g-my-20">
-                                            {/*{this.renderTags()}*/}
-                                            <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10">无认购费</span>
-                                            <span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10" style={{width:110 +'px'}}>自有基金跟投</span>
+                                            {this.renderTags()}
+                                            {/*<span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10">无认购费</span>*/}
+                                            {/*<span className="strategy-details-tip g-px-10 g-py-5 text-center g-mr-10" style={{width:110 +'px'}}>自有基金跟投</span>*/}
                                             <span className="pull-right fund-share g-px-10 g-py-5 text-center"><i className="fa fa-share-alt  fund-detail-share"></i>订阅</span>
                                             <span className="pull-right fund-share g-px-10 g-py-5 text-center "> <i className="fa fa-share-alt  fund-detail-share"></i>分享</span>
                                         </div>
@@ -173,7 +175,7 @@ class StrategyDetails extends Component{
                                     </li>
                                     <li className="g-my-20">
                                         <span>基金期限&#x3000;&#x3000;&#x3000;&nbsp;</span>
-                                        <span>{data.info ? data.info.deadline :'--'}</span>
+                                        <span>{data.info ? new Date(data.info.deadline).toLocaleDateString() :'--'}</span>
                                     </li>
                                 </ul>
                             </div>

@@ -199,7 +199,7 @@ class UserFundmy extends Component{
     }
 
     render(){
-        const data = this.props.strategy_user;
+        const data= this.props.strategy_user && this.props.strategy_user.data;
         const totalNum = this.props.strategy_user && this.props.strategy_user.rowCount;
         if(data ===null || totalNum == 0){
             return(
@@ -221,7 +221,7 @@ class UserFundmy extends Component{
                     </ul>
                 </div>
                 <div className="g-my-30">
-                    <Pagination  defaultPageSize={this.state.pageSize} total={totalNum}  onChange={e => this.handlePagination(e)}/>
+                    {data==null || totalNum == 0 ?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
                 </div>
             </div>
 

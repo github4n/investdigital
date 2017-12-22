@@ -82,16 +82,17 @@ class MyStrategy extends Component{
                             <span className="member text-center g-px-20">高级数据会员服务</span>
                         </div>
                         <div className="g-py-20">
-                            <div className="strategy-all-set text-center g-px-20 g-mr-10">创建新策略</div>
+                            <div className="strategy-all-set tesxt-center g-px-20 g-mr-10">创建新策略</div>
                             <div className="strategy-all-set text-center g-px-20 g-mr-10">向导式策略生成器</div>
                             <input className="strategy-input pull-right g-px-10" type="text" placeholder="搜索"/>
                         </div>
                     </div>
                     <div className="g-mt-20">
                         <Table columns={columns} dataSource={data} tableStyle={style.tableStyle} tableClass={style.tableProps} />
+                        {totalNum == 0 ? <div className="text-center h3 col-sm-12 g-py-10">暂无数据</div> : ""}
                     </div>
                     <div className="strategy-table-pagination">
-                        {data==null?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
+                        {data==null || totalNum == 0?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
                     </div>
                 </div>
             </div>

@@ -1,17 +1,20 @@
 /**
  * Created by fengxiaoli on 2017/12/12.
  */
-
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: [
         './src/index.js'
     ],
     output: {
-        path: __dirname,
+        path: path.resolve(__dirname, "./dist"),
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.[chunkhash:8].js'
     },
     module: {
+
         loaders: [
             {
                 test: /\.js$/,
@@ -32,6 +35,16 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            publicPath: './',
+        }),
+        new CopyWebpackPlugin([{
+            from: './public',
+            to: 'public'
+        }])
+    ],
     resolve: {
         extensions: ['.js', '.jsx', '.css']
     },

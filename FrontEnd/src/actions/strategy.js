@@ -44,8 +44,8 @@ export function fetchUserStrategy({ pageSize, pageNum, desc, userId}) {
     return function (dispatch) {
         axios.post(`${ROOT_STRATEGY}/strategy/getUserStrategy/${pageSize}/${pageNum}/${desc}/${userId}`)
             .then(response => {
-                console.log('我的策略');
-                console.log(response);
+                // console.log('我的策略');
+                // console.log(response);
                 if (response.data.status == 1) {
                     dispatch({ type: FETCH_USER_STRATEGY, payload: response.data});
                 }

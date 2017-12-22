@@ -154,13 +154,6 @@ class UserFundall extends Component{
     }
     renderList(){
         const data = this.props.myfund.data || [];
-        if(data ==! data){
-            return(
-                <li className="text-center">
-                    <h1> 暂无数据</h1>
-                </li>
-            );
-        }else {
             return data.map((item, index) => {
                 return (
                     <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
@@ -214,12 +207,11 @@ class UserFundall extends Component{
                     </li>
                 );
             });
-        }
     }
     render(){
         const totalNum = this.props.myfund &&  this.props.myfund.rowCount;
-        // console.log(totalNum);
-        if(this.props.myfund.data === null){
+        const data= this.props.myfund && this.props.myfund.data;
+        if(data === null){
             return(
                 <div className="text-center h3 col-sm-12 g-py-100">
                     暂无数据

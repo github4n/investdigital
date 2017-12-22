@@ -159,15 +159,6 @@ class ListFundall extends Component{
     renderList(){
 
         const data = this.props.data.data || [];
-         // console.log(data);
-
-        if(data ==! data){
-            return (
-                <li className="text-center">
-                    <h1> 暂无数据</h1>
-                </li>
-            );
-        }else {
             return data.map((item, index)=>{
                 return(
                     <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
@@ -221,15 +212,13 @@ class ListFundall extends Component{
                     </li>
                 );
             });
-        }
     }
     render(){
         const totalNum = this.props.data &&  this.props.data.rowCount;
-        console.log(totalNum);
         if(this.props.data === null){
             return(
                 <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
+                    暂无数据
                 </div>
             );
         }
