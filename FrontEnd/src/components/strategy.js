@@ -6,6 +6,7 @@ import EarningsList from './earnings_list';
 import StrategyList from './strategy_list';
 import Header from './common/header-all';
 import StrategyGreat from './strategy_great';
+import Footer from './common/footer';
 
 class Strategy extends Component{
     constructor(props) {
@@ -36,6 +37,7 @@ class Strategy extends Component{
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
 
         );

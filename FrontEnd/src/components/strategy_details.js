@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import MessageBoard from './message_board';
 import { Table } from 'antd';
+import Footer from './common/footer';
 import 'antd/dist/antd.css';
 import {fetchUserTransaction, fetchUserPosition, fetchStrategyInfo} from '../actions/strategy';
 import {ROOT_AVATAR} from '../actions/types';
@@ -192,6 +193,7 @@ class StrategyDetails extends Component{
                         <div className="col-sm-12"><MessageBoard strategyId={this.props.match.params.id} /></div>
                     </div>
                 </div>
+                <Footer/>
             </div>
 
         );

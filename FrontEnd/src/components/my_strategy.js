@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Header from './common/header-all';
+import Footer from './common/footer';
 import {Table, Pagination} from 'nl-design';
 import {fetchUserStrategy} from '../actions/strategy';
 
@@ -75,7 +76,7 @@ class MyStrategy extends Component{
         return(
             <div>
                 <Header/>
-                <div className="container my-strategy g-py-30">
+                <div className="container my-strategy g-py-30" style={{minHeight: "810px"}}>
                     <div className="top">
                         <div>
                             <span className="g-font-size-20 g-mr-20">策略列表</span>
@@ -95,6 +96,7 @@ class MyStrategy extends Component{
                         {data==null || totalNum == 0?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)}/> }
                     </div>
                 </div>
+                <Footer/>
             </div>
         );
     }
