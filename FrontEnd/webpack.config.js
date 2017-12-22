@@ -3,6 +3,7 @@
  */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: [
         './src/index.js'
@@ -39,6 +40,10 @@ module.exports = {
             template: 'index.html',
             publicPath: './',
         }),
+        new CopyWebpackPlugin([{
+            from: './public',
+            to: 'public'
+        }])
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.css']
