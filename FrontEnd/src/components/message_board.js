@@ -51,7 +51,7 @@ class MessageBoard extends Component{
         const totalNum = this.props.strategy_comment && this.props.strategy_comment.rowCount;
         if(this.props.strategy_comment === null){
             return(
-                <div className="text-center h3">loading</div>
+                <div className="text-center h3">loading...</div>
             );
         }
         return(

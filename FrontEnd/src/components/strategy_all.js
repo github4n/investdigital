@@ -163,6 +163,15 @@ class StrategyAll extends Component{
         });
     }
     renderList(){
+        const data= this.props.strategy_all && this.props.strategy_all.data;
+        const totalNum = this.props.strategy_all && this.props.strategy_all.rowCount;
+        if(data===null ||totalNum==0 ){
+            return(
+                <div className="text-center h3 col-sm-12 g-py-10">
+                    暂无数据
+                </div>
+            );
+        }
         return this.props.strategy_all.data.map((item, index)=>{
             return(
                 <li className="strate-all-content-item  clearfix g-mt-20" key={index}>
@@ -225,13 +234,6 @@ class StrategyAll extends Component{
     render(){
         const data= this.props.strategy_all && this.props.strategy_all.data;
         const totalNum = this.props.strategy_all && this.props.strategy_all.rowCount;
-        if(this.props.strategy_all===null){
-            return(
-                <div className="text-center h3 col-sm-12 g-py-100">
-                    <div className="loading"></div>
-                </div>
-            );
-        }
         return(
             <div className="strategy-all-content clearfix">
                 <div className="strategy-all-content-filtrate g-py-20 clearfix">
@@ -246,7 +248,7 @@ class StrategyAll extends Component{
                     </ul>
                 </div>
                 <div className="g-my-30">
-                    {data==null?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
+                    {data==null || totalNum == 0 ?'':<Pagination  defaultPageSize={this.state.pageSize} total={totalNum} onChange={e => this.handlePagination(e)} /> }
                 </div>
             </div>
 
